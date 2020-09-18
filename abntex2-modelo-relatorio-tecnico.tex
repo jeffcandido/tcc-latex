@@ -384,16 +384,17 @@
 
   \item[ARM]  \textit{Advanced RISC}
   \item[CLI]  \textit{Command Line Interface}
-  \item[DSP]  \textit{Digital Signal Processing} 
+  \item[DSP]  \textit{Digital Signal Processing}
   \item[FSF]  \textit{Free Software Foundation}
   \item[GNU]  \textit{GNU's Not Unix}
-  \item[GPG]  \textit{GNU Privacy Guard} 
+  \item[GPG]  \textit{GNU Privacy Guard}
   \item[GPLv3]  \textit{General Public License version 3}
   \item[GRC]  \textit{GNURadio Companion}
   \item[GUI]  \textit{Graphical User Interface}
   \item[SDR]  \textit{Software-defined Radio}
   \item[STDIN]  \textit{Standard Input}
-  \item[SDK]  \textit{Software Development Kit} 
+  \item[SDK]  \textit{Software Development Kit}
+  \item[SPC]  \textit{Super Privileged Container}
   \item[TTY]  \textit{TeleTYpewriter}
 
 
@@ -572,6 +573,36 @@ containers podem oferecer.
 
 FALAR O PORQUÊ DE USAR O DOCKER E NÃO INSTALAR DIRETAMENTE NA MÁQUINA HOST
 
+Os \textit{container}'s são projetados para manter suas próprias visualizações contidas de namespaces e têm acesso limitado aos \textit{hosts} nos quais
+são executados. Por padrão, os \textit{container}'s têm uma tabela de processos, interfaces de rede, sistemas de arquivos e recursos IPC separados do host.
+Muitos recursos de segurança, como recursos e SELinux, são colocados em \textit{container}'s para controlar o acesso ao sistema host e outros
+\textit{container}'s. Embora os \textit{container}'s possam usar recursos do host, os comandos executados a partir de um \textit{container} têm uma capacidade muito
+limitada de interagir diretamente com o host.
+
+Alguns \textit{container}'s, entretanto, têm como objetivo acessar, monitorar e, possivelmente, alterar recursos no sistema host diretamente. Eles são
+chamados de \textit{container}'s superprivilegiados.
+
+O Host deve ser enxuto. Muitas ferramentas que você pode desejar usar para gerenciar ou solucionar problemas do host não são incluídas por padrão.
+
+A melhor maneira de adicionar ferramentas a um  Host é incluir essas ferramentas em um \textit{container}.
+
+Você pode trazer um SPC para um Host, solucionar um problema e removê-lo quando não for mais necessário para liberar recursos.
+
+Aqui estão os motivos pelos quais alguns \textit{container}'s precisam de privilégios extras:
+
+Acesso ao soquete docker: a comunicação com o serviço docker por meio do soquete docker requer privilégios especiais.
+
+Necessidade de carregar módulos do kernel: Qualquer \textit{container} que precise carregar módulos do kernel deve ter privilégios.
+
+É necessário ignorar o SELinux: se um \textit{container} não funcionar com o SELinux no modo de aplicação, ele precisa de privilégios especiais
+para escapar do confinamento do SELinux. O \textit{container} openshift3 / logging-fluentd é um exemplo de tal \textit{container}.
+(Observe que é melhor criar uma política SELinux para o \textit{container} e rotular os arquivos que ele precisa acessar apropriadamente para que
+possa funcionar com o SELinux.)
+
+A próxima seção ilustra como os \textit{container} superprivilegiados são executados e como os recursos do host são acessados a partir de um SPC.
+
+
+
 \chapter{Criação do ambiente de desenvolvimento}
 
 Primeiramente é necessário ter a CLI (\textit{command line interface}) do \textbf{docker engine} instalada (na máquina \textit{host}) e tal procedimento de
@@ -641,7 +672,8 @@ E o retorno do terminal ficará:
   sub   rsa4096 2017-02-22 [S]
 \end{lstlisting}
 
-Feito isso, o próximo passo será configurar que o repositório mais estável ("\textit{stable}") do \textit{Docker} seja indexado ao gerenciador de pactotes do sistema, o \textbf{apt}:
+Feito isso, o próximo passo será configurar que o repositório mais estável ("\textit{stable}") do \textit{Docker} seja indexado ao gerenciador de
+pactotes do sistema, o \textbf{apt}:
 
 \begin{lstlisting}[language=bash]
   $ sudo add-apt-repository \
@@ -650,7 +682,8 @@ Feito isso, o próximo passo será configurar que o repositório mais estável (
   stable"
 \end{lstlisting}
 
-Finalmente, as versões mais recentes do \textbf{containerd} e do \textit{Engine} do \textit{Docker} podem ser instaladas após atualizar os índices do gerenciador de pacotes \textbf{apt}.
+Finalmente, as versões mais recentes do \textbf{containerd} e do \textit{Engine} do \textit{Docker} podem ser instaladas após atualizar os índices do
+gerenciador de pacotes \textbf{apt}.
 
 \begin{lstlisting}[language=bash]
   $ sudo apt-get update
