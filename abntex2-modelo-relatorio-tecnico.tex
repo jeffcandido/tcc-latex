@@ -302,17 +302,24 @@
 % Agradecimentos
 % ---
 \begin{agradecimentos}
-  Agradeço primeiramente a minha família por ter apoiado e viabilizado todo esse processo de aprendizado.
+  Agradeço primeiramente a minha família por ter apoiado e viabilizado todo esse processo de
+  aprendizado.
 
-  Sou grato pela liberdade e confiança dispensada pelo meu orientador, professor Dr. Alan Petrônio Pinheiro.
+  Sou grato pela liberdade e confiança dispensada pelo meu orientador, professor Dr. Antônio
+  Cláudio Paschoarelli Veiga.
 
   Aos professores que contribuíram para o cumprimento dessa jornada.
 
-  À Universidade Federal de Uberlândia por cumprir veementemente com o seu papel de formação de cidadãos através da garantia do ensino público, gratuito e de qualidade.
+  À Universidade Federal de Uberlândia por cumprir veementemente com o seu papel de formação de
+  cidadãos.
 
-  Aos colegas do laboratório de Redes de Computadores e Telecomunicações, William, Daniel e Caio por todo apoio e amizade.
+  Aos colegas do laboratório de Redes de Computadores e Telecomunicações, William, Daniel e Caio
+  por todo apoio e amizade.
 
-  Agradeço também a todas as entidades que estiveram presentes durante minha formação, com destaques para o Diretório Acadêmico da Faculdade de Engenharia Elétrica e ao Laboratório de Automação, Sistemas Eletrônicos e Controle (LASEC) que muito me auxiliaram no desenvolvimento profissional e de liderança.
+  Agradeço também a todas as entidades que estiveram presentes durante minha formação, com destaques
+  para o Diretório Acadêmico da Faculdade de Engenharia Elétrica e ao Laboratório de Automação,
+  Sistemas Eletrônicos e Controle (LASEC), que muito auxiliaram no meu desenvolvimento profissional
+  e de liderança.
 
 
 \end{agradecimentos}
@@ -374,19 +381,20 @@
 % ---
 \begin{siglas}
 
+
+  \item[ARM]  \textit{Advanced RISC}
   \item[CLI]  \textit{Command Line Interface}
-  \item[SDK]  \textit{Software Development Kit}
+  \item[DSP]  \textit{Digital Signal Processing} 
   \item[FSF]  \textit{Free Software Foundation}
   \item[GNU]  \textit{GNU's Not Unix}
+  \item[GPG]  \textit{GNU Privacy Guard} 
   \item[GPLv3]  \textit{General Public License version 3}
   \item[GRC]  \textit{GNURadio Companion}
-  \item[SDR]  \textit{Software-defined Radio}
-  \item[DSP]  \textit{Digital Signal Processing}
-  \item[ARM]  \textit{Advanced RISC Machine}
-  \item[GPG]  \textit{GNU Privacy Guard}
-  \item[STDIN]  \textit{Standard Input}
-  \item[TTY]  \textit{TeleTYpewriter}
   \item[GUI]  \textit{Graphical User Interface}
+  \item[SDR]  \textit{Software-defined Radio}
+  \item[STDIN]  \textit{Standard Input}
+  \item[SDK]  \textit{Software Development Kit} 
+  \item[TTY]  \textit{TeleTYpewriter}
 
 
   \item[ABP]  \textit{Activation-ByPersonalisation}
@@ -538,7 +546,7 @@ Configurar o ambiente de desenvolvimento e depois ter incompatibilidade de vers�
 que foi utilizado durante o desenvolvimento é um grande problema enfrentado por engenheiros e/ou programadores, principalmente em início de carreira.
 Nesta parte deste trabalho será demonstrada a criação de um ambiente para desenvolvimento de aplicações de rádio definido por \textit{software} utilizando
 o \textbf{GNURadio} instalado em um \textit{container} \textbf{Docker}.
-Os conceitos de \textit{container}'s e do Docker com certeza já são amplamente abordados na atualidade e então, apenas alguns pontos relacionados ao tema
+Os conceitos de \textit{container}'s e do \textit{Docker} com certeza já são amplamente abordados na atualidade e então, apenas alguns pontos relacionados ao tema
 serão tratados.
 
 \section*{GNURadio}
@@ -557,7 +565,7 @@ usuário (\textbf{GNURadio Companion} — GRC) por diagramas de blocos.
 
 \section*{Docker}
 
-O Docker é uma unidade padrão de \textit{software} da empresa Docker Inc., que fornece uma camada de abstração e automação em containers, ou seja, grupos isolados de
+O \textit{Docker} é uma unidade padrão de \textit{software} da empresa \textit{Docker} Inc., que fornece uma camada de abstração e automação em containers, ou seja, grupos isolados de
 processos do kernel Linux sendo executados e compartilhando os recursos de um mesmo host. Um bom entendimento sobre os \textit{namespaces} do  sistema operacional
 Linux (\textbf{mnt}, \textbf{pid}, \textbf{net}, \textbf{ipc}, \textbf{uts}, \textbf{user} e \textbf{cgroups}) pode ajudar na compreensão de quais soluções os
 containers podem oferecer.
@@ -573,14 +581,14 @@ Esta CLI está disponível para várias distribuições Linux na versão \textit
 demonstrado procedimento de instalação do \textbf{docker engine} em uma distribuição Linux, de forma que o procedimento é semelhante para demais distribuições
 e arquiteturas.
 
-\section*{Instalação do Docker Engine}
+\section*{Instalação do \textit{Docker Engine}}
 
-O Docker fornece pacotes prontos (\textbf{.deb} e \textbf{.rpm}) para instalação dessa CLI em distribuições Linux como \textit{CentOS}, \textit{Debian},
+O \textit{Docker} fornece pacotes prontos (\textbf{.deb} e \textbf{.rpm}) para instalação dessa CLI em distribuições Linux como \textit{CentOS}, \textit{Debian},
 \textit{Fedora}, \textit{Raspbian}, \textit{Ubuntu} e derivadas (\textit{LMDE}, \textit{BunsenLabs Linux}, \textit{Kali Linux}, \textit{Kubuntu}, \textit{Lubuntu}
 e \textit{Xubuntu}, por exemplo) para arquiteturas \textbf{x86\_64}/\textbf{amd64}, \textbf{ARM} (\textit{Advanced RISC Machine}) e \textbf{ARM64}/\textbf{AARCH64}.
-Outra opção de instalação seria utilizando os binários pré-compilados que são fornecidos no site do Docker e essa forma
-faz bastante sentido quando o sistema operacional utilizado não fizer parte de algum dentre todas as plataformas suportadas
-pelo Docker.
+Outra opção de instalação seria utilizando os binários pré-compilados que são fornecidos no site do \textit{Docker} e essa forma
+faz bastante sentido quando o sistema operacional utilizado não fizer parte de algum dentre todos os suportados
+pelo \textit{Docker}.
 
 Antes de iniciar o procedimento de instalação é necessário verificar se o sistema operacional utilizado está instalado em uma versão de arquitetura 64-bit
 (\textbf{x86\_64} ou \textbf{amd64}, \textbf{armhf} e \textbf{arm64}) e não possui instalações de versões antigas do \textit{software}
@@ -617,7 +625,7 @@ Após isso é necessário adicionar a chave GPG (\textit{GNU Privacy Guard}) ofi
     | sudo apt-key add -
   \end{lstlisting}
 
-Para verificar se possui a chave com o \textit{fingerprint} Docker (no momento em que este texto foi escrito,
+Para verificar se possui a chave com o \textit{fingerprint} \textit{Docker} (no momento em que este texto foi escrito,
 era \textbf{9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88}), o usuário deve pesquisar os últimos 8 caracteres do \textit{fingerprint}. Neste caso, basta utilizar o comando:
 
 \begin{lstlisting}[language=bash]
@@ -633,7 +641,7 @@ E o retorno do terminal ficará:
   sub   rsa4096 2017-02-22 [S]
 \end{lstlisting}
 
-Feito isso, o próximo passo será configurar que o repositório mais estável ("\textit{stable}") do Docker seja indexado ao gerenciador de pactotes do sistema, o \textbf{apt}:
+Feito isso, o próximo passo será configurar que o repositório mais estável ("\textit{stable}") do \textit{Docker} seja indexado ao gerenciador de pactotes do sistema, o \textbf{apt}:
 
 \begin{lstlisting}[language=bash]
   $ sudo add-apt-repository \
@@ -642,7 +650,7 @@ Feito isso, o próximo passo será configurar que o repositório mais estável (
   stable"
 \end{lstlisting}
 
-Finalmente, as versões mais recentes do \textbf{containerd} e da \textit{Engine} do Docker podem ser instaladas após atualizar os índices do gerenciador de pacotes \textbf{apt}.
+Finalmente, as versões mais recentes do \textbf{containerd} e do \textit{Engine} do \textit{Docker} podem ser instaladas após atualizar os índices do gerenciador de pacotes \textbf{apt}.
 
 \begin{lstlisting}[language=bash]
   $ sudo apt-get update
@@ -659,19 +667,19 @@ o terminal responderá com uma saída semelhante ao que é mostrado na Fig. \ref
 
 \begin{figure}[!htb]
   \centering
-  \caption{Teste de verificação de instalação do Docker Engine }
+  \caption{Teste de verificação de instalação do \textit{Docker Engine} }
   \includegraphics[width = \linewidth]{figures/docker-hello-world.png}
   \label{fig:docker-hello-world}
 \end{figure}
 
-Neste ponto, o Docker encontra-se devidamente instalado no sistema operacional e o usuário pode optar por executar alguns comandos de pós-instalação
+Neste ponto, o \textit{Docker} encontra-se devidamente instalado no sistema operacional e o usuário pode optar por executar alguns comandos de pós-instalação
 para, por exemplo, possibilitar a execução do docker sem a necessidade de ter privilégios de usuário \textit{root}, iniciar o serviço docker na inicialização do
 sistema operacional, usar uma \textit{engine} de armazenamento diferente da que vem como padrão de instalação (\textit{overlay2}) dentre outras coisas descritas
 na seção de \href{https://docs.docker.com/engine/install/linux-postinstall/}{pós-instalação} da documentação oficial.
 
 \section*{Criação do container}
 
-Com o Docker instalado, para inciar o procedimento de criação do \textit{container} do ambiente de desenvolvimento é preciso executar o comando \textbf{xhost +}
+Com o \textit{Docker} instalado, para inciar o procedimento de criação do \textit{container} do ambiente de desenvolvimento é preciso executar o comando \textbf{xhost +}
 para fornecer acesso a aplicações “externas” ao \textit{host} ao seu servidor gráfico (também conhecido como sessão \textbf{X} ou a tela do computador),
 afinal um dos objetivos é utilizar o \textit{GNURadio Companion} que estará instalado dentro do \textit{container}.
 
@@ -680,13 +688,25 @@ Agora, executando o seguinte comando será criado um \textit{container} a partir
 criado que será feita a instalação do GNURadio.
 
 \begin{lstlisting}[language=bash]
-$  docker run -i -t --privileged -e DISPLAY=$DISPLAY \
-      -v /tmp/.X11-unix/:/tmp/.X11-unix \
-      -v /dev/usb:/dev/usb \
-      -v /dev/snd:/dev/snd \
-      -v $HOME:/home/developer/working \
-      --name gnuradio \
-      ubuntu
+$  docker run -i -t --privileged \
+    --ipc=host --net=host --pid=host -e HOST=/host \
+    -e DISPLAY=$DISPLAY \
+    -e DCONF_PROFILE=/etc/dconf/profile/ \
+    -e XDG_DATA_HOME=/config/xdg/data \
+    -e XDG_CONFIG_HOME=/config/xdg/config \
+    -e XDG_CACHE_HOME=/config/xdg/cache \
+    -e XDG_RUNTIME_DIR=/tmp/runtime-root \
+    -e DBUS_SESSION_BUS_ADDRESS="$DBUS_SESSION_BUS_ADDRESS" \
+    -e DEBIAN_FRONTEND="noninteractive" \
+    -e NAME=gnuradio -e IMAGE=jeffcandido/gnuradio \
+    -v /run:/run -v /var/log:/var/log\
+    -v /etc/localtime:/etc/localtime -v /:/host \
+    -v /tmp/.X11-unix/:/tmp/.X11-unix \
+    -v /dev/usb:/dev/usb \
+    -v /dev/snd:/dev/snd \
+    -v /home/jefferson/gnuradio:/home/jefferson/gnuradio \
+    --name gnuradio \
+    ubuntu:20.04
   \end{lstlisting}
 
 \begin{figure}[!htb]
@@ -718,7 +738,7 @@ interface visual com uma vinculação de volumes montados no \textit{container} 
 
 \begin{figure}[!htb]
   \centering
-  \caption{Detalhamento de informações sobre \textit{container}’s Docker}
+  \caption{Detalhamento de informações sobre \textit{container}’s \textit{Docker}}
   \includegraphics[width = \linewidth]{figures/docker-inspect.png}
   \label{fig:docker-inspect}
 \end{figure}
@@ -738,7 +758,7 @@ as depedências para esta instalação bastando executar os seguintes comandos n
 
 \begin{lstlisting}[language=bash]
   $ apt-get update && apt-get upgrade
-  $ apt-get install libgmp-dev gir1.2-gtk-3.0 xauth
+  $ apt-get install gir1.2-gtk-3.0 libx11-dev
   $ apt-get install gnuradio
 \end{lstlisting}
 
@@ -771,7 +791,7 @@ através do comando \textbf{gnuradio-companion} (GRC).
 \end{figure}
 
 \newpage
-\section*{Criação da imagem Docker}
+\section*{Criação da imagem \textit{Docker}}
 
 CRIAR A IMAGEM DOCKER
 
