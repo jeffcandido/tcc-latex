@@ -321,7 +321,6 @@
   Sistemas Eletrônicos e Controle (LASEC), que muito auxiliaram no meu desenvolvimento profissional
   e de liderança.
 
-
 \end{agradecimentos}
 % ---
 
@@ -394,9 +393,9 @@
   \item[SDR]  \textit{Software-defined Radio}
   \item[STDIN]  \textit{Standard Input}
   \item[SDK]  \textit{Software Development Kit}
+  \item[SELinux]  \textit{Security-Enhanced Linux}
   \item[SPC]  \textit{Super Privileged Container}
   \item[TTY]  \textit{TeleTYpewriter}
-
 
   \item[ABP]  \textit{Activation-ByPersonalisation}
   \item[ADR] \textit{Adaptive Data Rate}
@@ -488,12 +487,12 @@
 \addcontentsline{toc}{chapter}{Introdução}
 
 ----------- USAR ESSE EXEMPLO E FALAR DE GNURADIO, DESENVOLVIMENTO DE SOFTWARE, BOAS PRÁTICAS, ENGENHARIA DE SOFTWARE, CONTAINERS, LINGUAGENS DE PROGRAMAÇÃO, C++, PYTHON
------------ DOCKER, RÁDIO DEFINIDO POR SOFTWARE, SOFTWARE-DEFINED RADIO, HACKRF, MICHAEL OSSMAN, LIMESDR, ANALOG DEVICES, SIMULINK, GNURADIO-COMPANION
+----------- \textit{Docker}, RÁDIO DEFINIDO POR SOFTWARE, SOFTWARE-DEFINED RADIO, HACKRF, MICHAEL OSSMAN, LIMESDR, ANALOG DEVICES, SIMULINK, GNURADIO-COMPANION
 
 A Internet das Coisas (IoT - Internet of Things) é uma rede de dispositivos físicos do cotidiano que podem se comunicar, levando em consideração que o seu foco é a interconexão entre dispositivos (conceito M2M) e, não apenas, dispositivos a seres humanos. A previsão é que mais de 25 bilhões de dispositivos estarão conectados à Internet até 2020 \cite[p. 1]{sanchez2017transmission}.
 
 However, the solutions deployed for human’s cellular communication (e.g., Global System for Mobile communications (GSM), General Packet Radio Service (GPRS), or Long Term Evolution (LTE)) present important drawbacks that make them unsuitable to be directly used by constrained IoT devices. These technologies were designed for applications with
-different requirements that those needed by IoT systems. Thus, a telephony cell is designed for providing broadband services to a limited number of users; meanwhile, an IoT cell will host a massive number of devices generating sporadic transmissions of
+different requirements that those needed by IoT systems. Thus, a telephony cell is designed for providing broadband services to a limited number of users; meanwhile, an IoT cell will \textit{host} a massive number of devices generating sporadic transmissions of
 short packets. This potentially huge population of devices gaining connectivity through a single base station raises new challenges related to signaling and traffic control [4] pegar referencia no \cite[p. 1]{sanchez2017transmission}.
 
 \cite[p. 1]{AN1200.13}. lORA MODEM
@@ -537,7 +536,7 @@ Lauro César Araujo
 % ----------------------------------------------------------
 % PARTE - preparação do ambiente de desenvolvimento
 % ----------------------------------------------------------
-\part{Ambiente de desenvolvimento}
+\part{Preparações}
 
 \chapter{Definições}
 
@@ -567,47 +566,41 @@ usuário (\textbf{GNURadio Companion} — GRC) por diagramas de blocos.
 \section*{Docker}
 
 O \textit{Docker} é uma unidade padrão de \textit{software} da empresa \textit{Docker} Inc., que fornece uma camada de abstração e automação em containers, ou seja, grupos isolados de
-processos do kernel Linux sendo executados e compartilhando os recursos de um mesmo host. Um bom entendimento sobre os \textit{namespaces} do  sistema operacional
+processos do \textit{kernel} Linux sendo executados e compartilhando os recursos de um mesmo \textit{host}. Um bom entendimento sobre os \textit{namespaces} do  sistema operacional
 Linux (\textbf{mnt}, \textbf{pid}, \textbf{net}, \textbf{ipc}, \textbf{uts}, \textbf{user} e \textbf{cgroups}) pode ajudar na compreensão de quais soluções os
 containers podem oferecer.
 
-FALAR O PORQUÊ DE USAR O DOCKER E NÃO INSTALAR DIRETAMENTE NA MÁQUINA HOST
+Um questionamento bastante pertinente que pode vir à tona neste momento é: Seria mesmo necessário utilizar \textit{container}'s para criação
+do ambiente de desenvolvimento, sendo que o próprio GNURadio já é distribuído oficialmente em pacotes compatíveis com os principais sistemas
+operacionais encontrados no mercado? Com o decorrer do próximo capítulo o porquê se tornará mais claro e por agora a ideia principal é de
+que quanto mais isolado possível for o ambiente de desenvolvimento, mais fácil será para testar hipóteses, criar diferentes soluções e tornar
+possível que elas sejam reproduzidas com facilidade independentemente da plataforma de hardware.
 
-Os \textit{container}'s são projetados para manter suas próprias visualizações contidas de namespaces e têm acesso limitado aos \textit{hosts} nos quais
-são executados. Por padrão, os \textit{container}'s têm uma tabela de processos, interfaces de rede, sistemas de arquivos e recursos IPC separados do host.
-Muitos recursos de segurança, como recursos e SELinux, são colocados em \textit{container}'s para controlar o acesso ao sistema host e outros
-\textit{container}'s. Embora os \textit{container}'s possam usar recursos do host, os comandos executados a partir de um \textit{container} têm uma capacidade muito
-limitada de interagir diretamente com o host.
+Muitas ferramentas que podem ser úteis para engenheiros e desenvolvedores de software para gerenciar ou solucionar problemas podem não estar
+incluídas no sistema \textit{host} de suas máquinas por padrão e a melhor maneira de adicionar ferramentas a um \textit{host} seria
+incluindo-as em um \textit{container} possibilitando que o \textit{host} seja o mais enxuto possível.
 
-Alguns \textit{container}'s, entretanto, têm como objetivo acessar, monitorar e, possivelmente, alterar recursos no sistema host diretamente. Eles são
-chamados de \textit{container}'s superprivilegiados.
+Os \textit{container}'s são projetados para manter suas próprias visualizações contidas de \textit{namespaces} e têm acesso limitado aos \textit{hosts} nos quais
+são executados. Por padrão, os \textit{container}'s têm uma tabela de processos, interfaces de rede, sistemas de arquivos e recursos IPC
+(\textit{Inter-Process Communication}) separados do \textit{host}.
+Muitos recursos de segurança, como por exemplo o SELinux (\textit{Security-Enhanced Linux}), são colocados em \textit{container}'s para controlar o acesso ao sistema \textit{host} e outros
+\textit{container}'s. Embora os \textit{container}'s possam usar recursos do \textit{host}, os comandos executados a partir de um \textit{container} têm uma capacidade muito
+limitada de interagir diretamente com o \textit{host}.
 
-O Host deve ser enxuto. Muitas ferramentas que você pode desejar usar para gerenciar ou solucionar problemas do host não são incluídas por padrão.
+Alguns \textit{container}'s, entretanto, têm como objetivo acessar, monitorar e, possivelmente, alterar recursos no sistema \textit{host}
+diretamente. Eles são chamados de \textit{container}'s super privilegiados (SPC - \textit{Super Privileged Container}). Um desenvolvedor
+pode \textit{subir} um SPC em um \textit{host}, solucionar um problema e removê-lo quando não for mais necessário para liberar recursos.
 
-A melhor maneira de adicionar ferramentas a um  Host é incluir essas ferramentas em um \textit{container}.
-
-Você pode trazer um SPC para um Host, solucionar um problema e removê-lo quando não for mais necessário para liberar recursos.
-
-Aqui estão os motivos pelos quais alguns \textit{container}'s precisam de privilégios extras:
-
-Acesso ao soquete docker: a comunicação com o serviço docker por meio do soquete docker requer privilégios especiais.
-
-Necessidade de carregar módulos do kernel: Qualquer \textit{container} que precise carregar módulos do kernel deve ter privilégios.
-
-É necessário ignorar o SELinux: se um \textit{container} não funcionar com o SELinux no modo de aplicação, ele precisa de privilégios especiais
-para escapar do confinamento do SELinux. O \textit{container} openshift3 / logging-fluentd é um exemplo de tal \textit{container}.
-(Observe que é melhor criar uma política SELinux para o \textit{container} e rotular os arquivos que ele precisa acessar apropriadamente para que
-possa funcionar com o SELinux.)
-
-A próxima seção ilustra como os \textit{container} superprivilegiados são executados e como os recursos do host são acessados a partir de um SPC.
+No próximo capítulo é mostrado como utilizar dos \textit{container}'s super privilegiados para a criação do ambiente de
+desenvolvimento de aplicações de software e como os recursos de um sistema \textit{host} são acessados a partir desse SPC.
 
 \chapter{Criação do ambiente de desenvolvimento}
 
 Primeiramente é necessário ter a CLI (\textit{command line interface}) do \textbf{docker engine} instalada (na máquina \textit{host}) e tal procedimento de
 instalação se torna extremamente simples bastando seguir o passo-a-passo fornecido pela \href{https://docs.docker.com/engine/install/}{documentação oficial}
-do Docker \cite{}.
+do \textit{Docker} \cite{Docker:2020}.
 Esta CLI está disponível para várias distribuições Linux na versão \textit{Server} e também para Windows e Mac na versão \textit{Desktop}. Neste trabalho será
-demonstrado procedimento de instalação do \textbf{docker engine} em uma distribuição Linux, de forma que o procedimento é semelhante para demais distribuições
+demonstrado o procedimento de instalação do \textbf{docker engine} em uma distribuição Linux, de forma que este procedimento é semelhante para demais distribuições
 e arquiteturas.
 
 \section*{Instalação do \textit{Docker Engine}}
@@ -619,20 +612,22 @@ Outra opção de instalação seria utilizando os binários pré-compilados que 
 faz bastante sentido quando o sistema operacional utilizado não fizer parte de algum dentre todos os suportados
 pelo \textit{Docker}.
 
-Antes de iniciar o procedimento de instalação é necessário verificar se o sistema operacional utilizado está instalado em uma versão de arquitetura 64-bit
-(\textbf{x86\_64} ou \textbf{amd64}, \textbf{armhf} e \textbf{arm64}) e não possui instalações de versões antigas do \textit{software}
-(\textbf{docker}, \textbf{docker.io}, ou \textbf{docker-engine}) e, caso hajam, é necessário removê-las. No sistema operacional Ubuntu
-basta utilizar o gerenciador de pacotes \textbf{apt}/\textbf{apt-get} para fazê-lo, conforme é exemplificado a seguir:
+Antes de iniciar o procedimento de instalação é necessário verificar se o sistema operacional do \textit{host} utilizado está instalado em uma versão de hardware
+de arquitetura 64-bit (\textbf{x86\_64} ou \textbf{amd64}, \textbf{armhf} e \textbf{arm64}/\textbf{aarch64}) e não possui instalações de versões antigas
+do \textit{software} (\textbf{docker}, \textbf{docker.io}, ou \textbf{docker-engine}) e, caso hajam, é necessário removê-las. No sistema
+operacional Ubuntu basta utilizar o gerenciador de pacotes \textbf{apt}/\textbf{apt-get} para fazê-lo, conforme é exemplificado a seguir:
 
 \begin{lstlisting}[language=bash]
   $ sudo apt-get remove docker-engine \
     docker docker.io containerd runc
   \end{lstlisting}
 
-\subsection*{Instalação utilizando repositório}
+\subsection*{Instalação utilizando o repositório ofical}
 
-Utilizar o gerenciador de pacotes presente na distribuição Linux facilita o processo de instalação e remoção de \textit{software} do sistema operacional. O primeiro
-passo é atualizar a lista de pacotes e instalar algumas dependências que permitem que o gerenciador de pacotes (\textbf{apt}) use um repositório sobre HTTPS:
+Utilizar o gerenciador de pacotes presente na distribuição Linux facilita o processo de instalação e remoção de \textit{software} do sistema operacional e esta intalação será feita
+utilizando o pacote fornecido no repositório oficial do \textit{Docker}. O primeiro
+passo é atualizar a lista de pacotes através do comando \textbf{apt-get update} e instalar algumas dependências que permitem que o gerenciador de pacotes (\textbf{apt}) use um repositório sobre HTTPS.
+Os comandos são exemplificados como segue:
 
 \begin{lstlisting}[language=bash]
 
@@ -647,15 +642,15 @@ passo é atualizar a lista de pacotes e instalar algumas dependências que permi
   \end{lstlisting}
 
 
-Após isso é necessário adicionar a chave GPG (\textit{GNU Privacy Guard}) oficial do Docker através do comando:
+Após isso é necessário adicionar a chave GPG (\textit{GNU Privacy Guard}) oficial do\textit{Docker} através do comando:
 
 \begin{lstlisting}[language=bash]
   $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
     | sudo apt-key add -
   \end{lstlisting}
 
-Para verificar se possui a chave com o \textit{fingerprint} \textit{Docker} (no momento em que este texto foi escrito,
-era \textbf{9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88}), o usuário deve pesquisar os últimos 8 caracteres do \textit{fingerprint}. Neste caso, basta utilizar o comando:
+Para verificar se o sistema já possui a chave com o \textit{fingerprint} \textit{Docker} (no momento em que este texto foi escrito,
+era \textbf{9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88}), o usuário deve pesquisar os últimos 8 caracteres desse \textit{fingerprint}. Neste caso, basta utilizar o comando:
 
 \begin{lstlisting}[language=bash]
     $ sudo apt-key fingerprint 0EBFCD88
@@ -680,6 +675,7 @@ pactotes do sistema, o \textbf{apt}:
   stable"
 \end{lstlisting}
 
+
 Finalmente, as versões mais recentes do \textbf{containerd} e do \textit{Engine} do \textit{Docker} podem ser instaladas após atualizar os índices do
 gerenciador de pacotes \textbf{apt}.
 
@@ -689,7 +685,7 @@ gerenciador de pacotes \textbf{apt}.
     docker-ce-cli containerd.io
 \end{lstlisting}
 
-Para verificar se a instalação foi bem-sucedida, basta executar o comando de testes a seguir que é o "\textit{hello-world}" do docker. Se tudo ocorrer bem,
+Para verificar se a instalação foi bem-sucedida, basta executar o comando de testes a seguir que é o "\textit{hello-world}" do \textit{Docker}. Se tudo ocorrer bem,
 o terminal responderá com uma saída semelhante ao que é mostrado na Fig. \ref{fig:docker-hello-world}.
 
 \begin{lstlisting}[language=bash]
@@ -704,7 +700,7 @@ o terminal responderá com uma saída semelhante ao que é mostrado na Fig. \ref
 \end{figure}
 
 Neste ponto, o \textit{Docker} encontra-se devidamente instalado no sistema operacional e o usuário pode optar por executar alguns comandos de pós-instalação
-para, por exemplo, possibilitar a execução do docker sem a necessidade de ter privilégios de usuário \textit{root}, iniciar o serviço docker na inicialização do
+para, por exemplo, possibilitar a execução do \textit{Docker} sem a necessidade de ter privilégios de usuário \textit{root}, iniciar o serviço \textit{Docker} na inicialização do
 sistema operacional, usar uma \textit{engine} de armazenamento diferente da que vem como padrão de instalação (\textit{overlay2}) dentre outras coisas descritas
 na seção de \href{https://docs.docker.com/engine/install/linux-postinstall/}{pós-instalação} da documentação oficial.
 
@@ -712,10 +708,10 @@ na seção de \href{https://docs.docker.com/engine/install/linux-postinstall/}{p
 
 Com o \textit{Docker} instalado, para inciar o procedimento de criação do \textit{container} do ambiente de desenvolvimento é preciso executar o comando \textbf{xhost +}
 para fornecer acesso a aplicações “externas” ao \textit{host} ao seu servidor gráfico (também conhecido como sessão \textbf{X} ou a tela do computador),
-afinal um dos objetivos é utilizar o \textit{GNURadio Companion} que estará instalado dentro do \textit{container}.
+afinal um dos objetivos é utilizar a interface gráfica do \textit{GNURadio Companion} que estará instalado dentro do \textit{container}.
 
 Agora, executando o seguinte comando será criado um \textit{container} a partir de uma imagem base da distribuição \textit{Ubuntu}. A Fig.
-\ref{fig:docker-run-gnuradio} exemplifica o uso dos comandos e as saídas retornadas pelo terminal e é dentro do \textit{container}
+\ref{fig:docker-run-gnuradio} exemplifica o uso do comando e as saídas retornadas pelo terminal e é dentro do \textit{container}
 criado que será feita a instalação do GNURadio.
 
 \begin{lstlisting}[language=bash]
@@ -729,9 +725,11 @@ $  docker run -i -t --privileged \
     -e XDG_RUNTIME_DIR=/tmp/runtime-root \
     -e DBUS_SESSION_BUS_ADDRESS="$DBUS_SESSION_BUS_ADDRESS" \
     -e DEBIAN_FRONTEND="noninteractive" \
-    -e NAME=gnuradio -e IMAGE=jeffcandido/gnuradio \
+    -e IMAGE=jeffcandido/gnuradio \
     -v /run:/run -v /var/log:/var/log\
     -v /etc/localtime:/etc/localtime -v /:/host \
+    -v /etc/dconf/profile/:/etc/dconf/profile/ \
+    -v /tmp/runtime-root/:/tmp/runtime-root/ \
     -v /tmp/.X11-unix/:/tmp/.X11-unix \
     -v /dev/usb:/dev/usb \
     -v /dev/snd:/dev/snd \
@@ -739,6 +737,7 @@ $  docker run -i -t --privileged \
     --name gnuradio \
     ubuntu:20.04
   \end{lstlisting}
+
 
 \begin{figure}[!htb]
   \centering
@@ -749,23 +748,88 @@ $  docker run -i -t --privileged \
 
 Para melhorar o entendimento, essa linha vai ser dividida e explicada por partes. O comando \textbf{docker run} primeiro cria uma camada de \textit{container}
 gravável sobre a imagem especificada (Ubuntu) e, em seguida, o inicia usando o comando especificado. Ou seja, \textbf{docker run} é equivalente a utilizar
-\textbf{docker container create} + \textbf{docker container start}. Um \textit{container} interrompido pode ser reiniciado com todas as suas alterações anteriores
+\textbf{docker container create} e depois \textbf{docker container start}. Um \textit{container} interrompido pode ser reiniciado com todas as suas alterações anteriores
 intactas usando \textbf{docker start}. Agora, sobre as \textit{flags} passadas:
 
 \begin{itemize}
   \item[$-$] \textbf{i} (\textbf{interactive}): manter o \textbf{STDIN} (\textit{standard input} — fluxo de entrada padrão) aberto, mesmo se não estiver conectado;
   \item[$-$] \textbf{t} (\textbf{tty}): alocar um pseudo-\textbf{TTY} (\textit{TeleTYpewriter} — simplesmente um terminal ao qual o usuário está conectado);
-  \item[$-$] \textbf{privileged}: dar privilégios estendidos a este \textit{container} (O docker permitirá o acesso a todos os dispositivos no \textit{host},
-        bem como definirá algumas configurações no AppArmor ou SELinux para permitir ao container quase todo o mesmo acesso ao \textit{host} que os processos que executam
-        \textit{container}'s externos no \textit{host}.);
+  \item[$-$] \textbf{privileged}: dar privilégios estendidos a este \textit{container} (desativa a separação de segurança entre o \textit{host} e o
+        \textit{container}, o que significa que um processo executado como \textit{root} dentro do \textit{container} tem o mesmo acesso ao \textit{host}
+        que ele poderia também ter se fosse executado de fora do \textit{container}.);
   \item[$-$] \textbf{e} (\textbf{env}): definir variáveis de ambiente;
   \item[$-$] \textbf{v} (\textbf{volume}): vincular a montagem de um volume dentro \textit{container};
   \item[$-$] \textbf{name}: o nome que se dará ao \textit{container} criado.
+  \item[$-$] As \textit{flags} \textbf{--ipc=host}, \textbf{--net=host} e \textbf{--pid=host} desligam os \textit{namespaces} \textbf{ipc},
+        \textbf{net} e \textbf{pid} dentro do \textit{container}. Isso significa que os processos dentro do \textit{container} veem a mesma rede e
+        tabela de processos, bem como compartilham quaisquer IPCs com os processos do \textit{host}.
+\end{itemize}
+
+Indo um pouco mais a fundo, tem-se a configuração de algumas variáveis de ambiente e a definição dos pontos de montagem e vinculação de alguns
+\textit{volumes} ao \textit{host}. Em tese, estas variáveis de ambiente foram configuradas porque foram observadas algumas necessidades durante o
+desenvolvimento deste trabalho, tais quais:
+
+\begin{itemize}
+  \item[$-$] \textbf{HOST=/host}: definir uma variável que possa ser usada dentro do \textit{container} para acessar
+        arquivos e diretórios a partir da raiz do \textit{filesystem} do \textit{host};
+  \item[$-$] \textbf{DISPLAY=\$DISPLAY}: definir uma variável que identifique onde serão exibidos recursos pelo servidor gráfico \textbf{X};
+  \item[$-$] \textbf{DCONF\_PROFILE=/etc/dconf/profile/}: definir a variável relacionada a um sistema de armazenamento das
+        preferências de usuário;
+  \item[$-$] \textbf{XDG\_DATA\_HOME=/config/xdg/data}: definir qual será o único diretório base relativo ao qual os arquivos
+        de dados específicos do usuário devem ser gravados;
+  \item[$-$] \textbf{XDG\_CONFIG\_HOME=/config/xdg/config}: definir qual será o único diretório base relativo ao qual os arquivos
+        de configuração específicos do usuário devem ser gravados;
+  \item[$-$] \textbf{XDG\_CACHE\_HOME=/config/xdg/cache}: definir qual será o único diretório base relativo ao qual os dados não
+        essenciais específicos do usuário (em cache) devem ser gravados.
+  \item[$-$] \textbf{XDG\_RUNTIME\_DIR=/tmp/runtime-root}: definir qual será o único diretório base relativo ao qual os arquivos de
+        tempo de execução específicos do usuário e outros objetos de arquivo devem ser colocados;
+  \item[$-$] \textbf{DBUS\_SESSION\_BUS\_ADDRESS=}
+
+        \textbf{"\$DBUS\_SESSION\_BUS\_ADDRESS"}: possibilitar a inicialização de uma sessão de barramento usando o utilitário D-Bus;
+  \item[$-$] \textbf{DEBIAN\_FRONTEND="noninteractive"}: definir variável para silenciar os \textit{prompt}'s de configuração do \textit{container};
+  \item[$-$] \textbf{IMAGE=jeffcandido/gnuradio}: definir a variável para identificar o nome da imagem.
+\end{itemize}
+
+Com relação aos \textit{volumes} que foram montados, seguem suas definições:
+
+\begin{itemize}
+  \item[$-$] \textbf{/run}:\textbf{/run}: montar o diretório \textbf{/run} do host no diretório \textbf{/run} dentro do \textit{container}. Isso permite que os processos dentro do
+        \textit{container} falem com o serviço \textbf{dbus} do \textit{host} e falem diretamente com o serviço \textbf{systemd};
+
+  \item[$-$] \textbf{/var/log}:\textbf{/var/log}: permitir que comandos sejam executados dentro do \textit{container} para ler e gravar arquivos de log no diretório
+        \textbf{/var/log} do \textit{host};
+
+  \item[$-$] \textbf{/etc/localtime}:\textbf{/etc/localtime}: fazer com que o fuso horário do sistema \textit{host} seja usado
+        tambem no \textit{container};
+
+  \item[$-$] \textbf{/}:\textbf{/host}: montar a raiz da árvore de diretórios do \textit{host} (mais conhecida como \textbf{/}) no  ponto
+        de montagem \textbf{/host} para permitir que processos dentro do \textit{container} consigam modificar facilmente o conteúdo no \textit{host};
+
+  \item[$-$] \textbf{/etc/dconf/profile/}:\textbf{/etc/dconf/profile/}: vincular o sistema de armazenamento de preferências do usuário ao mesmo do \textit{host};
+
+  \item[$-$] \textbf{/tmp/runtime-root/}:\textbf{/tmp/runtime-root/}: montar e vincular o diretório base relativo aos arquivos de
+        tempo de execução específicos do usuário e outros objetos de arquivo devem ser colocados ;
+
+  \item[$-$] \textbf{/tmp/.X11-unix/}:\textbf{/tmp/.X11-unix/}: montar um volume para o \textit{unix socket} X11 (servidor gráfico);
+
+  \item[$-$] \textbf{/dev/usb}:\textbf{/dev/usb}: vincular o volume que possibilita a utilização de recursos da porta USB do \textit{host};
+
+  \item[$-$] \textbf{/dev/snd}:\textbf{/dev/snd}: vincular o volume que possibilita a utilização de recursos de áudio do \textit{host};
+
+  \item[$-$] \textbf{/home/jefferson/gnuradio}:\textbf{/home/jefferson/gnuradio}: montar um diretório que será utilizado no desenvolvimento
+        deste trabalho e que poderá ser acessado tanto pelo \textit{host} como pelo \textit{container}.
 \end{itemize}
 
 Resumindo, foi utilizada uma linha de comando para criar um \textit{container}, o qual foi nomeado \textbf{gnuradio}, a partir de uma imagem base (Ubuntu) com
 privilégios para acessar recursos da máquina (o \textit{host}), onde mais precisamente será possível utilizar os recursos de áudio, da porta USB e da
 interface visual com uma vinculação de volumes montados no \textit{container} a partir da máquina \textit{host}.
+
+Algo importante a se notar na Fig. \ref{fig:docker-run-gnuradio} é que depois da criação do \textit{container} o terminal “mudou” do usuário \textbf{jefferson} para \textbf{root}
+e manteve o \textit{hostname}. Isso ocorre porque a partir desse momento o que aparece na tela é o terminal visto de "dentro"
+do \textbf{container}, ou seja com o usuário \textbf{root} em um \textit{container} que está enxerga o mesmo \textit{namespace} \textbf{net} que o \textbf{host}.
+
+Em um outro terminal é possível obter mais informações como, por exemplo, quais \textit{container}'s estão sendo executados no momento ou inspecionar algum
+\textit{container} específico em busca de maiores detalhes, como é mostrado na Fig. \ref{fig:docker-inspect}.
 
 \begin{figure}[!htb]
   \centering
@@ -774,16 +838,10 @@ interface visual com uma vinculação de volumes montados no \textit{container} 
   \label{fig:docker-inspect}
 \end{figure}
 
-Algo importante a se notar na Fig. \ref{fig:docker-run-gnuradio} é que depois da criação do \textit{container} o terminal “mudou” do usuário \textbf{jefferson} para \textbf{root} e do
-\textit{hostname} \textbf{jefferson} para \textbf{142104d3a3fb}. Isso ocorre porque a partir desse momento o que aparece na tela é o terminal visto de "dentro"
-do \textbf{container}, ou seja com o usuário \textbf{root} do \textit{container} de \textit{hostname} \textbf{142104d3a3fb}.
-
-Em um outro terminal é possível obter mais informações como, por exemplo, quais \textit{container}'s estão sendo executados no momento ou inspecionar algum
-\textit{container} específico em busca de maiores detalhes, como é mostrado na Fig. \ref{fig:docker-inspect}.
-
+\newpage
 \section*{Instalação do GNURadio}
 
-Até o momento apenas foi feito o provisionamento de um \textit{container} docker executando uma imagem Ubuntu e então o GNURadio será instalado utilizando
+Até o momento apenas foi feito o provisionamento de um \textit{container} \textit{Docker} executando uma imagem Ubuntu e então o GNURadio será instalado utilizando
 o gerenciador de pacotes \textbf{apt} disponível na distribuição Ubuntu deste \textit{container}. É recomendável atualizar a lista dos repositórios e verificar
 as depedências para esta instalação bastando executar os seguintes comandos no terminal do \textit{container} criado:
 
@@ -793,8 +851,8 @@ as depedências para esta instalação bastando executar os seguintes comandos n
   $ apt-get install gnuradio
 \end{lstlisting}
 
-A partir desse ponto, o GNURadio estará instalado no \textit{container} docker e é possível verificar a versão, o local de instalação e os
-componentes já habilitados através dos seguintes comandos que foram exemplifiados na Fig. \ref{fig:gnuradio-config-info}:
+A partir desse ponto, o GNURadio estará instalado no \textit{container} \textit{Docker} e é possível verificar a versão, o local de instalação e os
+componentes já habilitados através dos seguintes comandos que foram exemplificados na Fig. \ref{fig:gnuradio-config-info}:
 
 \begin{lstlisting}[language=bash]
   $ gnuradio-config-info --version
@@ -821,14 +879,18 @@ através do comando \textbf{gnuradio-companion} (GRC).
   \label{fig:gnuradio-companion}
 \end{figure}
 
-\newpage
 \section*{Criação da imagem \textit{Docker}}
 
 CRIAR A IMAGEM DOCKER
 
 DAR UMA TAG PARA A IMAGEM DOCKER
 
-ENVIAR A IMAGEM DOCKER PARA O REGISTRY NA DOCKER HUB
+ENVIAR A IMAGEM \textit{Docker} PARA O REGISTRY NA \textit{Docker} HUB
+
+% ----------------------------------------------------------
+% Parte de desenvolvimento
+% ----------------------------------------------------------
+\part{Desenvolvimento}
 
 % ----------------------------------------------------------
 % Parte de resultados
