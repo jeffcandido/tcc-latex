@@ -543,11 +543,11 @@ Lauro César Araujo
 O conceito e as boas práticas relacionadas ao desenvolvimento de \textit{software} evoluiu bastante desde os primórdios da computação e algo que sempre esteve
 em pauta é o problema de incompatibilidade de ambientes de desenvolvimento, o que acabou dando origem ao jargão: “na minha máquina funciona”.
 Configurar o ambiente de desenvolvimento e depois ter incompatibilidade de versão de alguma biblioteca ou então não ter a facilidade de replicar o ambiente
-que foi utilizado durante o desenvolvimento é um grande problema enfrentado por engenheiros e/ou programadores, principalmente em início de carreira.
+que foi utilizado durante o desenvolvimento é um grande problema enfrentado por engenheiros e/ou programadores, principalmente os que estão em início de carreira.
 Nesta parte deste trabalho será demonstrada a criação de um ambiente para desenvolvimento de aplicações de rádio definido por \textit{software} utilizando
 o \textbf{GNURadio} instalado em um \textit{container} \textbf{Docker}.
 Os conceitos de \textit{container}'s e do \textit{Docker} com certeza já são amplamente abordados na atualidade e então, apenas alguns pontos relacionados ao tema
-serão tratados.
+serão tratados aqui.
 
 \section*{GNURadio}
 
@@ -694,8 +694,9 @@ o terminal responderá com uma saída semelhante ao que é mostrado na Fig. \ref
 
 \begin{figure}[!htb]
   \centering
-  \caption{Teste de verificação de instalação do \textit{Docker Engine} }
+  \caption{Teste de verificação de instalação do \textit{Docker Engine}.}
   \includegraphics[width = \linewidth]{figures/docker-hello-world.png}
+  Fonte: Elaborada pelo autor.
   \label{fig:docker-hello-world}
 \end{figure}
 
@@ -707,7 +708,7 @@ na seção de \href{https://docs.docker.com/engine/install/linux-postinstall/}{p
 \section*{Criação do container}
 
 Com o \textit{Docker} instalado, para inciar o procedimento de criação do \textit{container} do ambiente de desenvolvimento é preciso executar o comando \textbf{xhost +}
-para fornecer acesso a aplicações “externas” ao \textit{host} ao seu servidor gráfico (também conhecido como sessão \textbf{X} ou a tela do computador),
+para fornecer acesso ao servidor gráfico do \textit{host} a aplicações “externas” ao \textit{host} (também conhecido como sessão \textbf{X} ou a tela do computador),
 afinal um dos objetivos é utilizar a interface gráfica do \textit{GNURadio Companion} que estará instalado dentro do \textit{container}.
 
 Agora, executando o seguinte comando será criado um \textit{container} a partir de uma imagem base da distribuição \textit{Ubuntu}. A Fig.
@@ -741,8 +742,9 @@ $  docker run -i -t --privileged \
 
 \begin{figure}[!htb]
   \centering
-  \caption{Criação do \textit{container} de desenvolvimento a partir de uma imagem Ubuntu}
+  \caption{Criação do \textit{container} de desenvolvimento a partir de uma imagem Ubuntu.}
   \includegraphics[width = \linewidth]{figures/docker-run-gnuradio.png}
+  Fonte: Elaborada pelo autor.
   \label{fig:docker-run-gnuradio}
 \end{figure}
 
@@ -833,8 +835,9 @@ Em um outro terminal é possível obter mais informações como, por exemplo, qu
 
 \begin{figure}[!htb]
   \centering
-  \caption{Detalhamento de informações sobre \textit{container}’s \textit{Docker}}
+  \caption{Detalhamento de informações sobre \textit{container}’s \textit{Docker}.}
   \includegraphics[width = \linewidth]{figures/docker-inspect.png}
+  Fonte: Elaborada pelo autor.
   \label{fig:docker-inspect}
 \end{figure}
 
@@ -862,8 +865,9 @@ componentes já habilitados através dos seguintes comandos que foram exemplific
 
 \begin{figure}[!htb]
   \centering
-  \caption{Conferência de versão, \textit{path} e componentes habilitados do GNURadio}
+  \caption{Conferência de versão, \textit{path} e componentes habilitados do GNURadio.}
   \includegraphics[width = \linewidth]{figures/gnuradio-config-info.png}
+  Fonte: Elaborada pelo autor.
   \label{fig:gnuradio-config-info}
 \end{figure}
 
@@ -874,18 +878,65 @@ através do comando \textbf{gnuradio-companion} (GRC).
 
 \begin{figure}[!htb]
   \centering
-  \caption{GUI do GNURadio Companion}
+  \caption{\textit{GUI} do GNURadio Companion.}
   \includegraphics[width = \linewidth]{figures/gnuradio-companion.png}
+  Fonte: Elaborada pelo autor.
   \label{fig:gnuradio-companion}
 \end{figure}
 
 \section*{Criação da imagem \textit{Docker}}
 
-CRIAR A IMAGEM DOCKER
+O \textit{container} criado na seção anterior pode ser disponibilizado para outros desenvolvedores por meio da criação de uma imagem
+base. A imagem base deve receber uma \textit{tag}, que normalmente está ligada à sua versão e por fim esta imagem pode ser
+"empurrada" para um repositório de imagens \textit{Docker}. Neste caso foi utilizado o \textit{DockerHub} que é um repositório
+de imagens \textit{Docker} hospedado e fornecido pela própria empresa \textit{Docker} Inc. Qualquer empresa pode hospedar, manter
+e disponibilizar um repositório de imagens \textit{Docker} por meio da implantação de um \textit{Docker Registry} próprio.
 
-DAR UMA TAG PARA A IMAGEM DOCKER
+Na Fig. \ref{fig:docker-gnuradio_base_image}, ao executar o comando \textbf{docker images} apenas a imagem \textbf{ubuntu}
+foi listada, pois ainda não foi criada uma imagem do container \textbf{gnuradio}, o qual pode ser conferido com o comando
+\textbf{docker ps -a}. Utilizando o commando \textbf{docker commit} referenciando para o container \textbf{gnuradio}, uma imagem
+\textit{Docker} é criada localmente, onde as \textit{flags} utilizadas, \textbf{-a} e \textbf{-m} são uma descrição
+sobre o autor e uma breve mensagem sobre a imagem que será criada, respectivamente.
 
-ENVIAR A IMAGEM \textit{Docker} PARA O REGISTRY NA \textit{Docker} HUB
+\begin{figure}[!htb]
+  \centering
+  \caption{Fazendo o \textit{commit} da imagem base GNURadio}
+  \includegraphics[width = \linewidth]{figures/docker-gnuradio_base_image.png}
+  Fonte: Elaborada pelo autor.
+  \label{fig:docker-gnuradio_base_image}
+\end{figure}
+
+Após o \textit{commit} da imagem, ao executar o comando \textbf{docker images} novamente, observa-se que a imagem foi criada com
+um \textbf{IMAGE ID} igual a \textbf{1c66799cf780} faltando apenas que seja associada a um repositório e que tenha uma \textit{tag} de versionamento.
+Como exemplo foi criada a \textit{tag} para a imagem e associada a um repositório público através do comando \textbf{docker tag 1c66799cf780 jeffcandido/gnuradio}.
+Ao executar \textbf{docker images} novamente, a imagem do \textit{container} contendo a instalação do GNURadio na versão 3.8.1.0
+está pronta para ser levada ao repositório de imagens \textit{Docker} para que possa ser acessada por outros desenvolvedores. Para
+fazer esse procedimento, foi necessário criar uma conta (gratuita) no \textit{DockerHub} e fazer o login via linha de comando e por fim
+executar o \textit{push} da imagem para levá-la até o repositório remoto, como é demonstrado nos passos executados na Fig. \ref{fig:docker-push_image}.
+
+\begin{figure}[!htb]
+  \centering
+  \caption{Submetendo a imagem base ao repositório remoto.}
+  \includegraphics[width = \linewidth]{figures/docker-push_image.png}
+  Fonte: Elaborada pelo autor.
+  \label{fig:docker-push_image}
+\end{figure}
+
+A imagem que foi criada e submetida ao repositório remoto agora pode ser visualizada pela interface \textit{web} do \textit{DockerHub} e qualquer usuário
+conectado à \textit{Internet} poderá buscar e utilizar essa imagem.
+
+\begin{figure}[!htb]
+  \centering
+  \caption{Interface \textit{web} do \textit{DockerHub} com a imagem criada.}
+  \includegraphics[width = \linewidth]{figures/dockerhub-general.png}
+  Fonte: Elaborada pelo autor.
+  \label{fig:dockerhub-general}
+\end{figure}
+
+Algumas otimizações poderiam ser feitas com relação ao processo de criação do \textit{container} e geração de imagem \textit{Docker}, como por exemplo a criação
+de arquivos para composição do \textit{container} (\textit{Dockerfile}, \textit{docker-compose.yaml} e \textit{.dockerignore}), porém isto
+não adicionaria vigor e relevância ao propósito deste trabalho de forma que tais otimizações podem ser realizadas em trabalhos futuros nessa mesma
+área de estudo.
 
 % ----------------------------------------------------------
 % Parte de desenvolvimento
