@@ -1,0 +1,1158 @@
+%% abtex2-modelo-relatorio-tecnico.tex, v-1.9.7 laurocesar
+%% Copyright 2012-2018 by abnTeX2 group at http://www.abntex.net.br/ 
+%%
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either version 1.3
+%% of this license or (at your option) any later version.
+%% The latest version of this license is in
+%%   http://www.latex-project.org/lppl.txt
+%% and version 1.3 or later is part of all distributions of LaTeX
+%% version 2005/12/01 or later.
+%%
+%% This work has the LPPL maintenance status `maintained'.
+%% 
+%% The Current Maintainer of this work is the abnTeX2 team, led
+%% by Lauro César Araujo. Further information are available on 
+%% http://www.abntex.net.br/
+%%
+%% This work consists of the files abntex2-modelo-relatorio-tecnico.tex,
+%% abntex2-modelo-include-comandos and abntex2-modelo-references.bib
+%%
+
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+% abnTeX2: Modelo de Relatório Técnico/Acadêmico em conformidade com 
+% ABNT NBR 10719:2015 Informação e documentação - Relatório técnico e/ou
+% científico - Apresentação
+% ------------------------------------------------------------------------ 
+% ------------------------------------------------------------------------
+
+\documentclass[
+  % -- opções da classe memoir --
+  12pt,				% tamanho da fonte
+  openright,			% capítulos começam em pág ímpar (insere página vazia caso preciso)
+  twoside,			% para impressão em recto e verso. Oposto a oneside
+  a4paper,			% tamanho do papel. 
+  % -- opções da classe abntex2 --
+  %chapter=TITLE,		% títulos de capítulos convertidos em letras maiúsculas
+  %section=TITLE,		% títulos de seções convertidos em letras maiúsculas
+  %subsection=TITLE,	% títulos de subseções convertidos em letras maiúsculas
+  %subsubsection=TITLE,% títulos de subsubseções convertidos em letras maiúsculas
+  % -- opções do pacote babel --
+  english,			% idioma adicional para hifenização
+  french,				% idioma adicional para hifenização
+  spanish,			% idioma adicional para hifenização
+  brazil,				% o último idioma é o principal do documento
+  ]{abntex2}
+
+
+% ---
+% PACOTES
+% ---
+% ---- packs adicionais
+\usepackage{lastpage}
+\usepackage{xcolor}
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily,
+  showstringspaces=false,
+  commentstyle=\color{red},
+  keywordstyle=\color{blue}
+}
+\usepackage{hyperref}
+
+
+% ---
+% Pacotes fundamentais 
+% ---
+\usepackage{lmodern}			% Usa a fonte Latin Modern
+\usepackage[T1]{fontenc}		% Selecao de codigos de fonte.
+\usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
+\usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
+\usepackage{color}				% Controle das cores
+\usepackage{graphicx}			% Inclusão de gráficos
+\usepackage{microtype} 			% para melhorias de justificação
+% ---
+
+% ---
+% Pacotes adicionais, usados no anexo do modelo de folha de identificação
+% ---
+\usepackage{multicol}
+\usepackage{multirow}
+% ---
+  
+% ---
+% Pacotes adicionais, usados apenas no âmbito do Modelo Canônico do abnteX2
+% ---
+\usepackage{lipsum}				% para geração de dummy text
+% ---
+
+% ---
+% Pacotes de citações
+% ---
+\usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
+\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+
+%% PACOTES QUE EU ADICIONEI
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+% --- 
+% CONFIGURAÇÕES DE PACOTES
+% --- 
+
+% ---
+% Configurações do pacote backref
+% Usado sem a opção hyperpageref de backref
+\renewcommand{\backrefpagesname}{Citado na(s) página(s):~}
+% Texto padrão antes do número das páginas
+\renewcommand{\backref}{}
+% Define os textos da citação
+\renewcommand*{\backrefalt}[4]{
+  \ifcase #1 %
+    Nenhuma citação no texto.%
+  \or
+    Citado na página #2.%
+  \else
+    Citado #1 vezes nas páginas #2.%
+  \fi}%
+% ---
+
+% ---
+% Informações de dados para CAPA e FOLHA DE ROSTO
+% ---
+\titulo{Implementações práticas de DSP e RF com GNURadio e HackRF}
+\autor{Jefferson da Silva Cândido}
+\local{Uberlândia, Minas Gerais}
+\data{\the\year}
+\instituicao{%
+  Universidade Federal de Uberlândia -- UFU
+  \par
+  Faculdade de Engenharia Elétrica
+  \par
+  Graduação em Engenharia Eletrônica e de Telecomunicações}
+\tipotrabalho{Trabalho de Conclusão de Curso}
+% O preambulo deve conter o tipo do trabalho, o objetivo, 
+% o nome da instituição e a área de concentração 
+\orientador{Dr. Antônio Cláudio Paschoarelli Veiga}
+
+\preambulo{Trabalho apresentado na Universidade Federal de Uberlândia como requisito para conclusão do curso de graduação em Engenharia Eletrônica e de Telecomunicações.}
+% ---
+
+% ---
+% Configurações de aparência do PDF final
+
+% alterando o aspecto da cor azul
+\definecolor{blue}{RGB}{41,5,195}
+
+% informações do PDF
+\makeatletter
+\hypersetup{
+      %pagebackref=true,
+    pdftitle={\@title}, 
+    pdfauthor={\@author},
+      pdfsubject={\imprimirpreambulo},
+      pdfcreator={LaTeX with abnTeX2},
+    pdfkeywords={abnt}{latex}{abntex}{abntex2}{relatório técnico}, 
+    colorlinks=true,       		% false: boxed links; true: colored links
+      linkcolor=blue,          	% color of internal links
+      citecolor=blue,        		% color of links to bibliography
+      filecolor=magenta,      		% color of file links
+    urlcolor=blue,
+    bookmarksdepth=4
+}
+\makeatother
+% --- 
+
+% --- 
+% Espaçamentos entre linhas e parágrafos 
+% --- 
+
+% O tamanho do parágrafo é dado por:
+\setlength{\parindent}{1.3cm}
+
+% Controle do espaçamento entre um parágrafo e outro:
+\setlength{\parskip}{0.2cm}  % tente também \onelineskip
+
+% ---
+% compila o indice
+% ---
+\makeindex
+% ---
+
+% ----
+% Início do documento
+% ----
+\begin{document}
+
+% Seleciona o idioma do documento (conforme pacotes do babel)
+%\selectlanguage{english}
+\selectlanguage{brazil}
+
+% Retira espaço extra obsoleto entre as frases.
+\frenchspacing
+
+% ----------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS
+% ----------------------------------------------------------
+\pretextual
+
+% ---
+% Capa
+% ---
+\imprimircapa
+% ---
+
+% ---
+% Folha de rosto
+% (o * indica que haverá a ficha bibliográfica)
+% ---
+\imprimirfolhaderosto
+% ---
+
+% ---
+% Anverso da folha de rosto:
+% ---
+
+% \begin{fichacatalografica}
+%   \vspace*{15cm} % Posição vertical
+%   \hrule % Linha horizontal
+%   \begin{center} % Minipage Centralizado
+%     \begin{minipage}[c]{12.5cm} % Largura
+%       \imprimirautor
+%       \hspace{0.5cm} \imprimirtitulo / \imprimirautor. --
+%       \imprimirlocal, \imprimirdata-
+%       \hspace{0.5cm} \pageref{LastPage} p. : il.(alguma color.); 30 cm.\\
+%       \hspace{0.5cm} \imprimirorientadorRotulo \imprimirorientador\\
+%       \hspace{0.5cm}
+%       \parbox[t]{\textwidth}{\imprimirtipotrabalho~--~\imprimirinstituicao,
+%         \imprimirdata.}\\
+%       \hspace{0.5cm}
+%       1. LoRaWAN.
+%       2. LoRa Server.
+%       I. Orientador.
+%       II. Universidade xxx.
+%       III. Faculdade de xxx.
+%       IV. Título\\
+%       \hspace{8.75cm} CDU 02:141:005.7\\
+%     \end{minipage}
+%   \end{center}
+%   \hrule
+% \end{fichacatalografica}
+
+\begin{folhadeaprovacao}
+
+  \begin{center}
+
+    {\ABNTEXchapterfont\large\textsc{\imprimirautor}}
+
+    {\ABNTEXchapterfont\Large\bfseries\imprimirtitulo}
+
+  \end{center}
+
+  \vspace{1cm}
+
+  \hspace{.45\textwidth} \begin{minipage}{.45\textwidth}
+
+    \imprimirpreambulo
+
+  \end{minipage}
+
+  \vspace{1cm}
+
+  Trabalho aprovado. Uberlândia, \today
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  %Assinaturas
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \assinatura{\textbf{\imprimirorientador} \\ Orientador}
+  \assinatura{\textbf{Dr. Gilberto Arantes Carrijo} \\ Convidado 1}
+  \assinatura{\textbf{Dr. Alan Petrônio Pinheiro} \\ Convidado 2}
+  \assinatura{\textbf{Dr. Éderson Rosa da Silva} \\ Convidado 3}
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{center}
+    \vfill
+    {\large\imprimirlocal}
+    \par
+    {\large\imprimirdata}
+
+  \end{center}
+\end{folhadeaprovacao}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Fim da folha de aprovação
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Início da dedicatória - Elemento opcional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{dedicatoria}
+  \vspace*{\fill}
+  Este trabalho é dedicado à minha mãe, Maria Aparecida da Silva, que sempre me foi exemplo de obstinação, diligência e honradez.
+  \vspace*{\fill}
+
+\end{dedicatoria}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Fim da dedicatória
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+% ---
+% Agradecimentos
+% ---
+\begin{agradecimentos}
+  Agradeço primeiramente a minha família por ter apoiado e viabilizado todo esse processo de
+  aprendizado.
+
+  Sou grato pela liberdade e confiança dispensada pelo meu orientador, professor Dr. Antônio
+  Cláudio Paschoarelli Veiga.
+
+  Aos professores que contribuíram para o cumprimento dessa jornada.
+
+  À Universidade Federal de Uberlândia por cumprir veementemente com o seu papel de formação de
+  cidadãos.
+
+  Aos colegas do laboratório de Redes de Computadores e Telecomunicações, William, Daniel e Caio
+  por todo apoio e amizade.
+
+  Agradeço também a todas as entidades que estiveram presentes durante minha formação, com destaques
+  para o Diretório Acadêmico da Faculdade de Engenharia Elétrica e ao Laboratório de Automação,
+  Sistemas Eletrônicos e Controle (LASEC), que muito auxiliaram no meu desenvolvimento profissional
+  e de liderança.
+
+\end{agradecimentos}
+% ---
+
+%%%%%%%%%%%%%%%%%%%%%%% 
+% Início da epígrafe - opcional 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\begin{epigrafe}
+  \vspace*{\fill}
+  \begin{flushright}
+    \textit{``Messages and the corresponding signals are points in two "function spaces", and the
+      modulation process is a mapping of one space into other.''\\ (Claude E. Shannon)}
+  \end{flushright}
+\end{epigrafe}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Fim da epígrafe - opcional 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% ---
+% RESUMO
+% ---
+
+% resumo na língua vernácula (obrigatório)
+\setlength{\absparsep}{18pt} % ajusta o espaçamento dos parágrafos do resumo
+\begin{resumo}
+  % Segundo a \citeonline[3.1-3.2]{NBR6028:2003}, o resumo deve ressaltar o
+  objetivo, o método, os resultados e as conclusões do documento. A ordem e a extensão
+  destes itens dependem do tipo de resumo (informativo ou indicativo) e do
+  tratamento que cada item recebe no documento original. O resumo deve ser
+  precedido da referência do documento, com exceção do resumo inserido no
+  próprio documento. (\ldots) As palavras-chave devem figurar logo abaixo do
+  resumo, antecedidas da expressão Palavras-chave:, separadas entre si por
+  ponto e finalizadas também por ponto.
+
+  \noindent
+  \textbf{Palavras-chaves}: latex. abntex. editoração de texto.
+\end{resumo}
+% ---
+
+% ---
+% inserir lista de ilustrações
+% ---
+\pdfbookmark[0]{\listfigurename}{lof}
+\listoffigures*
+\cleardoublepage
+% ---
+
+% ---
+% inserir lista de tabelas
+% ---
+\pdfbookmark[0]{\listtablename}{lot}
+\listoftables*
+\cleardoublepage
+% ---
+
+% ---
+% inserir lista de abreviaturas e siglas
+% ---
+\begin{siglas}
+
+
+  \item[ARM]  \textit{Advanced RISC}
+  \item[CLI]  \textit{Command Line Interface}
+  \item[DSP]  \textit{Digital Signal Processing}
+  \item[FSF]  \textit{Free Software Foundation}
+  \item[GNU]  \textit{GNU's Not Unix}
+  \item[GPG]  \textit{GNU Privacy Guard}
+  \item[GPLv3]  \textit{General Public License version 3}
+  \item[GRC]  \textit{GNURadio Companion}
+  \item[GUI]  \textit{Graphical User Interface}
+  \item[SDR]  \textit{Software-defined Radio}
+  \item[STDIN]  \textit{Standard Input}
+  \item[SDK]  \textit{Software Development Kit}
+  \item[SELinux]  \textit{Security-Enhanced Linux}
+  \item[SPC]  \textit{Super Privileged Container}
+  \item[TTY]  \textit{TeleTYpewriter}
+
+  \item[ABP]  \textit{Activation-ByPersonalisation}
+  \item[ADR] \textit{Adaptive Data Rate}
+  \item[AM] \textit{Amplitude Modulation}
+  \item[API] \textit{Application Programming Interface}
+  \item[ASK] \textit{Amplitude-shift keying}
+  \item[BW] \textit{Bandwidth}
+  \item[CR] \textit{Coding Rate}
+  \item[CRC] \textit{Cyclic Redundancy Check}
+  \item[CSS] \textit{Chirp Spread Spectrum}
+  \item[DAC] \textit{Digital-to-Analog Converter}
+  \item[DR] \textit{Data Rate}
+  \item[EIRP] \textit{Effective Isotropic Radiated Power}
+  \item[ERP] \textit{Effective Radiated Power}
+  \item[ETSI] \textit{European Telecommunications Standards Institute}
+  \item[FCC] \textit{Federal Communications Commission}
+  \item[FEC] \textit{Forward Error Correction}
+  \item[FM] \textit{Frequency Modulation}
+  \item[FPGA] \textit{Field Programmable Gate Array}
+  \item[FSK] \textit{Frequency Shift Keying}
+  \item[GNSS] \textit{Global Navigation Satellite System}
+  \item[GPS] \textit{Global Positioning System}
+  \item[gRPC] \textit{Google Remote Procedure Call}
+  \item[HAL] \textit{Hardware Abstraction Layer}
+  \item[IoT] \textit{Internet of Things}
+  \item[ISM band] \textit{Industrial, Scientific and Medical band}
+  \item[JSON] \textit{JavaScript Object Notation}
+  \item[KCC] \textit{Korea Communications Commission}
+  \item[LBT] \textit{Listen-Before-Talk}
+  \item[LMIC] \textit{LoraMAC-in-C}
+  \item[LO] \textit{Local Oscillator}
+  \item[LoRa] \textit{Long Range}
+  \item[LoRaWAN] \textit{Long Range Wide Area Network}
+  \item[LPF] \textit{Low-Pass Filter}
+  \item[LPWA] \textit{Low Power, Wide Area}
+  \item[MAC] \textit{Media Access Control}
+  \item[MCU] \textit{Microcontroller Unit}
+  \item[MIC] \textit{Message Integrity Code}
+  \item[MQTT] \textit{Message Queuing Telemetry Transport}
+  \item[M2M] \textit{Machine-to-Machine}
+  \item[NB-IoT] \textit{Narrowband Internet of Things}
+  \item[OTAA] \textit{Over-The-Air-Activation}
+  \item[PM] \textit{Phase Modulation}
+  \item[PSK] \textit{Phase-shift keying}
+  \item[REST] \textit{Representational State Transfer}
+  \item[RF] \textit{Radiofrequency}
+  \item[RSSI] \textit{Received Signal Strength Indicator}
+  \item[SF] \textit{Spreading Factor}
+  \item[SI] Sistema Internacional
+  \item[SNR] \textit{Signal-to-Noise Ratio}
+  \item[SPI] \textit{Serial Peripheral Interface}
+  \item[TELEC] \textit{Telecom Engineering Center}
+  \item[ToA] \textit{Time on Air}
+  \item[TTN] \textit{The Things Network}
+  \item[UDP] \textit{User Datagram Protocol}
+
+\end{siglas}
+% ---
+
+% ---
+% inserir lista de símbolos
+% ---
+\begin{simbolos}
+  \item[$ Rb $] Taxa de bits
+  \item[$ Rs $] Taxa de símbolos
+  \item[$ dB $] Decibel
+  \item[$ P $] Potência
+\end{simbolos}
+% ---
+
+% ---
+% inserir o sumario
+% ---
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\cleardoublepage
+% ---
+
+
+% ----------------------------------------------------------
+% ELEMENTOS TEXTUAIS
+% ----------------------------------------------------------
+\textual
+
+% ----------------------------------------------------------
+% Introdução (exemplo de capítulo sem numeração, mas presente no Sumário)
+% ----------------------------------------------------------
+\chapter*[Introdução]{Introdução}
+\addcontentsline{toc}{chapter}{Introdução}
+
+----------- USAR ESSE EXEMPLO E FALAR DE GNURADIO, DESENVOLVIMENTO DE SOFTWARE, BOAS PRÁTICAS, ENGENHARIA DE SOFTWARE, CONTAINERS, LINGUAGENS DE PROGRAMAÇÃO, C++, PYTHON
+----------- \textit{Docker}, RÁDIO DEFINIDO POR SOFTWARE, SOFTWARE-DEFINED RADIO, HACKRF, MICHAEL OSSMAN, LIMESDR, ANALOG DEVICES, SIMULINK, GNURADIO-COMPANION
+
+A Internet das Coisas (IoT - Internet of Things) é uma rede de dispositivos físicos do cotidiano que podem se comunicar, levando em consideração que o seu foco é a interconexão entre dispositivos (conceito M2M) e, não apenas, dispositivos a seres humanos. A previsão é que mais de 25 bilhões de dispositivos estarão conectados à Internet até 2020 \cite[p. 1]{sanchez2017transmission}.
+
+However, the solutions deployed for human’s cellular communication (e.g., Global System for Mobile communications (GSM), General Packet Radio Service (GPRS), or Long Term Evolution (LTE)) present important drawbacks that make them unsuitable to be directly used by constrained IoT devices. These technologies were designed for applications with
+different requirements that those needed by IoT systems. Thus, a telephony cell is designed for providing broadband services to a limited number of users; meanwhile, an IoT cell will \textit{host} a massive number of devices generating sporadic transmissions of
+short packets. This potentially huge population of devices gaining connectivity through a single base station raises new challenges related to signaling and traffic control [4] pegar referencia no \cite[p. 1]{sanchez2017transmission}.
+
+\cite[p. 1]{AN1200.13}. lORA MODEM
+
+
+Este documento e seu código-fonte são exemplos de referência de uso da classe
+\textsf{abntex2} e do pacote \textsf{abntex2cite}. O documento
+exemplifica a elaboração de relatórios técnicos e/ou científicos produzidos
+conforme a ABNT NBR 10719:2015 \emph{Informação e documentação - Relatório
+  técnico e/ou científico - Apresentação}.
+
+A expressão ``Modelo canônico'' é utilizada para indicar que \abnTeX\ não é
+modelo específico de nenhuma universidade ou instituição, mas que implementa tão
+somente os requisitos das normas da ABNT. Uma lista completa das normas
+% observadas pelo \abnTeX\ é apresentada em \citeonline{abntex2classe}.
+
+Sinta-se convidado a participar do projeto \abnTeX! Acesse o site do projeto em
+\url{http://www.abntex.net.br/}. Também fique livre para conhecer,
+estudar, alterar e redistribuir o trabalho do \abnTeX, desde que os arquivos
+modificados tenham seus nomes alterados e que os créditos sejam dados aos
+autores originais, nos termos da ``The \LaTeX\ Project Public
+License''\footnote{\url{http://www.latex-project.org/lppl.txt}}.
+
+Encorajamos que sejam realizadas customizações específicas deste exemplo para
+universidades e outras instituições --- como capas, folhas de rosto, etc.
+Porém, recomendamos que ao invés de se alterar diretamente os arquivos do
+\abnTeX, distribua-se arquivos com as respectivas customizações.
+Isso permite que futuras versões do \abnTeX~não se tornem automaticamente
+incompatíveis com as customizações promovidas. Consulte
+% \citeonline{abntex2-wiki-como-customizar} para mais informações.
+
+Este documento deve ser utilizado como complemento dos manuais do \abnTeX\
+% \cite{abntex2classe,abntex2cite,abntex2cite-alf} e da classe \textsf{memoir}
+% \cite{memoir}.
+
+Equipe \abnTeX
+
+Lauro César Araujo
+
+
+% ----------------------------------------------------------
+% PARTE - preparação do ambiente de desenvolvimento
+% ----------------------------------------------------------
+\part{Preparações}
+
+\chapter{Software}
+
+O conceito e as boas práticas relacionadas ao desenvolvimento de \textit{software} evoluiu bastante desde os primórdios da computação e algo que sempre esteve
+em pauta é o problema de incompatibilidade de ambientes de desenvolvimento, o que acabou dando origem ao jargão: “na minha máquina funciona”.
+Configurar o ambiente de desenvolvimento e depois ter incompatibilidade de versão de alguma biblioteca ou então não ter a facilidade de replicar o ambiente
+que foi utilizado durante o desenvolvimento é um grande problema enfrentado por engenheiros e/ou programadores, principalmente os que estão em início de carreira.
+Nesta parte deste trabalho será demonstrada a criação de um ambiente para desenvolvimento de aplicações de rádio definido por \textit{software} utilizando
+o \textbf{GNURadio} instalado em um \textit{container} \textbf{Docker}.
+Os conceitos de \textit{container}'s e do \textit{Docker} com certeza já são amplamente abordados na atualidade e então, apenas alguns pontos relacionados ao tema
+serão tratados aqui.
+
+\section*{GNURadio}
+
+O GNURadio é um SDK (\textit{software development kit}) de um projeto \textit{OpenSource} criado com o intuito de auxiliar no desenvolvimento de aplicações de
+rádio definido por \textit{software} inicialmente publicado no ano de 2001 como um pacote oficial GNU.
+O GNURadio pode ser utilizado tanto por \textit{hobbystas}, como também em meio acadêmico ou para suprir necessidades do mercado no que tange comunicações sem
+fio ou qualquer tipo de sistema de rádio digital do mundo real.
+O GNURadio está sob uma licença pública geral — GNU GPLv3 — da \textit{Free Software Foundation} (FSF).
+
+Por ser um projeto de \textit{software} agnóstico ao hardware das plataformas de desenvolvimento (SDR — \textit{Software-defined Radio}), o GNURadio é idealizado
+para trabalhar apenas com dados digitalizados e a partir disso executar todo um processamento digital de sinais (DSP — \textit{Digital Signal Processing})
+definido por aplicações escritas para receber ou enviar dados de sistemas de \textit{streaming} digital programaticamente, utilizando a linguagem de programação
+Python — que é considerado mais fácil — ou C++ — para escrita de códigos de desempenho crítico — além de também ser possível através de uma interface gráfica de
+usuário (\textbf{GNURadio Companion} — GRC) por diagramas de blocos.
+
+\newpage
+\section*{Docker}
+
+O \textit{Docker} é uma unidade padrão de \textit{software} da empresa \textit{Docker} Inc., que fornece uma camada de abstração e automação em containers, ou seja, grupos isolados de
+processos do \textit{kernel} Linux sendo executados e compartilhando os recursos de um mesmo \textit{host}. Um bom entendimento sobre os \textit{namespaces} do  sistema operacional
+Linux (\textbf{mnt}, \textbf{pid}, \textbf{net}, \textbf{ipc}, \textbf{uts}, \textbf{user} e \textbf{cgroups}) pode ajudar na compreensão de quais soluções os
+containers podem oferecer.
+
+Um questionamento bastante pertinente que pode vir à tona neste momento é: Seria mesmo necessário utilizar \textit{container}'s para criação
+do ambiente de desenvolvimento, sendo que o próprio GNURadio já é distribuído oficialmente em pacotes compatíveis com os principais sistemas
+operacionais encontrados no mercado? Com o decorrer do próximo capítulo o porquê se tornará mais claro e por agora a ideia principal é de
+que quanto mais isolado possível for o ambiente de desenvolvimento, mais fácil será para testar hipóteses, criar diferentes soluções e tornar
+possível que elas sejam reproduzidas com facilidade independentemente da plataforma de hardware.
+
+Muitas ferramentas que podem ser úteis para engenheiros e desenvolvedores de software para gerenciar ou solucionar problemas podem não estar
+incluídas no sistema \textit{host} de suas máquinas por padrão e a melhor maneira de adicionar ferramentas a um \textit{host} seria
+incluindo-as em um \textit{container} possibilitando que o \textit{host} seja o mais enxuto possível.
+
+Os \textit{container}'s são projetados para manter suas próprias visualizações contidas de \textit{namespaces} e têm acesso limitado aos \textit{hosts} nos quais
+são executados. Por padrão, os \textit{container}'s têm uma tabela de processos, interfaces de rede, sistemas de arquivos e recursos IPC
+(\textit{Inter-Process Communication}) separados do \textit{host}.
+Muitos recursos de segurança, como por exemplo o SELinux (\textit{Security-Enhanced Linux}), são colocados em \textit{container}'s para controlar o acesso ao sistema \textit{host} e outros
+\textit{container}'s. Embora os \textit{container}'s possam usar recursos do \textit{host}, os comandos executados a partir de um \textit{container} têm uma capacidade muito
+limitada de interagir diretamente com o \textit{host}.
+
+Alguns \textit{container}'s, entretanto, têm como objetivo acessar, monitorar e, possivelmente, alterar recursos no sistema \textit{host}
+diretamente. Eles são chamados de \textit{container}'s super privilegiados (SPC - \textit{Super Privileged Container}). Um desenvolvedor
+pode \textit{subir} um SPC em um \textit{host}, solucionar um problema e removê-lo quando não for mais necessário para liberar recursos.
+
+No próximo capítulo é mostrado como utilizar dos \textit{container}'s super privilegiados para a criação do ambiente de
+desenvolvimento de aplicações de software e como os recursos de um sistema \textit{host} são acessados a partir desse SPC.
+
+\section*{Criação do ambiente de desenvolvimento}
+
+Primeiramente é necessário ter a CLI (\textit{command line interface}) do \textbf{docker engine} instalada (na máquina \textit{host}) e tal procedimento de
+instalação se torna extremamente simples bastando seguir o passo-a-passo fornecido pela \href{https://docs.docker.com/engine/install/}{documentação oficial}
+do \textit{Docker} \cite{Docker:2020}.
+Esta CLI está disponível para várias distribuições Linux na versão \textit{Server} e também para Windows e Mac na versão \textit{Desktop}. Neste trabalho será
+demonstrado o procedimento de instalação do \textbf{docker engine} em uma distribuição Linux, de forma que este procedimento é semelhante para demais distribuições
+e arquiteturas.
+
+\subsection*{Instalação do \textit{Docker Engine}}
+
+O \textit{Docker} fornece pacotes prontos (\textbf{.deb} e \textbf{.rpm}) para instalação dessa CLI em distribuições Linux como \textit{CentOS}, \textit{Debian},
+\textit{Fedora}, \textit{Raspbian}, \textit{Ubuntu} e derivadas (\textit{LMDE}, \textit{BunsenLabs Linux}, \textit{Kali Linux}, \textit{Kubuntu}, \textit{Lubuntu}
+e \textit{Xubuntu}, por exemplo) para arquiteturas \textbf{x86\_64}/\textbf{amd64}, \textbf{ARM} (\textit{Advanced RISC Machine}) e \textbf{ARM64}/\textbf{AARCH64}.
+Outra opção de instalação seria utilizando os binários pré-compilados que são fornecidos no site do \textit{Docker} e essa forma
+faz bastante sentido quando o sistema operacional utilizado não fizer parte de algum dentre todos os suportados
+pelo \textit{Docker}.
+
+Antes de iniciar o procedimento de instalação é necessário verificar se o sistema operacional do \textit{host} utilizado está instalado em uma versão de hardware
+de arquitetura 64-bit (\textbf{x86\_64} ou \textbf{amd64}, \textbf{armhf} e \textbf{arm64}/\textbf{aarch64}) e não possui instalações de versões antigas
+do \textit{software} (\textbf{docker}, \textbf{docker.io}, ou \textbf{docker-engine}) e, caso hajam, é necessário removê-las. No sistema
+operacional Ubuntu basta utilizar o gerenciador de pacotes \textbf{apt}/\textbf{apt-get} para fazê-lo, conforme é exemplificado a seguir:
+
+\begin{lstlisting}[language=bash]
+  $ sudo apt-get remove docker-engine \
+    docker docker.io containerd runc
+  \end{lstlisting}
+
+\subsubsection*{Instalação utilizando o repositório ofical}
+
+Utilizar o gerenciador de pacotes presente na distribuição Linux facilita o processo de instalação e remoção de \textit{software} do sistema operacional e esta intalação será feita
+utilizando o pacote fornecido no repositório oficial do \textit{Docker}. O primeiro
+passo é atualizar a lista de pacotes através do comando \textbf{apt-get update} e instalar algumas dependências que permitem que o gerenciador de pacotes (\textbf{apt}) use um repositório sobre HTTPS.
+Os comandos são exemplificados como segue:
+
+\newpage
+\begin{lstlisting}[language=bash]
+
+  $ sudo apt-get update
+
+  $ sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
+  \end{lstlisting}
+
+
+Após isso é necessário adicionar a chave GPG (\textit{GNU Privacy Guard}) oficial do\textit{Docker} através do comando:
+
+\begin{lstlisting}[language=bash]
+  $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
+    | sudo apt-key add -
+  \end{lstlisting}
+
+Para verificar se o sistema já possui a chave com o \textit{fingerprint} \textit{Docker} (no momento em que este texto foi escrito,
+era \textbf{9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88}), o usuário deve pesquisar os últimos 8 caracteres desse \textit{fingerprint}. Neste caso, basta utilizar o comando:
+
+\begin{lstlisting}[language=bash]
+    $ sudo apt-key fingerprint 0EBFCD88
+    \end{lstlisting}
+
+E o retorno do terminal ficará:
+
+\begin{lstlisting}[language=bash]
+  pub   rsa4096 2017-02-22 [SCEA]
+  9DC8 5822 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88
+  uid  [unknown] Docker Release (CE deb) <docker@docker.com>
+  sub   rsa4096 2017-02-22 [S]
+\end{lstlisting}
+
+Feito isso, o próximo passo será configurar que o repositório mais estável ("\textit{stable}") do \textit{Docker} seja indexado ao gerenciador de
+pactotes do sistema, o \textbf{apt}:
+
+\begin{lstlisting}[language=bash]
+  $ sudo add-apt-repository \
+  "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) \
+  stable"
+\end{lstlisting}
+
+
+Finalmente, as versões mais recentes do \textbf{containerd} e do \textit{Engine} do \textit{Docker} podem ser instaladas após atualizar os índices do
+gerenciador de pacotes \textbf{apt}.
+
+\begin{lstlisting}[language=bash]
+  $ sudo apt-get update
+  $ sudo apt-get install docker-ce \
+    docker-ce-cli containerd.io
+\end{lstlisting}
+
+Para verificar se a instalação foi bem-sucedida, basta executar o comando de testes a seguir que é o "\textit{hello-world}" do \textit{Docker}. Se tudo ocorrer bem,
+o terminal responderá com uma saída semelhante ao que é mostrado na Fig. \ref{fig:docker-hello-world}.
+
+\begin{lstlisting}[language=bash]
+  $ sudo docker run hello-world
+\end{lstlisting}
+
+\begin{figure}[!htb]
+  \centering
+  \caption{Teste de verificação de instalação do \textit{Docker Engine}.}
+  \includegraphics[width = \linewidth]{figures/docker-hello-world.png}
+  Fonte: Elaborada pelo autor.
+  \label{fig:docker-hello-world}
+\end{figure}
+
+Neste ponto, o \textit{Docker} encontra-se devidamente instalado no sistema operacional e o usuário pode optar por executar alguns comandos de pós-instalação
+para, por exemplo, possibilitar a execução do \textit{Docker} sem a necessidade de ter privilégios de usuário \textit{root}, iniciar o serviço \textit{Docker} na inicialização do
+sistema operacional, usar uma \textit{engine} de armazenamento diferente da que vem como padrão de instalação (\textit{overlay2}) dentre outras coisas descritas
+na seção de \href{https://docs.docker.com/engine/install/linux-postinstall/}{pós-instalação} da documentação oficial.
+
+\subsection*{Criação do container}
+
+Com o \textit{Docker} instalado, para inciar o procedimento de criação do \textit{container} do ambiente de desenvolvimento é preciso executar o comando \textbf{xhost +}
+para fornecer acesso ao servidor gráfico do \textit{host} a aplicações “externas” ao \textit{host} (também conhecido como sessão \textbf{X} ou a tela do computador),
+afinal um dos objetivos é utilizar a interface gráfica do \textit{GNURadio Companion} que estará instalado dentro do \textit{container}.
+
+Agora, executando o seguinte comando será criado um \textit{container} a partir de uma imagem base da distribuição \textit{Ubuntu}. A Fig.
+\ref{fig:docker-run-gnuradio} exemplifica o uso do comando e as saídas retornadas pelo terminal e é dentro do \textit{container}
+criado que será feita a instalação do GNURadio.
+
+\begin{lstlisting}[language=bash]
+$  docker run -i -t --privileged \
+    --ipc=host --net=host --pid=host -e HOST=/host \
+    -e DISPLAY=$DISPLAY \
+    -e DCONF_PROFILE=/etc/dconf/profile/ \
+    -e XDG_DATA_HOME=/config/xdg/data \
+    -e XDG_CONFIG_HOME=/config/xdg/config \
+    -e XDG_CACHE_HOME=/config/xdg/cache \
+    -e XDG_RUNTIME_DIR=/tmp/runtime-root \
+    -e DBUS_SESSION_BUS_ADDRESS="$DBUS_SESSION_BUS_ADDRESS" \
+    -e DEBIAN_FRONTEND="noninteractive" \
+    -e IMAGE=jeffcandido/gnuradio \
+    -v /run:/run -v /var/log:/var/log\
+    -v /etc/localtime:/etc/localtime -v /:/host \
+    -v /etc/dconf/profile/:/etc/dconf/profile/ \
+    -v /tmp/runtime-root/:/tmp/runtime-root/ \
+    -v /tmp/.X11-unix/:/tmp/.X11-unix \
+    -v /dev/usb:/dev/usb \
+    -v /dev/snd:/dev/snd \
+    -v /home/jefferson/gnuradio:/home/jefferson/gnuradio \
+    --name gnuradio \
+    ubuntu:20.04
+  \end{lstlisting}
+
+
+\begin{figure}[!htb]
+  \centering
+  \caption{Criação do \textit{container} de desenvolvimento a partir de uma imagem Ubuntu.}
+  \includegraphics[width = \linewidth]{figures/docker-run-gnuradio.png}
+  Fonte: Elaborada pelo autor.
+  \label{fig:docker-run-gnuradio}
+\end{figure}
+
+Para melhorar o entendimento, essa linha vai ser dividida e explicada por partes. O comando \textbf{docker run} primeiro cria uma camada de \textit{container}
+gravável sobre a imagem especificada (Ubuntu) e, em seguida, o inicia usando o comando especificado. Ou seja, \textbf{docker run} é equivalente a utilizar
+\textbf{docker container create} e depois \textbf{docker container start}. Um \textit{container} interrompido pode ser reiniciado com todas as suas alterações anteriores
+intactas usando \textbf{docker start}. Agora, sobre as \textit{flags} passadas:
+
+\begin{itemize}
+  \item[$-$] \textbf{i} (\textbf{interactive}): manter o \textbf{STDIN} (\textit{standard input} — fluxo de entrada padrão) aberto, mesmo se não estiver conectado;
+  \item[$-$] \textbf{t} (\textbf{tty}): alocar um pseudo-\textbf{TTY} (\textit{TeleTYpewriter} — simplesmente um terminal ao qual o usuário está conectado);
+  \item[$-$] \textbf{privileged}: dar privilégios estendidos a este \textit{container} (desativa a separação de segurança entre o \textit{host} e o
+        \textit{container}, o que significa que um processo executado como \textit{root} dentro do \textit{container} tem o mesmo acesso ao \textit{host}
+        que ele poderia também ter se fosse executado de fora do \textit{container}.);
+  \item[$-$] \textbf{e} (\textbf{env}): definir variáveis de ambiente;
+  \item[$-$] \textbf{v} (\textbf{volume}): vincular a montagem de um volume dentro \textit{container};
+  \item[$-$] \textbf{name}: o nome que se dará ao \textit{container} criado.
+  \item[$-$] As \textit{flags} \textbf{--ipc=host}, \textbf{--net=host} e \textbf{--pid=host} desligam os \textit{namespaces} \textbf{ipc},
+        \textbf{net} e \textbf{pid} dentro do \textit{container}. Isso significa que os processos dentro do \textit{container} veem a mesma rede e
+        tabela de processos, bem como compartilham quaisquer IPCs com os processos do \textit{host}.
+\end{itemize}
+
+Indo um pouco mais a fundo, tem-se a configuração de algumas variáveis de ambiente e a definição dos pontos de montagem e vinculação de alguns
+\textit{volumes} ao \textit{host}. Em tese, estas variáveis de ambiente foram configuradas porque foram observadas algumas necessidades durante o
+desenvolvimento deste trabalho, tais quais:
+
+\begin{itemize}
+  \item[$-$] \textbf{HOST=/host}: definir uma variável que possa ser usada dentro do \textit{container} para acessar
+        arquivos e diretórios a partir da raiz do \textit{filesystem} do \textit{host};
+  \item[$-$] \textbf{DISPLAY=\$DISPLAY}: definir uma variável que identifique onde serão exibidos recursos pelo servidor gráfico \textbf{X};
+  \item[$-$] \textbf{DCONF\_PROFILE=/etc/dconf/profile/}: definir a variável relacionada a um sistema de armazenamento das
+        preferências de usuário;
+  \item[$-$] \textbf{XDG\_DATA\_HOME=/config/xdg/data}: definir qual será o único diretório base relativo ao qual os arquivos
+        de dados específicos do usuário devem ser gravados;
+  \item[$-$] \textbf{XDG\_CONFIG\_HOME=/config/xdg/config}: definir qual será o único diretório base relativo ao qual os arquivos
+        de configuração específicos do usuário devem ser gravados;
+  \item[$-$] \textbf{XDG\_CACHE\_HOME=/config/xdg/cache}: definir qual será o único diretório base relativo ao qual os dados não
+        essenciais específicos do usuário (em cache) devem ser gravados.
+  \item[$-$] \textbf{XDG\_RUNTIME\_DIR=/tmp/runtime-root}: definir qual será o único diretório base relativo ao qual os arquivos de
+        tempo de execução específicos do usuário e outros objetos de arquivo devem ser colocados;
+  \item[$-$] \textbf{DBUS\_SESSION\_BUS\_ADDRESS=}
+
+        \textbf{"\$DBUS\_SESSION\_BUS\_ADDRESS"}: possibilitar a inicialização de uma sessão de barramento usando o utilitário D-Bus;
+  \item[$-$] \textbf{DEBIAN\_FRONTEND="noninteractive"}: definir variável para silenciar os \textit{prompt}'s de configuração do \textit{container};
+  \item[$-$] \textbf{IMAGE=jeffcandido/gnuradio}: definir a variável para identificar o nome da imagem.
+\end{itemize}
+
+Com relação aos \textit{volumes} que foram montados, seguem suas definições:
+
+\begin{itemize}
+  \item[$-$] \textbf{/run}:\textbf{/run}: montar o diretório \textbf{/run} do host no diretório \textbf{/run} dentro do \textit{container}. Isso permite que os processos dentro do
+        \textit{container} falem com o serviço \textbf{dbus} do \textit{host} e falem diretamente com o serviço \textbf{systemd};
+
+  \item[$-$] \textbf{/var/log}:\textbf{/var/log}: permitir que comandos sejam executados dentro do \textit{container} para ler e gravar arquivos de log no diretório
+        \textbf{/var/log} do \textit{host};
+
+  \item[$-$] \textbf{/etc/localtime}:\textbf{/etc/localtime}: fazer com que o fuso horário do sistema \textit{host} seja usado
+        tambem no \textit{container};
+
+  \item[$-$] \textbf{/}:\textbf{/host}: montar a raiz da árvore de diretórios do \textit{host} (mais conhecida como \textbf{/}) no  ponto
+        de montagem \textbf{/host} para permitir que processos dentro do \textit{container} consigam modificar facilmente o conteúdo no \textit{host};
+
+  \item[$-$] \textbf{/etc/dconf/profile/}:\textbf{/etc/dconf/profile/}: vincular o sistema de armazenamento de preferências do usuário ao mesmo do \textit{host};
+
+  \item[$-$] \textbf{/tmp/runtime-root/}:\textbf{/tmp/runtime-root/}: montar e vincular o diretório base relativo aos arquivos de
+        tempo de execução específicos do usuário e outros objetos de arquivo devem ser colocados ;
+
+  \item[$-$] \textbf{/tmp/.X11-unix/}:\textbf{/tmp/.X11-unix/}: montar um volume para o \textit{unix socket} X11 (servidor gráfico);
+
+  \item[$-$] \textbf{/dev/usb}:\textbf{/dev/usb}: vincular o volume que possibilita a utilização de recursos da porta USB do \textit{host};
+
+  \item[$-$] \textbf{/dev/snd}:\textbf{/dev/snd}: vincular o volume que possibilita a utilização de recursos de áudio do \textit{host};
+
+  \item[$-$] \textbf{/home/jefferson/gnuradio}:\textbf{/home/jefferson/gnuradio}: montar um diretório que será utilizado no desenvolvimento
+        deste trabalho e que poderá ser acessado tanto pelo \textit{host} como pelo \textit{container}.
+\end{itemize}
+
+Resumindo, foi utilizada uma linha de comando para criar um \textit{container}, o qual foi nomeado \textbf{gnuradio}, a partir de uma imagem base (Ubuntu) com
+privilégios para acessar recursos da máquina (o \textit{host}), onde mais precisamente será possível utilizar os recursos de áudio, da porta USB e da
+interface visual com uma vinculação de volumes montados no \textit{container} a partir da máquina \textit{host}.
+
+Algo importante a se notar na Fig. \ref{fig:docker-run-gnuradio} é que depois da criação do \textit{container} o terminal “mudou” do usuário \textbf{jefferson} para \textbf{root}
+e manteve o \textit{hostname}. Isso ocorre porque a partir desse momento o que aparece na tela é o terminal visto de "dentro"
+do \textbf{container}, ou seja com o usuário \textbf{root} em um \textit{container} que está enxerga o mesmo \textit{namespace} \textbf{net} que o \textbf{host}.
+
+Em um outro terminal é possível obter mais informações como, por exemplo, quais \textit{container}'s estão sendo executados no momento ou inspecionar algum
+\textit{container} específico em busca de maiores detalhes, como é mostrado na Fig. \ref{fig:docker-inspect}.
+
+\begin{figure}[!htb]
+  \centering
+  \caption{Detalhamento de informações sobre \textit{container}’s \textit{Docker}.}
+  \includegraphics[width = \linewidth]{figures/docker-inspect.png}
+  Fonte: Elaborada pelo autor.
+  \label{fig:docker-inspect}
+\end{figure}
+
+\newpage
+\subsection*{Instalação do GNURadio}
+
+Até o momento apenas foi feito o provisionamento de um \textit{container} \textit{Docker} executando uma imagem Ubuntu e então o GNURadio será instalado utilizando
+o gerenciador de pacotes \textbf{apt} disponível na distribuição Ubuntu deste \textit{container}. É recomendável atualizar a lista dos repositórios e verificar
+as depedências para esta instalação bastando executar os seguintes comandos no terminal do \textit{container} criado:
+
+\begin{lstlisting}[language=bash]
+  $ apt-get update && apt-get upgrade
+  $ apt-get install gir1.2-gtk-3.0 libx11-dev
+  $ apt-get install gnuradio
+\end{lstlisting}
+
+A partir desse ponto, o GNURadio estará instalado no \textit{container} \textit{Docker} e é possível verificar a versão, o local de instalação e os
+componentes já habilitados através dos seguintes comandos que foram exemplificados na Fig. \ref{fig:gnuradio-config-info}:
+
+\begin{lstlisting}[language=bash]
+  $ gnuradio-config-info --version
+  $ gnuradio-config-info --prefix
+  $ gnuradio-config-info --enabled-components
+\end{lstlisting}
+
+\begin{figure}[!htb]
+  \centering
+  \caption{Conferência de versão, \textit{path} e componentes habilitados do GNURadio.}
+  \includegraphics[width = \linewidth]{figures/gnuradio-config-info.png}
+  Fonte: Elaborada pelo autor.
+  \label{fig:gnuradio-config-info}
+\end{figure}
+
+Conforme ilustrado na Fig. \ref{fig:gnuradio-companion}, após todos os procedimentos descritos neste capítulo, o GNURadio na versão \textbf{3.8.1.0} estará
+disponível para o desenvolvimento de aplicações de rádio definido por \textit{software} e de processamento digital de sinais utilizando as bibliotecas
+que foram instaladas no \textit{container} ou utilizando a GUI — \textit{Graphical User Interface}, interface gráfica de usuário —
+através do comando \textbf{gnuradio-companion} (GRC).
+
+\begin{figure}[!htb]
+  \centering
+  \caption{\textit{GUI} do GNURadio Companion.}
+  \includegraphics[width = \linewidth]{figures/gnuradio-companion.png}
+  Fonte: Elaborada pelo autor.
+  \label{fig:gnuradio-companion}
+\end{figure}
+
+\subsection*{Criação da imagem \textit{Docker}}
+
+O \textit{container} criado na seção anterior pode ser disponibilizado para outros desenvolvedores por meio da criação de uma imagem
+base. A imagem base deve receber uma \textit{tag}, que normalmente está ligada à sua versão e por fim esta imagem pode ser
+"empurrada" para um repositório de imagens \textit{Docker}. Neste caso foi utilizado o \textit{DockerHub} que é um repositório
+de imagens \textit{Docker} hospedado e fornecido pela própria empresa \textit{Docker} Inc. Qualquer empresa pode hospedar, manter
+e disponibilizar um repositório de imagens \textit{Docker} por meio da implantação de um \textit{Docker Registry} próprio.
+
+Na Fig. \ref{fig:docker-gnuradio_base_image}, ao executar o comando \textbf{docker images} apenas a imagem \textbf{ubuntu}
+foi listada, pois ainda não foi criada uma imagem do container \textbf{gnuradio}, o qual pode ser conferido com o comando
+\textbf{docker ps -a}. Utilizando o commando \textbf{docker commit} referenciando para o container \textbf{gnuradio}, uma imagem
+\textit{Docker} é criada localmente, onde as \textit{flags} utilizadas, \textbf{-a} e \textbf{-m} são uma descrição
+sobre o autor e uma breve mensagem sobre a imagem que será criada, respectivamente.
+
+\begin{figure}[!htb]
+  \centering
+  \caption{Fazendo o \textit{commit} da imagem base GNURadio}
+  \includegraphics[width = \linewidth]{figures/docker-gnuradio_base_image.png}
+  Fonte: Elaborada pelo autor.
+  \label{fig:docker-gnuradio_base_image}
+\end{figure}
+
+Após o \textit{commit} da imagem, ao executar o comando \textbf{docker images} novamente, observa-se que a imagem foi criada com
+um \textbf{IMAGE ID} igual a \textbf{1c66799cf780} faltando apenas que seja associada a um repositório e que tenha uma \textit{tag} de versionamento.
+Como exemplo foi criada a \textit{tag} para a imagem e associada a um repositório público através do comando \textbf{docker tag 1c66799cf780 jeffcandido/gnuradio}.
+Ao executar \textbf{docker images} novamente, a imagem do \textit{container} contendo a instalação do GNURadio na versão 3.8.1.0
+está pronta para ser levada ao repositório de imagens \textit{Docker} para que possa ser acessada por outros desenvolvedores. Para
+fazer esse procedimento, foi necessário criar uma conta (gratuita) no \textit{DockerHub} e fazer o login via linha de comando e por fim
+executar o \textit{push} da imagem para levá-la até o repositório remoto, como é demonstrado nos passos executados na Fig. \ref{fig:docker-push_image}.
+
+\begin{figure}[!htb]
+  \centering
+  \caption{Submetendo a imagem base ao repositório remoto.}
+  \includegraphics[width = \linewidth]{figures/docker-push_image.png}
+  Fonte: Elaborada pelo autor.
+  \label{fig:docker-push_image}
+\end{figure}
+
+A imagem que foi criada e submetida ao repositório remoto agora pode ser visualizada pela interface \textit{web} do \textit{DockerHub} e qualquer usuário
+conectado à \textit{Internet} poderá buscar e utilizar essa imagem.
+
+\begin{figure}[!htb]
+  \centering
+  \caption{Interface \textit{web} do \textit{DockerHub} com a imagem criada.}
+  \includegraphics[width = \linewidth]{figures/dockerhub-general.png}
+  Fonte: Elaborada pelo autor.
+  \label{fig:dockerhub-general}
+\end{figure}
+
+Algumas otimizações poderiam ser feitas com relação ao processo de criação do \textit{container} e geração de imagem \textit{Docker}, como por exemplo a criação
+de arquivos para composição do \textit{container} (\textit{Dockerfile}, \textit{docker-compose.yaml} e \textit{.dockerignore}), porém isto
+não adicionaria vigor e relevância ao propósito deste trabalho de forma que tais otimizações podem ser realizadas em trabalhos futuros nessa mesma
+área de estudo.
+
+\chapter{Hardware}
+
+\begin{figure}[ht]
+  \centering
+  \begin{subfigure}[b]{0.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/hackrf/hack_rf_cabo_usb_antena_linear.jpg}
+    \caption{Cabo USB e antena linear.}
+    \label{fig:hack_rf_cabo_usb_antena_linear}
+  \end{subfigure}
+  \hspace{0.5cm}
+  \begin{subfigure}[b]{0.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/hackrf/hack_rf_antena_helicoidal.jpg}
+    \caption{$y=3sinx$}
+    \label{fig:hack_rf_antena_helicoidal}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{0.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/hackrf/hack_rf.jpg}
+    \caption{$y=x$}
+    \label{fig:hack_rf}
+  \end{subfigure}
+  \hspace{0.5cm}
+  \begin{subfigure}[b]{0.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/hackrf/hack_rf_kit.jpg}
+    \caption{$y=3sinx$}
+    \label{fig:hack_rf_kit}
+  \end{subfigure}
+  \caption{Kit de desenvolvimento de aplicações de rádio definido por software.}
+  \label{fig:three}
+\end{figure}
+
+SUBFIGURE TEST
+
+% ----------------------------------------------------------
+% Parte de desenvolvimento
+% ----------------------------------------------------------
+\part{Desenvolvimento}
+
+% ----------------------------------------------------------
+% Parte de resultados
+% ----------------------------------------------------------
+\part{Resultados}
+
+% ---
+% Capitulo de revisão de literatura
+% ---
+\chapter{Lorem ipsum dolor sit amet}
+
+% ---
+\section{Aliquam vestibulum fringilla lorem}
+% ---
+
+\lipsum[1]
+
+\lipsum[2-3]
+
+% ---
+% Finaliza a parte no bookmark do PDF
+% para que se inicie o bookmark na raiz
+% e adiciona espaço de parte no Sumário
+% ---
+\phantompart
+
+% ---
+% Considerações Finais
+% ---
+\chapter{Considerações Finais}
+% ---
+
+\lipsum[31-33]
+
+% ----------------------------------------------------------
+% ELEMENTOS PÓS-TEXTUAIS
+% ----------------------------------------------------------
+\postextual
+
+% ----------------------------------------------------------
+% Referências bibliográficas
+% ----------------------------------------------------------
+\bibliography{abntex2-modelo-references}
+
+% ----------------------------------------------------------
+% Glossário
+% ----------------------------------------------------------
+%
+% Consulte o manual da classe abntex2 para orientações sobre o glossário.
+%
+%\glossary
+
+% ----------------------------------------------------------
+% Apêndices
+% ----------------------------------------------------------
+
+% ---
+% Inicia os apêndices
+% ---
+\begin{apendicesenv}
+
+  % Imprime uma página indicando o início dos apêndices
+  % \partapendices
+
+  % ----------------------------------------------------------
+  % \chapter{Quisque libero justo}
+  % ----------------------------------------------------------
+
+  \lipsum[50]
+
+  % ----------------------------------------------------------
+  \chapter{Nullam elementum urna vel imperdiet sodales elit ipsum pharetra ligula
+    ac pretium ante justo a nulla curabitur tristique arcu eu metus}
+  % ----------------------------------------------------------
+  \lipsum[55-57]
+
+\end{apendicesenv}
+% ---
+
+
+% ----------------------------------------------------------
+% Anexos
+% ----------------------------------------------------------
+
+% ---
+% Inicia os anexos
+% ---
+\begin{anexosenv}
+
+  % Imprime uma página indicando o início dos anexos
+  % \partanexos
+  % ---
+  % \chapter{Morbi ultrices rutrum lorem.}
+  % ---
+  % \lipsum[30]
+
+  % ---
+  \chapter{Cras non urna sed feugiat cum sociis natoque penatibus et magnis dis
+    parturient montes nascetur ridiculus mus}
+  % ---
+
+  \lipsum[31]
+
+  % ---
+  \chapter{Fusce facilisis lacinia dui}
+  % ---
+
+  \lipsum[32]
+
+\end{anexosenv}
+
+%---------------------------------------------------------------------
+% INDICE REMISSIVO
+%---------------------------------------------------------------------
+
+\phantompart
+
+\printindex
+
+%---------------------------------------------------------------------
+% Formulário de Identificação (opcional)
+%---------------------------------------------------------------------
+\chapter*[Formulário de Identificação]{Formulário de Identificação}
+\addcontentsline{toc}{chapter}{Exemplo de Formulário de Identificação}
+\label{formulado-identificacao}
+
+Exemplo de Formulário de Identificação, compatível com o Anexo A (informativo)
+da ABNT NBR 10719:2015. Este formulário não é um anexo. Conforme definido na
+norma, ele é o último elemento pós-textual e opcional do relatório.
+
+\bigskip
+
+\begin{tabular}{|p{8cm}|p{5cm}|}
+  \hline
+  \multicolumn{2}{|c|}{\textbf{\large Dados do Relatório Técnico e/ou científico}}               \\
+  \hline
+  \multirow{3}{8cm}[24pt]{Título e subtítulo} & Classificação de segurança                       \\
+                                              &                                                  \\
+  \cline{2-2}
+                                              & No.                                              \\
+                                              &                                                  \\
+
+  \hline
+  Tipo de relatório                           & Data                                             \\
+  \hline
+  Título do projeto/programa/plano            & No.                                              \\
+  \hline
+  \multicolumn{2}{|l|}{Autor(es)}                                                                \\
+  \hline
+  \multicolumn{2}{|l|}{Instituição executora e endereço completo}                                \\
+  \hline
+  \multicolumn{2}{|l|}{Instituição patrocinadora e endereço completo}                            \\
+  \hline
+  \multicolumn{2}{|l|}{Resumo}                                                                   \\[3cm]
+  \hline
+  \multicolumn{2}{|l|}{Palavras-chave/descritores}                                               \\
+  \hline
+  \multicolumn{2}{|l|}{
+    Edição \hfill No. de páginas \hfill No. do volume \hfill Nº de classificação \phantom{XXXX}} \\
+  \hline
+  \multicolumn{2}{|l|}{
+    ISSN \hfill \hfill Tiragem \hfill Preço \phantom{XXXXXXXX}}                                  \\
+  \hline
+  \multicolumn{2}{|l|}{Distribuidor}                                                             \\
+  \hline
+  \multicolumn{2}{|l|}{Observações/notas}                                                        \\[3cm]
+  \hline
+\end{tabular}
+
+\end{document}
