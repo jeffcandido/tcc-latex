@@ -92,6 +92,11 @@
 \usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
 \usepackage[alf]{abntex2cite}	% Citações padrão ABNT
 
+%% PACOTES QUE EU ADICIONEI
+
+\usepackage{caption}
+\usepackage{subcaption}
+
 % --- 
 % CONFIGURAÇÕES DE PACOTES
 % --- 
@@ -538,7 +543,7 @@ Lauro César Araujo
 % ----------------------------------------------------------
 \part{Preparações}
 
-\chapter{Definições}
+\chapter{Software}
 
 O conceito e as boas práticas relacionadas ao desenvolvimento de \textit{software} evoluiu bastante desde os primórdios da computação e algo que sempre esteve
 em pauta é o problema de incompatibilidade de ambientes de desenvolvimento, o que acabou dando origem ao jargão: “na minha máquina funciona”.
@@ -563,6 +568,7 @@ definido por aplicações escritas para receber ou enviar dados de sistemas de \
 Python — que é considerado mais fácil — ou C++ — para escrita de códigos de desempenho crítico — além de também ser possível através de uma interface gráfica de
 usuário (\textbf{GNURadio Companion} — GRC) por diagramas de blocos.
 
+\newpage
 \section*{Docker}
 
 O \textit{Docker} é uma unidade padrão de \textit{software} da empresa \textit{Docker} Inc., que fornece uma camada de abstração e automação em containers, ou seja, grupos isolados de
@@ -594,7 +600,7 @@ pode \textit{subir} um SPC em um \textit{host}, solucionar um problema e removê
 No próximo capítulo é mostrado como utilizar dos \textit{container}'s super privilegiados para a criação do ambiente de
 desenvolvimento de aplicações de software e como os recursos de um sistema \textit{host} são acessados a partir desse SPC.
 
-\chapter{Criação do ambiente de desenvolvimento}
+\section*{Criação do ambiente de desenvolvimento}
 
 Primeiramente é necessário ter a CLI (\textit{command line interface}) do \textbf{docker engine} instalada (na máquina \textit{host}) e tal procedimento de
 instalação se torna extremamente simples bastando seguir o passo-a-passo fornecido pela \href{https://docs.docker.com/engine/install/}{documentação oficial}
@@ -603,7 +609,7 @@ Esta CLI está disponível para várias distribuições Linux na versão \textit
 demonstrado o procedimento de instalação do \textbf{docker engine} em uma distribuição Linux, de forma que este procedimento é semelhante para demais distribuições
 e arquiteturas.
 
-\section*{Instalação do \textit{Docker Engine}}
+\subsection*{Instalação do \textit{Docker Engine}}
 
 O \textit{Docker} fornece pacotes prontos (\textbf{.deb} e \textbf{.rpm}) para instalação dessa CLI em distribuições Linux como \textit{CentOS}, \textit{Debian},
 \textit{Fedora}, \textit{Raspbian}, \textit{Ubuntu} e derivadas (\textit{LMDE}, \textit{BunsenLabs Linux}, \textit{Kali Linux}, \textit{Kubuntu}, \textit{Lubuntu}
@@ -622,13 +628,14 @@ operacional Ubuntu basta utilizar o gerenciador de pacotes \textbf{apt}/\textbf{
     docker docker.io containerd runc
   \end{lstlisting}
 
-\subsection*{Instalação utilizando o repositório ofical}
+\subsubsection*{Instalação utilizando o repositório ofical}
 
 Utilizar o gerenciador de pacotes presente na distribuição Linux facilita o processo de instalação e remoção de \textit{software} do sistema operacional e esta intalação será feita
 utilizando o pacote fornecido no repositório oficial do \textit{Docker}. O primeiro
 passo é atualizar a lista de pacotes através do comando \textbf{apt-get update} e instalar algumas dependências que permitem que o gerenciador de pacotes (\textbf{apt}) use um repositório sobre HTTPS.
 Os comandos são exemplificados como segue:
 
+\newpage
 \begin{lstlisting}[language=bash]
 
   $ sudo apt-get update
@@ -705,7 +712,7 @@ para, por exemplo, possibilitar a execução do \textit{Docker} sem a necessidad
 sistema operacional, usar uma \textit{engine} de armazenamento diferente da que vem como padrão de instalação (\textit{overlay2}) dentre outras coisas descritas
 na seção de \href{https://docs.docker.com/engine/install/linux-postinstall/}{pós-instalação} da documentação oficial.
 
-\section*{Criação do container}
+\subsection*{Criação do container}
 
 Com o \textit{Docker} instalado, para inciar o procedimento de criação do \textit{container} do ambiente de desenvolvimento é preciso executar o comando \textbf{xhost +}
 para fornecer acesso ao servidor gráfico do \textit{host} a aplicações “externas” ao \textit{host} (também conhecido como sessão \textbf{X} ou a tela do computador),
@@ -842,7 +849,7 @@ Em um outro terminal é possível obter mais informações como, por exemplo, qu
 \end{figure}
 
 \newpage
-\section*{Instalação do GNURadio}
+\subsection*{Instalação do GNURadio}
 
 Até o momento apenas foi feito o provisionamento de um \textit{container} \textit{Docker} executando uma imagem Ubuntu e então o GNURadio será instalado utilizando
 o gerenciador de pacotes \textbf{apt} disponível na distribuição Ubuntu deste \textit{container}. É recomendável atualizar a lista dos repositórios e verificar
@@ -884,7 +891,7 @@ através do comando \textbf{gnuradio-companion} (GRC).
   \label{fig:gnuradio-companion}
 \end{figure}
 
-\section*{Criação da imagem \textit{Docker}}
+\subsection*{Criação da imagem \textit{Docker}}
 
 O \textit{container} criado na seção anterior pode ser disponibilizado para outros desenvolvedores por meio da criação de uma imagem
 base. A imagem base deve receber uma \textit{tag}, que normalmente está ligada à sua versão e por fim esta imagem pode ser
@@ -937,6 +944,43 @@ Algumas otimizações poderiam ser feitas com relação ao processo de criação
 de arquivos para composição do \textit{container} (\textit{Dockerfile}, \textit{docker-compose.yaml} e \textit{.dockerignore}), porém isto
 não adicionaria vigor e relevância ao propósito deste trabalho de forma que tais otimizações podem ser realizadas em trabalhos futuros nessa mesma
 área de estudo.
+
+\chapter{Hardware}
+
+\begin{figure}[ht]
+  \centering
+  \begin{subfigure}[b]{0.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/hackrf/hack_rf_cabo_usb_antena_linear.jpg}
+    \caption{Cabo USB e antena linear.}
+    \label{fig:hack_rf_cabo_usb_antena_linear}
+  \end{subfigure}
+  \hspace{0.5cm}
+  \begin{subfigure}[b]{0.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/hackrf/hack_rf_antena_helicoidal.jpg}
+    \caption{$y=3sinx$}
+    \label{fig:hack_rf_antena_helicoidal}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{0.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/hackrf/hack_rf.jpg}
+    \caption{$y=x$}
+    \label{fig:hack_rf}
+  \end{subfigure}
+  \hspace{0.5cm}
+  \begin{subfigure}[b]{0.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/hackrf/hack_rf_kit.jpg}
+    \caption{$y=3sinx$}
+    \label{fig:hack_rf_kit}
+  \end{subfigure}
+  \caption{Kit de desenvolvimento de aplicações de rádio definido por software.}
+  \label{fig:three}
+\end{figure}
+
+SUBFIGURE TEST
 
 % ----------------------------------------------------------
 % Parte de desenvolvimento
