@@ -557,8 +557,43 @@ com relação ao software e qual o custo do investimento. Entre os dispostivos a
 os quais atuam até a casa de 2 GHz aproximadamente. Com relação aos SDR's RX/TX foram considerados o LimeSDR, BladeRF, HackRF, Ettus USRP B210 e o
 Adalm PlutoSDR e todos podem ser utilizados na faixa entre alguns MHz até a mais do que 3 GHz podendo chegar até 6 GHz.
 
+O resumo dos principais SDR's que podem ser encontrados é mostrado na Tabela \ref{table:SDR_comparison}, com preços em dólares cotados online através do site \href{https://pt.aliexpress.com}{https://pt.aliexpress.com}
+e também dos própiros fabricantes \href{https://www.sdrplay.com/rspduo/}{SDRplay}, \href{https://www.analog.com/en/design-center/evaluation-hardware-and-software/evaluation-boards-kits/adalm-pluto.html}{Analog Devices},
+\href{https://www.nuand.com/bladerf-1/}{Nuand} e \href{https://www.ettus.com/all-products/ub210-kit/}{Ettus}.
+
+\begin{table}[!htb]
+  \caption{Comparativo de SDR's a nível de hardware e custo de investimento}
+  \centering
+  \begin{tabular}{|l|r|r|r|r|r|r|}
+    \hline
+                                        & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Faixa\\ de\\ frequência\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Largura\\ de banda\\ máxima\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}RX/\\ TX\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Half /\\ Full Duplex\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Resolução\\ do ADC\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Preço\\ (US\$)\end{tabular}}} \\ \hline
+    \textbf{RTL-SDR}                    & \begin{tabular}[c]{@{}r@{}}500 kHz\\ a\\ 1766 MHz\end{tabular}                               & 3 MHz                                                    & RX                                                       & Half Duplex                                              & 8 bits                                                   & $\sim$25,00                                              \\ \hline
+    \textbf{RSPduo}                     & \begin{tabular}[c]{@{}r@{}}1 kHz\\ a\\ 2 GHz\end{tabular}                               & 10 MHz                                                   & RX                                                       & Half Duplex                                              & 14 bits                                                  & $\sim$260,00                                             \\ \hline
+    \textbf{\begin{tabular}[c]{@{}l@{}}AirSpy\\ Mini\end{tabular}} & \begin{tabular}[c]{@{}r@{}}24 Hz\\ a\\ 1.7 GHz\end{tabular}                               & 6 MHz                                                    & RX                                                       & Half Duplex                                              & até 16 bits                                              & $\sim$150,00                                             \\ \hline
+    \textbf{\begin{tabular}[c]{@{}l@{}}USRP\\ B200/\\ B210\end{tabular}} & \begin{tabular}[c]{@{}r@{}}70 MHz\\ a\\ 6 GHz\end{tabular}                               & 56 MHz                                                   & \begin{tabular}[c]{@{}r@{}}RX/\\ TX\end{tabular}                               & Full Duplex                                              & 12 bits                                                  & \begin{tabular}[c]{@{}r@{}}a partir\\ de 890,00\end{tabular}                               \\ \hline
+    \textbf{PlutoSDR}                   & \begin{tabular}[c]{@{}r@{}}325 MHz\\ a\\ 3.8 GHz\end{tabular}                               & 20 MHz                                                   & \begin{tabular}[c]{@{}r@{}}RX/\\ TX\end{tabular}                               & Full Duplex                                              & 12 bits                                                  & 249,00                                                   \\ \hline
+    \textbf{\begin{tabular}[c]{@{}l@{}}LimeSDR\\ Mini\end{tabular}} & \begin{tabular}[c]{@{}r@{}}10 MHz\\ a\\ 3.5 GHz\end{tabular}                               & 30 MHz                                                   & \begin{tabular}[c]{@{}r@{}}RX/\\ TX\end{tabular}                               & Full Duplex                                              & 12 bits                                                  & \begin{tabular}[c]{@{}r@{}}de 300,00\\ a 350,00\end{tabular}                               \\ \hline
+    \textbf{BladeRF}                    & \begin{tabular}[c]{@{}r@{}}300 MHz\\ a\\ 3.8 GHz\end{tabular}                               & 40MHz                                                    & \begin{tabular}[c]{@{}r@{}}RX/\\ TX\end{tabular}                               & Full Duplex                                              & 12 bits                                                  & \begin{tabular}[c]{@{}r@{}}a partir\\ de 720,00\end{tabular}                               \\ \hline
+    \textbf{HackRF}                     & \begin{tabular}[c]{@{}r@{}}1 MHz\\ a\\ 6 GHz\end{tabular}                               & 20 MHz                                                   & \begin{tabular}[c]{@{}r@{}}RX/\\ TX\end{tabular}                               & Half Duplex                                              & 8 bits                                                   & \begin{tabular}[c]{@{}r@{}}a partir\\ de 70,00\end{tabular}                               \\ \hline
+  \end{tabular}
+  \label{table:SDR_comparison}
+\end{table}
+
 \subsection*{RTL-SDR}
 RTL-SDR: \href{https://produto.mercadolivre.com.br/MLB-1276411271-rtl2832u-receptor-rtl-sdr-r820t2-dongle-usb-rtl-sdr-com-_JM}{https://produto.mercadolivre.com.br/MLB-1276411271-rtl2832u-receptor-rtl-sdr-r820t2-dongle-usb-rtl-sdr-com-\_JM}
+
+https://www.rtl-sdr.com/about-rtl-sdr/
+
+O que é RTL-SDR?
+
+RTL-SDR é um dongle USB de $\sim$ \$ 25 dólares que pode ser usado como um scanner de rádio baseado em computador para receber sinais de rádio ao vivo em sua área (sem necessidade de Internet). Dependendo do modelo específico, ele pode receber frequências de 500 kHz a 1,75 GHz. A maioria dos softwares para o RTL-SDR também é desenvolvida pela comunidade e fornecida gratuitamente.
+As origens do RTLSDR derivam de dongles sintonizadores de TV DVB-T produzidos em massa que foram baseados no chipset RTL2832U.
+Com os esforços combinados de Antti Palosaari, Eric Fry e Osmocom (em particular Steve Markgraf), descobriu-se que os dados I - Q
+% brutos no chipset RTL2832U podiam ser acessados ​​diretamente, o que permitiu que o sintonizador de tv dvb=t fosse convertido em um radio
+de banda larga definido por software por meio de um driver de software personalizado desenvolvido por Steve Markgraf.
+Se você já gostou do projeto RTL-SDR, por favor, considere fazer uma doação para Osmocom via Open Collective, pois foram eles que
+desenvolveram os drivers e deram vida ao RTL-SDR.
+Ao longo dos anos, desde sua descoberta, o RTL-SDR se tornou extremamente popular e democratizou o acesso ao espectro de rádio. Agora, qualquer pessoa com orçamento limitado, incluindo amadores, pode acessar o espectro de rádio. É importante notar que esse tipo de capacidade SDR teria custado centenas ou mesmo milhares de dólares apenas alguns anos atrás. O RTL-SDR também é às vezes referido como RTL2832U, DVB-T SDR, dongle DVB-T, dongle RTL ou o "rádio definido por software barato".
 
 Frequency range: 24 - 1766 MHz
 Max BW: 3 MHz
@@ -568,23 +603,18 @@ Preço: ~R\$200,00
 Software Support: Excellent
 
 
-
 \subsection*{AirSpy Mini}
 AIR-SPY MINI: https://pt.aliexpress.com/item/32981502202.html
 
-Keep this one in your pocket!
+O Airspy Mini se baseia na arquitetura bem-sucedida do Airspy R2 para oferecer um scanner portátil de alto desempenho para as bandas VHF e UHF.
 
-Airspy Mini builds on top of the successful Airspy R2 architecture to offer a portable high performance scanner for the VHF and UHF bands.
+O Airspy Mini aproveita nossa comprovada arquitetura de baixo IF baseada no Rafael Micro R820T2 e um Oversampling de 12 bits ADC de alta qualidade e DSP de última geração.
 
-The Airspy Mini leverages our proven low-IF architecture based on Rafael Micro R820T2 and a high quality Oversampling 12bit ADC and state of the art DSP.
+No modo Oversampling, o Airspy Mini aplica filtragem analógica de RF e IF ao caminho do sinal e aumenta a resolução para até 16 bits usando a dizimação do software. O resultado líquido é um desempenho espetacular!
 
-In Oversampling Mode, the Airspy Mini applies Analog RF and IF filtering to the signal path and increases the resolution to up to 16-bit using the software decimation. The net result is Spectacular Performance!
+A cobertura pode ser estendida às bandas de HF por meio do conversor ascendente do SpyVerter.
 
-The coverage can be extended to the HF bands via the SpyVerter up-converter companion.
-
-This new addition to the Airspy family is 100\% compatible with all the existing software including the de facto scanning standard SDR, but also a number of popular software defined radio applications such as SDR-Radio, HDSDR, GQRX and GNU Radio.
-
-For a more complete list of supported software, check the download page.
+Esta nova adição à família Airspy é 100 \% compatível com todo o software existente, incluindo o SDR padrão de digitalização de fato, mas também uma série de aplicativos de rádio definidos por software populares, como SDR-Radio, HDSDR, GQRX e GNU Radio.
 
 Typical Applications
 
@@ -643,51 +673,51 @@ High speed USB 2.0 controller
 
 RSPduo: https://www.sdrplay.com/rspduo/
 
-The RSPduo is a high performance dual-tuner 14-bit SDR receiver.
+O RSPduo é um receptor SDR de 14 bits com sintonizador duplo de alto desempenho.
 
-Housed in a high quality steel enclosure, each tuner can operate individually anywhere between 1kHz and 2GHz with up to 10MHz of bandwidth or both tuners can operate simultaneously anywhere between 1kHz and 2GHz with up to 2MHz of bandwidth per tuner.
+Alojado em um invólucro de aço de alta qualidade, cada sintonizador pode operar individualmente em qualquer lugar entre 1kHz e 2GHz com até 10MHz de largura de banda ou ambos os sintonizadores podem operar simultaneamente em qualquer lugar entre 1kHz e 2GHz com até 2MHz de largura de banda por sintonizador.
 
-A high stability reference along with external clocking features makes this device ideally suited to industrial, scientific \& educational applications
+Uma referência de alta estabilidade junto com recursos de relógio externo tornam este dispositivo ideal para aplicações industriais, científicas e educacionais.
 
-To check compatibility with your choice of computer hardware, operating system and SDR application software, go to https://www.sdrplay.com
 
 \subsection*{LimeSDR Mini}
 
 https://pt.aliexpress.com/item/1005001463402847.html
+https://limemicro.com/products/boards/limesdr-mini/
 
 \subsection*{Adalm Pluto}
 
 https://www.analog.com/en/design-center/evaluation-hardware-and-software/evaluation-boards-kits/adalm-pluto.html
 
 
-Features and Benefits
+Características e benefícios
 
-Portable self-contained RF learning module
-Cost-effective experimentation platform
-Based on Analog Devices AD9363--Highly Integrated RF Agile Transceiver and Xilinx REGISTERED Zynq Z-7010 FPGA
-RF coverage from 325 MHz to 3.8 GHz
-Up to 20 MHz of instantaneous bandwidth
-Flexible rate, 12-bit ADC and DAC
-One transmitter and one receiver, half or full duplex
-MATLAB REGISTERED, Simulink REGISTERED support
-GNU Radio sink and source blocks
-% libiio, a C, C++, C\#, and Python API
-USB 2.0 Powered Interface with Micro-USB 2.0 connector
-High quality plastic enclosure
+Módulo de aprendizagem RF autocontido portátil
+Plataforma de experimentação econômica
+Baseado em Dispositivos Analógicos AD9363 - Transceptor Agile RF Altamente Integrado e FPGA Xilinx REGISTADO Zynq Z-7010
+Cobertura de RF de 325 MHz a 3,8 GHz
+Até 20 MHz de largura de banda instantânea
+Taxa flexível, ADC e DAC de 12 bits
+Um transmissor e um receptor, half ou full duplex
+MATLAB REGISTRADO, suporte Simulink registrado
+Bloco GNU Radio coletor e fonte
+libiio, uma API C, Cpluplus, Csharp e Python
+Interface alimentada por USB 2.0 com conector Micro-USB 2.0
+Caixa de plástico de alta qualidade
 
-Product Details
+Detalhes do produto
 
-The easy to use ADALM-PLUTO active learning module (PlutoSDR) helps introduce electrical engineering students to the fundamentals of software-defined radio (SDR), radio frequency (RF), and wireless communications. Designed for students at all levels and from all backgrounds, the module can be used for both instructor-led and self-directed learning to help students develop a foundation in real-world RF and communications that they can build on as they pursue science, technology, or engineering degrees.
+O módulo de aprendizado ativo ADALM-PLUTO (PlutoSDR) fácil de usar ajuda a apresentar aos alunos de engenharia elétrica os fundamentos de rádio definido por software (SDR), radiofrequência (RF) e comunicações sem fio. Projetado para alunos de todos os níveis e de todas as origens, o módulo pode ser usado tanto para aprendizagem dirigida por instrutor quanto para autodirigida para ajudar os alunos a desenvolverem uma base em RF e comunicações do mundo real na qual eles podem desenvolver enquanto buscam ciência e tecnologia , ou diplomas de engenharia.
 
-Connecting RF Theory with RF Practice
+Conectando a teoria de RF com a prática de RF
 
-The PlutoSDR works as a portable lab that, when used with a host, can augment classroom learning. MATLAB and Simulink are two of the many software packages supported by PlutoSDR, and it provides an intuitive graphical user interface (GUI) so students can learn faster, work smarter, and explore more.
+O PlutoSDR funciona como um laboratório portátil que, quando usado com um host, pode aumentar o aprendizado em sala de aula. MATLAB e Simulink são dois dos muitos pacotes de software suportados pelo PlutoSDR e fornecem uma interface gráfica de usuário (GUI) intuitiva para que os alunos possam aprender mais rápido, trabalhar de maneira mais inteligente e explorar mais.
 
-Made for Teachers, Students, and Self-Learners
+Feito para professores, alunos e autodidatas
 
-The PlutoSDR features independent receive and transmit channels that can be operated in full duplex. The active learning module can generate or acquire RF analog signals from 325 MHz to 3800 MHz at up to 61.44 megasamples per second (MSPS). Small enough to fit in a shirt pocket, the PlutoSDR is completely self-contained and entirely USB powered with the default firmware. Because PlutoSDR is enabled by libiio drivers, it supports OS X REGISTERED, Windows REGISTERED, and Linux REGISTERED, which allows students to learn and explore on a variety of devices.
+O PlutoSDR possui canais de recepção e transmissão independentes que podem ser operados em full duplex. O módulo de aprendizado ativo pode gerar ou adquirir sinais analógicos de RF de 325 MHz a 3800 MHz em até 61,44 megaamostras por segundo (MSPS). Pequeno o suficiente para caber no bolso de uma camisa, o PlutoSDR é totalmente independente e totalmente alimentado por USB com o firmware padrão. Como o PlutoSDR é habilitado por drivers libiio, ele oferece suporte para OS X registrado, Windows registrado e Linux registrado, o que permite que os alunos aprendam e explorem em uma variedade de dispositivos.
 
-With dozens of available online tutorials for SDR-based projects, PlutoSDR boasts labs and teaching material covering topics such as ADS-B aircraft position, receiving NOAA and Meteor-M2 weather satellite imagery, GSM analysis, listening to TETRA signals, pager decoding, and many more!
+Com dezenas de tutoriais online disponíveis para projetos baseados em SDR, PlutoSDR possui laboratórios e material de ensino cobrindo tópicos como posição da aeronave ADS-B, recepção de imagens de satélite meteorológico NOAA e Meteor-M2, análise GSM, escuta de sinais TETRA, decodificação de pager e muito mais!
 
 \subsection*{BladeRF}
 
@@ -839,13 +869,13 @@ Suporta todas as transportadoras que transmitem as seguintes bandas de frequênc
 1710-1880 MHz 9.5dB
 1850-1990 MHz 9.5dB
 2110-2170 MHz 10dB
-2500 \~ 2700 MHz 12dB
+2500 $\sim$ 2700 MHz 12dB
 
 Incluído no Pacote:
 1 x Mount Magnet Antena
 
 \newpage
-\begin{figure}[ht]
+\begin{figure}[!htb]
   \centering
   \begin{subfigure}[b]{0.45\linewidth}
     \centering
