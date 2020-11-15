@@ -59,7 +59,8 @@
   keywordstyle=\color{blue}
 }
 \usepackage{hyperref}
-
+\usepackage{caption}
+\usepackage{subcaption}
 
 % ---
 % Pacotes fundamentais 
@@ -91,11 +92,6 @@
 % ---
 \usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
 \usepackage[alf]{abntex2cite}	% Citações padrão ABNT
-
-%% PACOTES QUE EU ADICIONEI
-
-\usepackage{caption}
-\usepackage{subcaption}
 
 % --- 
 % CONFIGURAÇÕES DE PACOTES
@@ -543,6 +539,213 @@ Lauro César Araujo
 % ----------------------------------------------------------
 \part{Preparações}
 
+\chapter{Hardware}
+
+Neste capítulo serão abordados os dispositivos de \textit{hardware} utilizados no desenvolvimento deste trabalho, trazendo brevemente um comparativo de quais
+podem ser encontrados no mercado atualmente e quais as especificações técnicas disponibilizadas por alguns fabricantes. Basicamente para alcançar o êxito
+é necessário um dispositivo \textit{host} (arquiteturas \textbf{x86\_64} ou \textbf{amd64}, \textbf{armhf} e \textbf{arm64}/\textbf{aarch64}, por exemplo),
+preferencialmente com alguma distribuição \textit{Linux} e o \textit{GNURadio-companion} instalados, uma placa de circuito impresso do sistema de rádio
+definido por \textit{software} contendo algum cabo para comunicação com o computador \textit{host} (normalmente USB 2.0/3.0), as antenas e algum oscilador
+caso a aplicação exija sincronismo por \textit{clock} externo.
+
+\section*{Avaliação de SDR's}
+
+Para o sistema de rádio definido por \textit{software} primeiramente foi realizada uma pesquisa de mercado para avaliar quais os SDR's disponíveis e quais
+\textit{feature's} cada um oferece. Pontos importantes a serem observados antes de efetuar a compra de um SDR são: se ele pode atuar apenas como receptor
+(RX) ou como receptor e trasmissor (RX/TX), qual a faixa de frequência, a largura de banda máxima e a resolução (número de bits por amostra), qual o suporte
+com relação ao software e qual o custo do investimento. Entre os dispostivos apenas receptores, destacaram-se o RTL-SDR, o AirSpy Mini e o SDRplay RSPduo
+os quais atuam até a casa de 2 GHz aproximadamente. Com relação aos SDR's RX/TX foram considerados o LimeSDR, BladeRF, HackRF, Ettus USRP B200 e o
+Adalm PlutoSDR e todos podem ser utilizados na faixa entre alguns MHz até a mais do que 3 GHz podendo chegar até 6 GHz.
+
+RTL-SDR: \href{https://produto.mercadolivre.com.br/MLB-1276411271-rtl2832u-receptor-rtl-sdr-r820t2-dongle-usb-rtl-sdr-com-_JM}{https://produto.mercadolivre.com.br/MLB-1276411271-rtl2832u-receptor-rtl-sdr-r820t2-dongle-usb-rtl-sdr-com-\_JM}
+
+Frequency range: 24 - 1766 MHz
+Max BW: 3 MHz
+ADC Resolution: 8 bit
+RX
+Preço: ~R\$200,00
+Software Support: Excellent
+
+
+AIR-SPY MINI:
+
+Keep this one in your pocket!
+
+Airspy Mini builds on top of the successful Airspy R2 architecture to offer a portable high performance scanner for the VHF and UHF bands.
+
+The Airspy Mini leverages our proven low-IF architecture based on Rafael Micro R820T2 and a high quality Oversampling 12bit ADC and state of the art DSP.
+
+In Oversampling Mode, the Airspy Mini applies Analog RF and IF filtering to the signal path and increases the resolution to up to 16-bit using the software decimation. The net result is Spectacular Performance!
+
+The coverage can be extended to the HF bands via the SpyVerter up-converter companion.
+
+This new addition to the Airspy family is 100\% compatible with all the existing software including the de facto scanning standard SDR, but also a number of popular software defined radio applications such as SDR-Radio, HDSDR, GQRX and GNU Radio.
+
+For a more complete list of supported software, check the download page.
+
+Typical Applications
+
+Portable VHF/UHF/SHF Radio Monitoring
+Real Time Spectrum Analyzer
+ADS-B, ATC receiver
+Radio Astronomy
+Satellite IF
+Telemetry Receiver
+Wide Band Scanner
+Education
+Ham Radio, etc.
+
+Supported Software
+
+The gold standard SDR
+The ultimate Narrowband Signals Analysis and Decoding Suite Krypto500
+The ultimate Wideband Signals Analysis and Decoding Suite Krypto1000
+The other excellent SDR suite, SDR-Console
+The Suiss-army SDR knife for Linux and Mac, GQRX
+Check the full list of tools in our download page
+
+Supported Operating Systems
+
+Windows Vista, 7, 8, 8.1 and 10
+Linux
+*BSD
+OSX
+
+Technical specifications
+
+Continuous 24 – 1700 MHz native RX range, down to DC with the SpyVerter option
+3.5 dB NF between 42 and 1002 MHz
+Maximum RF input of +10 dBm
+Tracking RF filters
+35dBm IIP3 RF front end
+12bit ADC @ 20 MSPS (10.4 ENOB, 70dB SNR, 95dB SFDR)
+10, 6 and 3 MSPS IQ output – Optimized for portable and tablets
+Up to 6 MHz panoramic spectrum view
+0.5 ppm high precision, low phase noise clock
+4.5v software switchable Bias-Tee 100\% Compatible with SpyVerter and High Performance LNA
+IQ or Real, 16bit fixed or 32bit float output streams
+No IQ imbalance, DC offset or 1/F noise at the center of the spectrum that plagues all the other SDRs
+Best software support of all existing SDRs
+No drivers required! 100\% Plug-and-play on Windows Vista, Seven, 8, 8.1 and 10, all Linux Flavors, Mac and Android
+Compatible with Raspberry Pi, Odroid, Pine64 and UP boards
+Operating temperature: -10°C to 40°C
+
+Minimum hardware requirements
+
+Core 2 Duo @ 2 GHz CPU or equivalent
+2GB of RAM (to run your own OS, airspy barely needs 1MB of memory)
+High speed USB 2.0 controller
+
+
+USRP B210 - https://www.ettus.com/all-products/ub210-kit/
+
+https://www.youtube.com/watch?v=cygDXeZaiOM
+
+Overview
+
+The USRP B210 provides a fully integrated, single-board, Universal Software Radio Peripheral (USRP™) platform with continuous frequency coverage from 70 MHz – 6 GHz. Designed for low-cost experimentation, it combines the AD9361 RFIC direct-conversion transceiver providing up to 56MHz of real-time bandwidth, an open and reprogrammable Spartan6 FPGA, and fast SuperSpeed USB 3.0 connectivity with convenient bus-power. Full support for the USRP Hardware Driver™ (UHD) software allows you to immediately begin developing with GNU Radio, prototype your own GSM base station with OpenBTS, and seamless transition code from the USRP B210 to higher performance, industry-ready USRP platforms. An enclosure accessory kit is available to users of green PCB devices (revision 6 or later) to assemble a protective steel case.
+
+Experimentation with Low-cost SDR
+
+Experiment with the USRP B210 across a wide range of applications including: FM and TV broadcast, cellular, GPS, WiFi, ISM, and more. Users can immediately begin prototyping in GNURadio and participate in the open-source SDR community. Full support by the UHD software allows seamless code reuse from existing designs, compatibility with open-source applications like HDSDR and OpenBTS, and an upgrade path to industry-ready USRP systems to meet application requirements.  Here are some examples of what you can do with a USRP B210.
+
+B210 System Architecture
+
+The integrated RF frontend on the USRP B210 is designed with the new Analog Devices AD9361, a single-chip direct-conversion transceiver, capable of streaming up to 56 MHz of real-time RF bandwidth. The B210 uses both signal chains of the AD9361, providing coherent MIMO capability. Onboard signal processing and control of the AD9361 is performed by a Spartan6 XC6SLX150 FPGA connected to a host PC using SuperSpeed USB 3.0. The USRP B210 real time throughput is benchmarked at 61.44MS/s quadrature, providing the full 56 MHz of instantaneous RF bandwidth to the host PC for additional processing using GNU Radio or applications that use the UHD API. For detailed throughput capabilities in various SISO and MIMO configurations, please see the USRP B200/B210 Benchmark Table.
+
+Features
+
+First fully integrated, two-channel USRP device with continuous RF coverage from 70 MHz – 6 GHz
+
+Full duplex, MIMO (2 Tx \& 2 Rx) operation with up to 56 MHz of real-time bandwidth (61.44MS/s quadrature)
+
+Fast and convenient SuperSpeed USB 3.0 connectivity
+
+GNURadio and OpenBTS support through the open-source USRP Hardware Driver™ (UHD)
+
+Open and reconfigurable Spartan 6 XC6SLX150 FPGA (for advanced users)
+
+Early access prototyping platform for the Analog Devices AD9361 RFIC, a fully integrated direct conversion transceiver with mixed-signal baseband
+
+Steel enclosure accessory kit available for green PCB devices (revision 6 or later)
+
+\subsection*{HackRF}
+
+HACKRF: https://pt.aliexpress.com/item/32889992261.html
+
+From 1MHz to 6GHz, initially announced from 10Mhz, the HackRF can receive very large signals from 1MHz (shortwave radios) and from 5MHz signal lower powers (amateur radio bands)
+Transceiver in half duplex
+Up to 20 million samples per second
+8-bit samples in quadrature (I and 8 -bit 8 - bit Q)
+Compatible with GNU Radio, SDR Sharp, SDR Console, SDRAngel and other SDR software
+Configurable RX and TX gain by software and baseband filter
+Power antenna port controlled by software (50 mA at 3.3 V)
+Antenna connector SMA female
+Convenient buttons for programming
+USB 2.0 speed
+Powered by USB Open source hardware
+
+HackRF One output power
+
+The maximum power of the TX for HackRF One varies on which operating frequency:
+
+- 10 MHz to 2150 MHz: 5 dBm to 15 dBm (3 mW to 30 mW), generally increasing frequency decreases
+- 2150 MHz to 2750 MHz: 13 dBm to 15 dBm (20 mW to 30 mW)
+- 2750 MHz to 4000 MHz : from 0 dBm to 5 dBm ( 0-3 mW ), increases as the frequency decreases
+- 4000 MHz to 6000 MHz : -10 dBm to 0 dBm, generally increases as the frequency decreases
+
+The frequency range with the best performance is 2150 MHz to 2750 MHz with 30 mWatts in output power (TX).
+
+The output power is sufficient for testing short-range (a few meters) or to power amplifier. If you connect an amplifier, you must also use an external filter bandpass adapted to the operating frequency.
+
+HackRF One is an equipment for testing RF systems. It is used like-this and you are legally responsible for the use of your HackRF One. An easiest, and legal way is to become an ham radio operator ;-)
+
+\newpage
+\begin{figure}[ht]
+  \centering
+  \begin{subfigure}[b]{0.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/hackrf/hack_rf_cabo_usb_antena_linear.jpg}
+    \caption{Cabo USB e antena linear.}
+    \label{fig:hack_rf_cabo_usb_antena_linear}
+  \end{subfigure}
+  \hspace{0.5cm}
+  \begin{subfigure}[b]{0.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/hackrf/hack_rf_antena_helicoidal.jpg}
+    \caption{$y=3sinx$}
+    \label{fig:hack_rf_antena_helicoidal}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{0.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/hackrf/hack_rf.jpg}
+    \caption{$y=x$}
+    \label{fig:hack_rf}
+  \end{subfigure}
+  \hspace{0.5cm}
+  \begin{subfigure}[b]{0.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/hackrf/hack_rf_kit.jpg}
+    \caption{$y=3sinx$}
+    \label{fig:hack_rf_kit}
+  \end{subfigure}
+  \caption{Kit de desenvolvimento de aplicações de rádio definido por software.}
+  \label{fig:hack_rf_hdk}
+\end{figure}
+
+\newpage
+Com relação ao computador utilizado, trata-se de um notebook com 8 GB de memória DDR3 e processador Intel® Core™ i7 de terceira geração com quatro
+núcleos e 3.0 GHz de \textit{clock} conforme estatísticas retiradas do próprio sistema operacional e mostradas na Fig. \ref{fig:host_pc_stats}.
+
+\begin{figure}[!htb]
+  \centering
+  \caption{Configurações de CPU e memória do computador utilizado.}
+  \includegraphics[width = \linewidth]{figures/host-pc/stats.png}
+  Fonte: Elaborada pelo autor.
+  \label{fig:host_pc_stats}
+\end{figure}
+
 \chapter{Software}
 
 O conceito e as boas práticas relacionadas ao desenvolvimento de \textit{software} evoluiu bastante desde os primórdios da computação e algo que sempre esteve
@@ -885,7 +1088,7 @@ através do comando \textbf{gnuradio-companion} (GRC).
 
 \begin{figure}[!htb]
   \centering
-  \caption{\textit{GUI} do GNURadio Companion.}
+  \caption{\textit{GUI} do \textit{GNURadio Companion}.}
   \includegraphics[width = \linewidth]{figures/gnuradio-companion.png}
   Fonte: Elaborada pelo autor.
   \label{fig:gnuradio-companion}
@@ -944,43 +1147,6 @@ Algumas otimizações poderiam ser feitas com relação ao processo de criação
 de arquivos para composição do \textit{container} (\textit{Dockerfile}, \textit{docker-compose.yaml} e \textit{.dockerignore}), porém isto
 não adicionaria vigor e relevância ao propósito deste trabalho de forma que tais otimizações podem ser realizadas em trabalhos futuros nessa mesma
 área de estudo.
-
-\chapter{Hardware}
-
-\begin{figure}[ht]
-  \centering
-  \begin{subfigure}[b]{0.45\linewidth}
-    \centering
-    \includegraphics[width=\linewidth]{figures/hackrf/hack_rf_cabo_usb_antena_linear.jpg}
-    \caption{Cabo USB e antena linear.}
-    \label{fig:hack_rf_cabo_usb_antena_linear}
-  \end{subfigure}
-  \hspace{0.5cm}
-  \begin{subfigure}[b]{0.45\linewidth}
-    \centering
-    \includegraphics[width=\linewidth]{figures/hackrf/hack_rf_antena_helicoidal.jpg}
-    \caption{$y=3sinx$}
-    \label{fig:hack_rf_antena_helicoidal}
-  \end{subfigure}
-  \quad
-  \begin{subfigure}[b]{0.45\linewidth}
-    \centering
-    \includegraphics[width=\linewidth]{figures/hackrf/hack_rf.jpg}
-    \caption{$y=x$}
-    \label{fig:hack_rf}
-  \end{subfigure}
-  \hspace{0.5cm}
-  \begin{subfigure}[b]{0.45\linewidth}
-    \centering
-    \includegraphics[width=\linewidth]{figures/hackrf/hack_rf_kit.jpg}
-    \caption{$y=3sinx$}
-    \label{fig:hack_rf_kit}
-  \end{subfigure}
-  \caption{Kit de desenvolvimento de aplicações de rádio definido por software.}
-  \label{fig:three}
-\end{figure}
-
-SUBFIGURE TEST
 
 % ----------------------------------------------------------
 % Parte de desenvolvimento
