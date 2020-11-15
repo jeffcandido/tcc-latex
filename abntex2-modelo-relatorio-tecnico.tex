@@ -380,12 +380,15 @@
 % inserir lista de abreviaturas e siglas
 % ---
 \begin{siglas}
+
+  \item[ADC]         \textit{Analog to Digital Converter}
   \item[AM]         \textit{Amplitude Modulation}
   \item[ARM]        \textit{Advanced RISC}
   \item[ASK]        \textit{Amplitude-shift keying}
   \item[BW]         \textit{Bandwidth}
   \item[CR]         \textit{Coding Rate}
   \item[CLI]        \textit{Command Line Interface}
+  \item[DAC]        \textit{Digital to Analog Converter}
   \item[DSP]        \textit{Digital Signal Processing}
   \item[EIRP]       \textit{Effective Isotropic Radiated Power}
   \item[ERP]        \textit{Effective Radiated Power}
@@ -400,7 +403,7 @@
   \item[GRC]        \textit{GNURadio Companion}
   \item[GUI]        \textit{Graphical User Interface}
   \item[GPSDO]      \textit{GPS disciplined oscillator}
-  \item[LPF         \textit{Low-Pass Filter}
+  \item[LPF]         \textit{Low-Pass Filter}
   \item[OCXO]       \textit{Oven Controlled Crystal Oscillator}
   \item[SDR]        \textit{Software-defined Radio}
   \item[STDIN]      \textit{Standard Input}
@@ -522,15 +525,18 @@ caso a aplicação exija sincronismo por \textit{clock} externo.
 
 Para o sistema de rádio definido por \textit{software} primeiramente foi realizada uma pesquisa de mercado para avaliar quais os SDR's disponíveis e quais
 \textit{feature's} cada um oferece. Pontos importantes a serem observados antes de efetuar a compra de um SDR são: se ele pode atuar apenas como receptor
-(RX) ou como receptor e trasmissor (RX/TX), qual a faixa de frequência, a largura de banda máxima e a resolução (número de bits por amostra), qual o suporte
+(RX) ou como receptor e trasmissor (RX/TX), qual a faixa de frequência de atuação, a largura de banda máxima e a resolução do ADC/DAC (número de bits por amostra), qual o suporte
 com relação ao software e qual o custo do investimento. Entre os dispostivos apenas receptores, destacaram-se o RTL-SDR, o AirSpy Mini e o SDRplay RSPduo
-os quais atuam até a casa de 2 GHz aproximadamente. Com relação aos SDR's RX/TX foram considerados o LimeSDR, BladeRF, HackRF, Ettus USRP B210 e o
-Adalm PlutoSDR e todos podem ser utilizados na faixa entre alguns MHz até a mais do que 3 GHz podendo chegar até 6 GHz.
+os quais atuam até a casa de 2 GHz aproximadamente. Com relação aos SDR's RX/TX foram considerados o LimeSDR Mini, BladeRF, HackRF, Ettus USRP B210 e o
+Adalm PlutoSDR e todos podem ser utilizados com largura de banda de pelo menos 20 MHz e podendo variar entre 1 MHz e 6 GHz no domínio da frequência.
 
 O resumo dos principais SDR's que podem ser encontrados é mostrado na Tabela \ref{table:SDR_comparison}, com preços em dólares cotados online através do site \href{https://pt.aliexpress.com}{https://pt.aliexpress.com}
 e também dos própiros fabricantes \href{https://www.sdrplay.com/rspduo/}{SDRplay}, \href{https://www.analog.com/en/design-center/evaluation-hardware-and-software/evaluation-boards-kits/adalm-pluto.html}{Analog Devices},
 \href{https://www.nuand.com/bladerf-1/}{Nuand} e \href{https://www.ettus.com/all-products/ub210-kit/}{Ettus}.
 
+O SDR escolhido para este trabalho foi o HackRF o qual será abordado com mais detalhes na próxima seção.
+
+\newpage
 \begin{table}[!htb]
   \caption{Comparativo de SDR's a nível de hardware e custo de investimento}
   \centering
@@ -748,74 +754,77 @@ e também dos própiros fabricantes \href{https://www.sdrplay.com/rspduo/}{SDRpl
 
 \subsection*{HackRF}
 
-HACKRF: https://pt.aliexpress.com/item/32889992261.html
+% HACKRF: https://pt.aliexpress.com/item/32889992261.html
 
-From 1MHz to 6GHz, initially announced from 10Mhz, the HackRF can receive very large signals from 1MHz (shortwave radios) and from 5MHz signal lower powers (amateur radio bands)
-Transceiver in half duplex
-Up to 20 million samples per second
-8-bit samples in quadrature (I and 8 -bit 8 - bit Q)
-Compatible with GNU Radio, SDR Sharp, SDR Console, SDRAngel and other SDR software
-Configurable RX and TX gain by software and baseband filter
-Power antenna port controlled by software (50 mA at 3.3 V)
-Antenna connector SMA female
-Convenient buttons for programming
-USB 2.0 speed
-Powered by USB Open source hardware
+De 1MHz a 6GHz, inicialmente anunciado a partir de 10Mhz, o HackRF pode receber sinais muito grandes de 1MHz (rádios de ondas curtas) e de potências de
+sinal 5MHz menores (bandas de rádio amador)
+Transceptor em half duplex
+Até 20 milhões de amostras por segundo
+Amostras de 8 bits em quadratura (I e 8 bits 8 bits Q)
+Compatível com GNU Radio, SDR Sharp, SDR Console, SDRAngel e outro software SDR
+Ganho configurável de RX e TX por software e filtro de banda base
+Porta de antena de energia controlada por software (50 mA a 3,3 V)
+Conector de antena SMA fêmea
+Botões convenientes para programação
+Velocidade USB 2.0
+Alimentado por hardware de código aberto USB
 
-HackRF One output power
+Potência de saída do HackRF One
 
-The maximum power of the TX for HackRF One varies on which operating frequency:
+A potência máxima do TX para HackRF One varia em qual frequência de operação:
 
-- 10 MHz to 2150 MHz: 5 dBm to 15 dBm (3 mW to 30 mW), generally increasing frequency decreases
-- 2150 MHz to 2750 MHz: 13 dBm to 15 dBm (20 mW to 30 mW)
-- 2750 MHz to 4000 MHz : from 0 dBm to 5 dBm ( 0-3 mW ), increases as the frequency decreases
-- 4000 MHz to 6000 MHz : -10 dBm to 0 dBm, generally increases as the frequency decreases
+- 10 MHz a 2150 MHz: 5 dBm a 15 dBm (3 mW a 30 mW), geralmente aumentando as diminuições de frequência
+- 2150 MHz a 2750 MHz: 13 dBm a 15 dBm (20 mW a 30 mW)
+- 2750 MHz a 4000 MHz: de 0 dBm a 5 dBm (0-3 mW), aumenta à medida que a frequência diminui
+- 4000 MHz a 6000 MHz: -10 dBm a 0 dBm, geralmente aumenta à medida que a frequência diminui
 
-The frequency range with the best performance is 2150 MHz to 2750 MHz with 30 mWatts in output power (TX).
+A faixa de frequência com melhor desempenho é de 2150 MHz a 2750 MHz com 30 mWatts de potência de saída (TX).
 
-The output power is sufficient for testing short-range (a few meters) or to power amplifier. If you connect an amplifier, you must also use an external filter bandpass adapted to the operating frequency.
+A potência de saída é suficiente para testar curto alcance (alguns metros) ou amplificador de potência. Se você conectar um amplificador, também deverá
+usar um filtro de banda externo adaptado à frequência de operação.
 
-HackRF One is an equipment for testing RF systems. It is used like-this and you are legally responsible for the use of your HackRF One. An easiest, and legal way is to become an ham radio operator ;-)
+HackRF One é um equipamento para teste de sistemas RF. Ele é usado dessa forma e você é legalmente responsável pelo uso do HackRF One. A maneira mais
+fácil e legal é se tornar um operador de rádio amador.
 
 
-Specifications:
-- 1 MHz to 6 GHz operating frequency
-- Half-duplex transceiver
-- Up to 20 million samples per second
-- 8-bit quadrature samples (8-bit I and 8-bit Q)
-- Compatible with GNU Radio, SDR, and more
-- Software-configurable RX and TX gain and baseband filter
-- Software-controlled antenna port power (50 mA at 3.3 V)
-- SMA female antenna connector
-- SMA female clock input and output for synchronization
-- Convenient buttons for programming
-- Internal pin headers for expansion
-- Hi-Speed USB 2.0
-- USB-powered
-- Open source hardware
+Especificações:
+- frequência de operação de 1 MHz a 6 GHz
+- Transceptor half-duplex
+- Até 20 milhões de amostras por segundo
+- Amostras de quadratura de 8 bits (8 bits I e 8 bits Q)
+- Compatível com GNU Radio, SDR e mais
+- Ganho RX e TX configurável por software e filtro de banda base
+- Potência de saída da antena controlada por software (50 mA a 3,3 V)
+- Conector de antena SMA fêmea
+- Entrada e saída para sincronismo
+- Botões convenientes para programação
+- Cabeçalhos de pinos internos para expansão
+- USB 2.0 de alta velocidade
+- alimentado por USB
+- Hardware de código aberto
 
-Parameters:
-- Frequency band: 1MHz-6Ghz
-- Data bandwidth: 20MHz
-- Sampling accuracy ( ADC/DAC) : 8BIT
-- Sampling speed ( ADC/DAC): 20Mbps
-- Interface: USB2.0
-- Open source
-- Maximum transmitting power: 10dbm
-- 64QAM transmitting EVM: 1.5\%
-- Complex sampling bandwidth: 20Mhz
+Parâmetros:
+- Banda de frequência: 1MHz-6Ghz
+- Largura de banda de dados: 20 MHz
+- Precisão de amostragem (ADC / DAC): 8BIT
+- Velocidade de amostragem (ADC / DAC): 20 Mbps
+- Interface: USB 2.0
+- Código aberto
+- Potência máxima de transmissão: 10dbm
+- 64QAM transmitindo EVM: 1,5 \%
+- Largura de banda de amostragem complexa: 20Mhz
 
 Hardware:
 - Mixer RFFC5072: 80MHz-4200MHz
-- Wireless bandwidth RF transceiver MAX2837: 2.3Ghz-2.7Ghz
-- Processor LPC4330: Main frequency 204MHz
-- Amplifier MGA-81563: 0.1-6Ghz, 3V, 14dbm
+- Transceptor de RF de largura de banda sem fio MAX2837: 2,3 Ghz-2,7 Ghz
+- Processador LPC4330: Frequência principal 204 MHz
+- Amplificador MGA-81563: 0,1-6 Ghz, 3V, 14dbm
 
-Package Contents:
-- 1 x Main board
-- 1 x Aluminum alloy Shell
-- 3 x Antenna
-- 1 x USB Data cable
+Conteúdo do pacote:
+- 1 placa principal
+- 1 x Shell de liga de alumínio
+- 3 x Antena
+- 1 cabo de dados USB
 
 \subsubsection*{ANTENA}
 
