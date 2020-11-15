@@ -554,9 +554,10 @@ Para o sistema de rádio definido por \textit{software} primeiramente foi realiz
 \textit{feature's} cada um oferece. Pontos importantes a serem observados antes de efetuar a compra de um SDR são: se ele pode atuar apenas como receptor
 (RX) ou como receptor e trasmissor (RX/TX), qual a faixa de frequência, a largura de banda máxima e a resolução (número de bits por amostra), qual o suporte
 com relação ao software e qual o custo do investimento. Entre os dispostivos apenas receptores, destacaram-se o RTL-SDR, o AirSpy Mini e o SDRplay RSPduo
-os quais atuam até a casa de 2 GHz aproximadamente. Com relação aos SDR's RX/TX foram considerados o LimeSDR, BladeRF, HackRF, Ettus USRP B200 e o
+os quais atuam até a casa de 2 GHz aproximadamente. Com relação aos SDR's RX/TX foram considerados o LimeSDR, BladeRF, HackRF, Ettus USRP B210 e o
 Adalm PlutoSDR e todos podem ser utilizados na faixa entre alguns MHz até a mais do que 3 GHz podendo chegar até 6 GHz.
 
+\subsection*{RTL-SDR}
 RTL-SDR: \href{https://produto.mercadolivre.com.br/MLB-1276411271-rtl2832u-receptor-rtl-sdr-r820t2-dongle-usb-rtl-sdr-com-_JM}{https://produto.mercadolivre.com.br/MLB-1276411271-rtl2832u-receptor-rtl-sdr-r820t2-dongle-usb-rtl-sdr-com-\_JM}
 
 Frequency range: 24 - 1766 MHz
@@ -567,7 +568,9 @@ Preço: ~R\$200,00
 Software Support: Excellent
 
 
-AIR-SPY MINI:
+
+\subsection*{AirSpy Mini}
+AIR-SPY MINI: https://pt.aliexpress.com/item/32981502202.html
 
 Keep this one in your pocket!
 
@@ -636,7 +639,80 @@ Core 2 Duo @ 2 GHz CPU or equivalent
 2GB of RAM (to run your own OS, airspy barely needs 1MB of memory)
 High speed USB 2.0 controller
 
+\subsection*{RSPduo}
 
+RSPduo: https://www.sdrplay.com/rspduo/
+
+The RSPduo is a high performance dual-tuner 14-bit SDR receiver.
+
+Housed in a high quality steel enclosure, each tuner can operate individually anywhere between 1kHz and 2GHz with up to 10MHz of bandwidth or both tuners can operate simultaneously anywhere between 1kHz and 2GHz with up to 2MHz of bandwidth per tuner.
+
+A high stability reference along with external clocking features makes this device ideally suited to industrial, scientific \& educational applications
+
+To check compatibility with your choice of computer hardware, operating system and SDR application software, go to https://www.sdrplay.com
+
+\subsection*{LimeSDR Mini}
+
+https://pt.aliexpress.com/item/1005001463402847.html
+
+\subsection*{Adalm Pluto}
+
+https://www.analog.com/en/design-center/evaluation-hardware-and-software/evaluation-boards-kits/adalm-pluto.html
+
+
+Features and Benefits
+
+Portable self-contained RF learning module
+Cost-effective experimentation platform
+Based on Analog Devices AD9363--Highly Integrated RF Agile Transceiver and Xilinx REGISTERED Zynq Z-7010 FPGA
+RF coverage from 325 MHz to 3.8 GHz
+Up to 20 MHz of instantaneous bandwidth
+Flexible rate, 12-bit ADC and DAC
+One transmitter and one receiver, half or full duplex
+MATLAB REGISTERED, Simulink REGISTERED support
+GNU Radio sink and source blocks
+% libiio, a C, C++, C\#, and Python API
+USB 2.0 Powered Interface with Micro-USB 2.0 connector
+High quality plastic enclosure
+
+Product Details
+
+The easy to use ADALM-PLUTO active learning module (PlutoSDR) helps introduce electrical engineering students to the fundamentals of software-defined radio (SDR), radio frequency (RF), and wireless communications. Designed for students at all levels and from all backgrounds, the module can be used for both instructor-led and self-directed learning to help students develop a foundation in real-world RF and communications that they can build on as they pursue science, technology, or engineering degrees.
+
+Connecting RF Theory with RF Practice
+
+The PlutoSDR works as a portable lab that, when used with a host, can augment classroom learning. MATLAB and Simulink are two of the many software packages supported by PlutoSDR, and it provides an intuitive graphical user interface (GUI) so students can learn faster, work smarter, and explore more.
+
+Made for Teachers, Students, and Self-Learners
+
+The PlutoSDR features independent receive and transmit channels that can be operated in full duplex. The active learning module can generate or acquire RF analog signals from 325 MHz to 3800 MHz at up to 61.44 megasamples per second (MSPS). Small enough to fit in a shirt pocket, the PlutoSDR is completely self-contained and entirely USB powered with the default firmware. Because PlutoSDR is enabled by libiio drivers, it supports OS X REGISTERED, Windows REGISTERED, and Linux REGISTERED, which allows students to learn and explore on a variety of devices.
+
+With dozens of available online tutorials for SDR-based projects, PlutoSDR boasts labs and teaching material covering topics such as ADS-B aircraft position, receiving NOAA and Meteor-M2 weather satellite imagery, GSM analysis, listening to TETRA signals, pager decoding, and many more!
+
+\subsection*{BladeRF}
+
+BLADERF: https://www.nuand.com/bladerf-1/
+
+Technical Specifications:
+
+Fully bus-powered USB 3.0 SuperSpeed Software Defined Radio
+Portable, handheld form factor: 5" by 3.5"
+Extensible gold plated RF SMA connectors
+300MHz - 3.8GHz RF frequency range
+Independent RX/TX 12-bit 40MSPS quadrature sampling
+Capable of achieving full-duplex 28MHz channels
+16-bit DAC factory calibrated 38.4MHz +/-1ppm VCTCXO
+On-board 200MHz ARM9 with 512KB embedded SRAM (JTAG port available)
+On-board 40KLE or 115KLE Altera Cyclone 4 E FPGA (JTAG port available)
+2x2 MIMO configurable with SMB cable, expandable up to 4x4
+Modular expansion board design for adding GPIO, Ethernet, and 1PPS sync signal and expanding frequency range, and power limits
+DC power jack for running headless
+Highly efficient, low noise power architecture
+Stable Linux, Windows, Mac and GNURadio software support
+Hardware capable of operating as a spectrum analyzer, vector signal analyzer, and vector signal generator
+
+
+\subsection*{USRP B210}
 USRP B210 - https://www.ettus.com/all-products/ub210-kit/
 
 https://www.youtube.com/watch?v=cygDXeZaiOM
@@ -699,6 +775,74 @@ The frequency range with the best performance is 2150 MHz to 2750 MHz with 30 mW
 The output power is sufficient for testing short-range (a few meters) or to power amplifier. If you connect an amplifier, you must also use an external filter bandpass adapted to the operating frequency.
 
 HackRF One is an equipment for testing RF systems. It is used like-this and you are legally responsible for the use of your HackRF One. An easiest, and legal way is to become an ham radio operator ;-)
+
+
+Specifications:
+- 1 MHz to 6 GHz operating frequency
+- Half-duplex transceiver
+- Up to 20 million samples per second
+- 8-bit quadrature samples (8-bit I and 8-bit Q)
+- Compatible with GNU Radio, SDR, and more
+- Software-configurable RX and TX gain and baseband filter
+- Software-controlled antenna port power (50 mA at 3.3 V)
+- SMA female antenna connector
+- SMA female clock input and output for synchronization
+- Convenient buttons for programming
+- Internal pin headers for expansion
+- Hi-Speed USB 2.0
+- USB-powered
+- Open source hardware
+
+Parameters:
+- Frequency band: 1MHz-6Ghz
+- Data bandwidth: 20MHz
+- Sampling accuracy ( ADC/DAC) : 8BIT
+- Sampling speed ( ADC/DAC): 20Mbps
+- Interface: USB2.0
+- Open source
+- Maximum transmitting power: 10dbm
+- 64QAM transmitting EVM: 1.5\%
+- Complex sampling bandwidth: 20Mhz
+
+Hardware:
+- Mixer RFFC5072: 80MHz-4200MHz
+- Wireless bandwidth RF transceiver MAX2837: 2.3Ghz-2.7Ghz
+- Processor LPC4330: Main frequency 204MHz
+- Amplifier MGA-81563: 0.1-6Ghz, 3V, 14dbm
+
+Package Contents:
+- 1 x Main board
+- 1 x Aluminum alloy Shell
+- 3 x Antenna
+- 1 x USB Data cable
+
+\subsubsection*{ANTENA}
+
+% https://pt.dhgate.com/product/12dbi-high-gain-omni-directional-sma-male/429542258.html
+
+Inscrição:
+A antena é ótimo para veículos / automóvel / caminhão / uso van. Montado em uma superfície mental. E é funcionado como uma antena de alto ganho ao ar livre.
+
+Especificações:
+gama de frequência: 700 MHz-2700 MHz
+VSWR: menor ou igual a 1.5
+Ganho: 12dB
+impedância de entrada: 50 Ohm
+cabo coaxial: RG174 (3mm de diâmetro)
+comprimento do fio: 3M
+Tipo de conector: SMA-J
+
+Suporta todas as transportadoras que transmitem as seguintes bandas de frequência:
+700-800 MHz 4.5dB
+824-894 MHz 5dB
+880-960 MHz 5dB
+1710-1880 MHz 9.5dB
+1850-1990 MHz 9.5dB
+2110-2170 MHz 10dB
+2500 \~ 2700 MHz 12dB
+
+Incluído no Pacote:
+1 x Mount Magnet Antena
 
 \newpage
 \begin{figure}[ht]
