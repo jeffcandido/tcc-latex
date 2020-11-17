@@ -117,7 +117,7 @@
 % ---
 % Informações de dados para CAPA e FOLHA DE ROSTO
 % ---
-\titulo{Implementações práticas de DSP e RF com GNURadio e HackRF}
+\titulo{Implementações práticas de DSP e RF com GNURadio e HackRF One}
 \autor{Jefferson da Silva Cândido}
 \local{Uberlândia, Minas Gerais}
 \data{\the\year}
@@ -521,37 +521,48 @@ preferencialmente com alguma distribuição \textit{Linux} e o \textit{GNURadio-
 definido por \textit{software} contendo algum cabo para comunicação com o computador \textit{host} (normalmente USB 2.0/3.0), as antenas e algum oscilador (TCXO, OCXO, GPSDO, etc...)
 caso a aplicação exija sincronismo por \textit{clock} externo.
 
+Com relação ao computador utilizado, trata-se de um notebook de arquitetura \textbf{amd64} com 8 GB de memória DDR3 e processador Intel® Core™ i7 de terceira geração com quatro núcleos e
+3.0 GHz de \textit{clock} conforme estatísticas retiradas do próprio sistema operacional e mostradas na Fig. \ref{fig:host_pc_stats}.
+
+\begin{figure}[!htb]
+  \centering
+  \caption{Configurações de CPU e memória do computador utilizado.}
+  \includegraphics[width = \linewidth]{figures/host-pc/stats.png}
+  Fonte: Elaborada pelo autor.
+  \label{fig:host_pc_stats}
+\end{figure}
+
 \section*{Avaliação de SDR's}
 
 Para o sistema de rádio definido por \textit{software} primeiramente foi realizada uma pesquisa de mercado para avaliar quais os SDR's disponíveis e quais
 \textit{feature's} cada um oferece. Pontos importantes a serem observados antes de efetuar a compra de um SDR são: se ele pode atuar apenas como receptor
 (RX) ou como receptor e trasmissor (RX/TX), qual a faixa de frequência de atuação, a largura de banda máxima e a resolução do ADC/DAC (número de bits por amostra), qual o suporte
 com relação ao software e qual o custo do investimento. Entre os dispostivos apenas receptores, destacaram-se o RTL-SDR, o AirSpy Mini e o SDRplay RSPduo
-os quais atuam até a casa de 2 GHz aproximadamente. Com relação aos SDR's RX/TX foram considerados o LimeSDR Mini, BladeRF, HackRF, Ettus USRP B210 e o
-Adalm PlutoSDR e todos podem ser utilizados com largura de banda de pelo menos 20 MHz e podendo variar entre 1 MHz e 6 GHz no domínio da frequência.
+os quais atuam até a casa de 2 GHz aproximadamente com laguras de banda máximas variando entre 3 MHz e 10 MHz. Com relação aos SDR's RX/TX foram considerados
+o LimeSDR Mini, BladeRF, \textit{HackRF One}, Ettus USRP B210 e o Adalm PlutoSDR e todos podem ser utilizados com largura de banda de pelo menos 20 MHz e podendo variar
+entre 1 MHz e 6 GHz no domínio da frequência.
 
 O resumo dos principais SDR's que podem ser encontrados é mostrado na Tabela \ref{table:SDR_comparison}, com preços em dólares cotados online através do site \href{https://pt.aliexpress.com}{https://pt.aliexpress.com}
 e também dos própiros fabricantes \href{https://www.sdrplay.com/rspduo/}{SDRplay}, \href{https://www.analog.com/en/design-center/evaluation-hardware-and-software/evaluation-boards-kits/adalm-pluto.html}{Analog Devices},
-\href{https://www.nuand.com/bladerf-1/}{Nuand} e \href{https://www.ettus.com/all-products/ub210-kit/}{Ettus}.
+\href{https://www.nuand.com/bladerf-1/}{Nuand} e \href{https://www.ettus.com/all-products/ub210-kit/}{Ettus}.O SDR escolhido para este trabalho foi o \textit{HackRF One} o qual será abordado com mais detalhes na próxima seção.
 
-O SDR escolhido para este trabalho foi o HackRF o qual será abordado com mais detalhes na próxima seção.
-
-\newpage
 \begin{table}[!htb]
   \caption{Comparativo de SDR's a nível de hardware e custo de investimento}
   \centering
-  \begin{tabular}{|l|r|r|r|r|r|r|}
-    \hline
-                                        & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Faixa\\ de\\ frequência\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Largura\\ de banda\\ máxima\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}RX/\\ TX\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Half /\\ Full Duplex\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Resolução\\ do ADC\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Preço\\ (US\$)\end{tabular}}} \\ \hline
-    \textbf{RTL-SDR}                    & \begin{tabular}[c]{@{}r@{}}500 kHz\\ a\\ 1766 MHz\end{tabular}                               & 3 MHz                                                    & RX                                                       & Half Duplex                                              & 8 bits                                                   & $\sim$25,00                                              \\ \hline
-    \textbf{RSPduo}                     & \begin{tabular}[c]{@{}r@{}}1 kHz\\ a\\ 2 GHz\end{tabular}                               & 10 MHz                                                   & RX                                                       & Half Duplex                                              & 14 bits                                                  & $\sim$260,00                                             \\ \hline
-    \textbf{\begin{tabular}[c]{@{}l@{}}AirSpy\\ Mini\end{tabular}} & \begin{tabular}[c]{@{}r@{}}24 Hz\\ a\\ 1.7 GHz\end{tabular}                               & 6 MHz                                                    & RX                                                       & Half Duplex                                              & até 16 bits                                              & $\sim$150,00                                             \\ \hline
-    \textbf{\begin{tabular}[c]{@{}l@{}}USRP\\ B200/\\ B210\end{tabular}} & \begin{tabular}[c]{@{}r@{}}70 MHz\\ a\\ 6 GHz\end{tabular}                               & 56 MHz                                                   & \begin{tabular}[c]{@{}r@{}}RX/\\ TX\end{tabular}                               & Full Duplex                                              & 12 bits                                                  & \begin{tabular}[c]{@{}r@{}}a partir\\ de 890,00\end{tabular}                               \\ \hline
-    \textbf{PlutoSDR}                   & \begin{tabular}[c]{@{}r@{}}325 MHz\\ a\\ 3.8 GHz\end{tabular}                               & 20 MHz                                                   & \begin{tabular}[c]{@{}r@{}}RX/\\ TX\end{tabular}                               & Full Duplex                                              & 12 bits                                                  & 249,00                                                   \\ \hline
-    \textbf{\begin{tabular}[c]{@{}l@{}}LimeSDR\\ Mini\end{tabular}} & \begin{tabular}[c]{@{}r@{}}10 MHz\\ a\\ 3.5 GHz\end{tabular}                               & 30 MHz                                                   & \begin{tabular}[c]{@{}r@{}}RX/\\ TX\end{tabular}                               & Full Duplex                                              & 12 bits                                                  & \begin{tabular}[c]{@{}r@{}}de 300,00\\ a 350,00\end{tabular}                               \\ \hline
-    \textbf{BladeRF}                    & \begin{tabular}[c]{@{}r@{}}300 MHz\\ a\\ 3.8 GHz\end{tabular}                               & 40MHz                                                    & \begin{tabular}[c]{@{}r@{}}RX/\\ TX\end{tabular}                               & Full Duplex                                              & 12 bits                                                  & \begin{tabular}[c]{@{}r@{}}a partir\\ de 720,00\end{tabular}                               \\ \hline
-    \textbf{HackRF}                     & \begin{tabular}[c]{@{}r@{}}1 MHz\\ a\\ 6 GHz\end{tabular}                               & 20 MHz                                                   & \begin{tabular}[c]{@{}r@{}}RX/\\ TX\end{tabular}                               & Half Duplex                                              & 8 bits                                                   & \begin{tabular}[c]{@{}r@{}}a partir\\ de 70,00\end{tabular}                               \\ \hline
-  \end{tabular}
+  \resizebox{\linewidth}{!}{
+    \begin{tabular}{|l|r|r|r|r|r|r|}
+      \hline
+                                          & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Faixa\\ de\\ frequência\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Largura\\ de banda\\ máxima\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}RX/\\ TX\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Half /\\ Full Duplex\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Resolução\\ do ADC\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Preço\\ (US\$)\end{tabular}}} \\ \hline
+      \textbf{RTL-SDR}                    & \begin{tabular}[c]{@{}r@{}}500 kHz\\ a\\ 1766 MHz\end{tabular}                               & 3 MHz                                                    & RX                                                       & -                                              & 8 bits                                                   & $\sim$25,00                                              \\ \hline
+      \textbf{RSPduo}                     & \begin{tabular}[c]{@{}r@{}}1 kHz\\ a\\ 2 GHz\end{tabular}                               & 10 MHz                                                   & RX                                                       & -                                              & 14 bits                                                  & $\sim$260,00                                             \\ \hline
+      \textbf{\begin{tabular}[c]{@{}l@{}}AirSpy\\ Mini\end{tabular}} & \begin{tabular}[c]{@{}r@{}}24 Hz\\ a\\ 1.7 GHz\end{tabular}                               & 6 MHz                                                    & RX                                                       & -                                              & até 16 bits                                              & $\sim$150,00                                             \\ \hline
+      \textbf{\begin{tabular}[c]{@{}l@{}}USRP\\ B200/\\ B210\end{tabular}} & \begin{tabular}[c]{@{}r@{}}70 MHz\\ a\\ 6 GHz\end{tabular}                               & 56 MHz                                                   & \begin{tabular}[c]{@{}r@{}}RX/\\ TX\end{tabular}                               & Full Duplex                                              & 12 bits                                                  & \begin{tabular}[c]{@{}r@{}}a partir\\ de 890,00\end{tabular}                               \\ \hline
+      \textbf{PlutoSDR}                   & \begin{tabular}[c]{@{}r@{}}325 MHz\\ a\\ 3.8 GHz\end{tabular}                               & 20 MHz                                                   & \begin{tabular}[c]{@{}r@{}}RX/\\ TX\end{tabular}                               & Full Duplex                                              & 12 bits                                                  & 249,00                                                   \\ \hline
+      \textbf{\begin{tabular}[c]{@{}l@{}}LimeSDR\\ Mini\end{tabular}} & \begin{tabular}[c]{@{}r@{}}10 MHz\\ a\\ 3.5 GHz\end{tabular}                               & 30 MHz                                                   & \begin{tabular}[c]{@{}r@{}}RX/\\ TX\end{tabular}                               & Full Duplex                                              & 12 bits                                                  & \begin{tabular}[c]{@{}r@{}}de 300,00\\ a 350,00\end{tabular}                               \\ \hline
+      \textbf{BladeRF}                    & \begin{tabular}[c]{@{}r@{}}300 MHz\\ a\\ 3.8 GHz\end{tabular}                               & 40MHz                                                    & \begin{tabular}[c]{@{}r@{}}RX/\\ TX\end{tabular}                               & Full Duplex                                              & 12 bits                                                  & \begin{tabular}[c]{@{}r@{}}a partir\\ de 720,00\end{tabular}                               \\ \hline
+      \textbf{HackRF}                     & \begin{tabular}[c]{@{}r@{}}1 MHz\\ a\\ 6 GHz\end{tabular}                               & 20 MHz                                                   & \begin{tabular}[c]{@{}r@{}}RX/\\ TX\end{tabular}                               & Half Duplex                                              & 8 bits                                                   & \begin{tabular}[c]{@{}r@{}}a partir\\ de 70,00\end{tabular}                               \\ \hline
+    \end{tabular}
+  }
   \label{table:SDR_comparison}
 \end{table}
 
@@ -752,107 +763,59 @@ O SDR escolhido para este trabalho foi o HackRF o qual será abordado com mais d
 % Steel enclosure accessory kit available for green PCB devices (revision 6 or later)
 
 
-\subsection*{HackRF}
+\subsection*{HackRF One}
 
 % HACKRF: https://pt.aliexpress.com/item/32889992261.html
 
-De 1MHz a 6GHz, inicialmente anunciado a partir de 10Mhz, o HackRF pode receber sinais muito grandes de 1MHz (rádios de ondas curtas) e de potências de
-sinal 5MHz menores (bandas de rádio amador)
-Transceptor em half duplex
-Até 20 milhões de amostras por segundo
-Amostras de 8 bits em quadratura (I e 8 bits 8 bits Q)
-Compatível com GNU Radio, SDR Sharp, SDR Console, SDRAngel e outro software SDR
-Ganho configurável de RX e TX por software e filtro de banda base
-Porta de antena de energia controlada por software (50 mA a 3,3 V)
-Conector de antena SMA fêmea
-Botões convenientes para programação
-Velocidade USB 2.0
-Alimentado por hardware de código aberto USB
+O \textit{HackRF One} é um SDR com \textit{hardware} de código aberto que foi desenvolvido pelo pesquisador em segurança de redes sem fio, Michael Ossmann. Trata-se de um transceptor \textit{half-duplex}
+com largura de banda máxima de 20 MHz preparado para atuar em uma grande faixa de frequências que vão de 1 MHz a 6 GHz, possibilitando o processamento de até 20 milhões de amostras por
+segundo (tendo 8 bits por amostra em quadratura - sinais I/Q com 8 bits para o I e 8 bits para o Q) recebidas ou transmitidas por meio de uma antena fixada em seu conector SMA fêmea, de
+forma que o ganho - de recepção (RX) ou de transmissão (TX) - é configurável pelo software utilizado, que neste caso é o GNURadio. O \textit{HackRF One} é alimentado pela tensão VCC fornecida
+pela porta de comunicação USB 2.0 que possibilita que o SDR trasnmita até 40 MB por segundo (20 milhões de amostras de 2 bytes). A potência máxima do \textit{HackRF One} varia de acordo com a
+faixa de frequência de operação e é suficiente para a realização de testes de curto alcance.
 
-Potência de saída do HackRF One
+\begin{itemize}
+  \item[$-$] 10 MHz a 2150 MHz: 5 dBm a 15 dBm (3 mW a 30 mW);
+  \item[$-$] 2150 MHz a 2750 MHz: 13 dBm a 15 dBm (20 mW a 30 mW);
+  \item[$-$] 2750 MHz a 4000 MHz: de 0 dBm a 5 dBm (0-3 mW);
+  \item[$-$] 4000 MHz a 6000 MHz: -10 dBm a 0 dBm.
+\end{itemize}
 
-A potência máxima do TX para HackRF One varia em qual frequência de operação:
+Por se tratar de um equipamento que lida com radiofrequência, o uso do \textit{HackRF One} deve estar dentro das observações legais da região em que for aplicado. No Brasil é importante que o
+engenheiro esteja atento às regras reguladas pela Agência Nacional de Telecomunicações, ANATEL, como por exemplo a Resolução nº 716, de 31 de outubro de 2019 em que foi aprovado o plano de
+atribuição, destinação e distribuição de faixas de frequências no Brasil (PDFF). O Anexo \ref{attachment:freq_range_brasil} contém o quadro de atribuição de faixas de frequências no Brasil, edição 2019.
 
-- 10 MHz a 2150 MHz: 5 dBm a 15 dBm (3 mW a 30 mW), geralmente aumentando as diminuições de frequência
-- 2150 MHz a 2750 MHz: 13 dBm a 15 dBm (20 mW a 30 mW)
-- 2750 MHz a 4000 MHz: de 0 dBm a 5 dBm (0-3 mW), aumenta à medida que a frequência diminui
-- 4000 MHz a 6000 MHz: -10 dBm a 0 dBm, geralmente aumenta à medida que a frequência diminui
+O kit que foi adquirido no site \href{https://pt.aliexpress.com}{https://pt.aliexpress.com} veio com uma placa de circuito impresso do SDR \textit{HackRF One}, um oscilador TCXO (\textit{Temperature Compensated Crystal Oscillator})
+uma antena telescópica (banda passante de 40 MHz a 6 GHz), uma antena Omnidirecional (para recepção de sinais GSM, 3G e 4G), um cabo USB e peças de acrílico para montagem do kit. As fotos da Fig.
+\ref{fig:hack_rf_hdk} foram tiradas após a montagem do kit.
 
-A faixa de frequência com melhor desempenho é de 2150 MHz a 2750 MHz com 30 mWatts de potência de saída (TX).
+% \subsubsection*{ANTENA}
 
-A potência de saída é suficiente para testar curto alcance (alguns metros) ou amplificador de potência. Se você conectar um amplificador, também deverá
-usar um filtro de banda externo adaptado à frequência de operação.
+% % https://pt.dhgate.com/product/12dbi-high-gain-omni-directional-sma-male/429542258.html
 
-HackRF One é um equipamento para teste de sistemas RF. Ele é usado dessa forma e você é legalmente responsável pelo uso do HackRF One. A maneira mais
-fácil e legal é se tornar um operador de rádio amador.
+% Inscrição:
+% A antena é ótimo para veículos / automóvel / caminhão / uso van. Montado em uma superfície mental. E é funcionado como uma antena de alto ganho ao ar livre.
 
+% Especificações:
+% gama de frequência: 700 MHz-2700 MHz
+% VSWR: menor ou igual a 1.5
+% Ganho: 12dB
+% impedância de entrada: 50 Ohm
+% cabo coaxial: RG174 (3mm de diâmetro)
+% comprimento do fio: 3M
+% Tipo de conector: SMA-J
 
-Especificações:
-- frequência de operação de 1 MHz a 6 GHz
-- Transceptor half-duplex
-- Até 20 milhões de amostras por segundo
-- Amostras de quadratura de 8 bits (8 bits I e 8 bits Q)
-- Compatível com GNU Radio, SDR e mais
-- Ganho RX e TX configurável por software e filtro de banda base
-- Potência de saída da antena controlada por software (50 mA a 3,3 V)
-- Conector de antena SMA fêmea
-- Entrada e saída para sincronismo
-- Botões convenientes para programação
-- Cabeçalhos de pinos internos para expansão
-- USB 2.0 de alta velocidade
-- alimentado por USB
-- Hardware de código aberto
+% Suporta todas as transportadoras que transmitem as seguintes bandas de frequência:
+% 700-800 MHz 4.5dB
+% 824-894 MHz 5dB
+% 880-960 MHz 5dB
+% 1710-1880 MHz 9.5dB
+% 1850-1990 MHz 9.5dB
+% 2110-2170 MHz 10dB
+% 2500 $\sim$ 2700 MHz 12dB
 
-Parâmetros:
-- Banda de frequência: 1MHz-6Ghz
-- Largura de banda de dados: 20 MHz
-- Precisão de amostragem (ADC / DAC): 8BIT
-- Velocidade de amostragem (ADC / DAC): 20 Mbps
-- Interface: USB 2.0
-- Código aberto
-- Potência máxima de transmissão: 10dbm
-- 64QAM transmitindo EVM: 1,5 \%
-- Largura de banda de amostragem complexa: 20Mhz
-
-Hardware:
-- Mixer RFFC5072: 80MHz-4200MHz
-- Transceptor de RF de largura de banda sem fio MAX2837: 2,3 Ghz-2,7 Ghz
-- Processador LPC4330: Frequência principal 204 MHz
-- Amplificador MGA-81563: 0,1-6 Ghz, 3V, 14dbm
-
-Conteúdo do pacote:
-- 1 placa principal
-- 1 x Shell de liga de alumínio
-- 3 x Antena
-- 1 cabo de dados USB
-
-\subsubsection*{ANTENA}
-
-% https://pt.dhgate.com/product/12dbi-high-gain-omni-directional-sma-male/429542258.html
-
-Inscrição:
-A antena é ótimo para veículos / automóvel / caminhão / uso van. Montado em uma superfície mental. E é funcionado como uma antena de alto ganho ao ar livre.
-
-Especificações:
-gama de frequência: 700 MHz-2700 MHz
-VSWR: menor ou igual a 1.5
-Ganho: 12dB
-impedância de entrada: 50 Ohm
-cabo coaxial: RG174 (3mm de diâmetro)
-comprimento do fio: 3M
-Tipo de conector: SMA-J
-
-Suporta todas as transportadoras que transmitem as seguintes bandas de frequência:
-700-800 MHz 4.5dB
-824-894 MHz 5dB
-880-960 MHz 5dB
-1710-1880 MHz 9.5dB
-1850-1990 MHz 9.5dB
-2110-2170 MHz 10dB
-2500 $\sim$ 2700 MHz 12dB
-
-Incluído no Pacote:
-1 x Mount Magnet Antena
+% Incluído no Pacote:
+% 1 x Mount Magnet Antena
 
 \newpage
 \begin{figure}[!htb]
@@ -860,44 +823,32 @@ Incluído no Pacote:
   \begin{subfigure}[b]{0.45\linewidth}
     \centering
     \includegraphics[width=\linewidth]{figures/hackrf/hack_rf_cabo_usb_antena_linear.jpg}
-    \caption{Cabo USB e antena linear.}
+    \caption{Cabo USB e antena telescópica.}
     \label{fig:hack_rf_cabo_usb_antena_linear}
   \end{subfigure}
   \hspace{0.5cm}
   \begin{subfigure}[b]{0.45\linewidth}
     \centering
     \includegraphics[width=\linewidth]{figures/hackrf/hack_rf_antena_helicoidal.jpg}
-    \caption{$y=3sinx$}
+    \caption{Antena Omnidirecional.}
     \label{fig:hack_rf_antena_helicoidal}
   \end{subfigure}
   \quad
   \begin{subfigure}[b]{0.45\linewidth}
     \centering
     \includegraphics[width=\linewidth]{figures/hackrf/hack_rf.jpg}
-    \caption{$y=x$}
+    \caption{HackRF com TCXO.}
     \label{fig:hack_rf}
   \end{subfigure}
   \hspace{0.5cm}
   \begin{subfigure}[b]{0.45\linewidth}
     \centering
     \includegraphics[width=\linewidth]{figures/hackrf/hack_rf_kit.jpg}
-    \caption{$y=3sinx$}
+    \caption{Kit completo.}
     \label{fig:hack_rf_kit}
   \end{subfigure}
   \caption{Kit de desenvolvimento de aplicações de rádio definido por software.}
   \label{fig:hack_rf_hdk}
-\end{figure}
-
-\newpage
-Com relação ao computador utilizado, trata-se de um notebook com 8 GB de memória DDR3 e processador Intel® Core™ i7 de terceira geração com quatro
-núcleos e 3.0 GHz de \textit{clock} conforme estatísticas retiradas do próprio sistema operacional e mostradas na Fig. \ref{fig:host_pc_stats}.
-
-\begin{figure}[!htb]
-  \centering
-  \caption{Configurações de CPU e memória do computador utilizado.}
-  \includegraphics[width = \linewidth]{figures/host-pc/stats.png}
-  Fonte: Elaborada pelo autor.
-  \label{fig:host_pc_stats}
 \end{figure}
 
 \chapter{Software}
@@ -1396,18 +1347,22 @@ não adicionaria vigor e relevância ao propósito deste trabalho de forma que t
 \begin{anexosenv}
 
   % Imprime uma página indicando o início dos anexos
-  % \partanexos
+  \partanexos
   % ---
   % \chapter{Morbi ultrices rutrum lorem.}
   % ---
   % \lipsum[30]
 
   % ---
-  \chapter{Cras non urna sed feugiat cum sociis natoque penatibus et magnis dis
-    parturient montes nascetur ridiculus mus}
-  % ---
+  \chapter{Atribuição de faixas de frequências no Brasil}
+  \label{attachment:freq_range_brasil}
+  \begin{figure}[!htb]
+    \centering
+    \includegraphics[height = 0.8\linewidth, angle=90]{attachments/atribuicao_faixas_de_frequencia_no_brasil.pdf}
 
-  \lipsum[31]
+    Fonte: Agência Nacional de Telecomunicações.
+  \end{figure}
+  % ---
 
   % ---
   \chapter{Fusce facilisis lacinia dui}
