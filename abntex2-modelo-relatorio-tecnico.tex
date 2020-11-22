@@ -61,6 +61,8 @@
 \usepackage{hyperref}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{adjustbox}
+\usepackage{etoolbox}
 
 % ---
 % Pacotes fundamentais 
@@ -91,7 +93,7 @@
 % Pacotes de citações
 % ---
 \usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
-\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+\usepackage[ieeetr]{abntex2cite}	% Citações padrão ABNT
 
 % --- 
 % CONFIGURAÇÕES DE PACOTES
@@ -265,8 +267,7 @@
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \assinatura{\textbf{\imprimirorientador} \\ Orientador}
   \assinatura{\textbf{Dr. Gilberto Arantes Carrijo} \\ Convidado 1}
-  \assinatura{\textbf{Dr. Alan Petrônio Pinheiro} \\ Convidado 2}
-  \assinatura{\textbf{Dr. Éderson Rosa da Silva} \\ Convidado 3}
+  \assinatura{\textbf{Dr. Éderson Rosa da Silva} \\ Convidado 2}
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -355,8 +356,24 @@
   resumo, antecedidas da expressão Palavras-chave:, separadas entre si por
   ponto e finalizadas também por ponto.
 
+  Objetivo: ser um pontapé inicial para que estudantes de engenharia eletrônica e de Telecomunicações
+  possam ter um primeiro contato prático com técnicas de processamento digital de sinais aplicadas a
+  um sistema de rádio definido por software.
+
+  Método: utilização de programação em C++/Python de blocos de processamento de sinais, juntamente ao
+  uso do \textit{hardware} do SDR para realizar experimentações em radiofrequência.
+
+  Resultados obtidos: foi possível receber sinais RF, principalmente FM,transmitir sinais, simular uma
+  estação base de transmissão.
+
+  Conclusões: A possibilidade de utilização de um \textit{hardware} que simule sistemas reais de recepção/transmissão
+  de sinais de radiofrequência potencializa o aprendizado de estudantes de engenharia eltrônica e de
+  telecomunicações.
+
+
+
   \noindent
-  \textbf{Palavras-chaves}: latex. abntex. editoração de texto.
+  \textbf{Palavras-chaves}: rádio, software, gnuradio, hackrf, sdr.
 \end{resumo}
 % ---
 
@@ -518,7 +535,8 @@ Neste capítulo serão abordados os dispositivos de \textit{hardware} utilizados
 podem ser encontrados no mercado atualmente e quais as especificações técnicas disponibilizadas por alguns fabricantes. Basicamente para alcançar o êxito
 é necessário um dispositivo \textit{host} (arquiteturas \textbf{x86\_64} ou \textbf{amd64}, \textbf{armhf} e \textbf{arm64}/\textbf{aarch64}, por exemplo),
 preferencialmente com alguma distribuição \textit{Linux} e o \textit{GNURadio-companion} instalados, uma placa de circuito impresso do sistema de rádio
-definido por \textit{software} contendo algum cabo para comunicação com o computador \textit{host} (normalmente USB 2.0/3.0), as antenas e algum oscilador (TCXO, OCXO, GPSDO, etc...)
+definido por \textit{software} contendo algum cabo para comunicação com o computador \textit{host} (normalmente USB 2.0/3.0), as antenas para transmissão e/ou recepção
+e algum oscilador (TCXO, OCXO, GPSDO, etc...)
 caso a aplicação exija sincronismo por \textit{clock} externo.
 
 Com relação ao computador utilizado, trata-se de um notebook de arquitetura \textbf{amd64} com 8 GB de memória DDR3 e processador Intel® Core™ i7 de terceira geração com quatro núcleos e
@@ -536,26 +554,26 @@ Com relação ao computador utilizado, trata-se de um notebook de arquitetura \t
 
 Para o sistema de rádio definido por \textit{software} primeiramente foi realizada uma pesquisa de mercado para avaliar quais os SDR's disponíveis e quais
 \textit{feature's} cada um oferece. Pontos importantes a serem observados antes de efetuar a compra de um SDR são: se ele pode atuar apenas como receptor
-(RX) ou como receptor e trasmissor (RX/TX), qual a faixa de frequência de atuação, a largura de banda máxima e a resolução do ADC/DAC (número de bits por amostra), qual o suporte
-com relação ao software e qual o custo do investimento. Entre os dispostivos apenas receptores, destacaram-se o RTL-SDR, o AirSpy Mini e o SDRplay RSPduo
+(RX) ou como receptor e trasmissor (RX/TX), qual a faixa de frequência de atuação, a largura de banda máxima e a resolução do ADC/DAC (número de \textit{bits} por amostra),
+qual o suporte a nível de \textit{software} e qual o custo do investimento. Entre os dispostivos apenas receptores, destacaram-se o RTL-SDR, o AirSpy Mini e o SDRplay RSPduo,
 os quais atuam até a casa de 2 GHz aproximadamente com laguras de banda máximas variando entre 3 MHz e 10 MHz. Com relação aos SDR's RX/TX foram considerados
 o LimeSDR Mini, BladeRF, \textit{HackRF One}, Ettus USRP B210 e o Adalm PlutoSDR e todos podem ser utilizados com largura de banda de pelo menos 20 MHz e podendo variar
 entre 1 MHz e 6 GHz no domínio da frequência.
 
-O resumo dos principais SDR's que podem ser encontrados é mostrado na Tabela \ref{table:SDR_comparison}, com preços em dólares cotados online através do site \href{https://pt.aliexpress.com}{https://pt.aliexpress.com}
-e também dos própiros fabricantes \href{https://www.sdrplay.com/rspduo/}{SDRplay}, \href{https://www.analog.com/en/design-center/evaluation-hardware-and-software/evaluation-boards-kits/adalm-pluto.html}{Analog Devices},
-\href{https://www.nuand.com/bladerf-1/}{Nuand} e \href{https://www.ettus.com/all-products/ub210-kit/}{Ettus}.O SDR escolhido para este trabalho foi o \textit{HackRF One} o qual será abordado com mais detalhes na próxima seção.
+O resumo dos principais SDR's que podem ser encontrados no mercado é mostrado na Tabela \ref{table:SDR_comparison}, com preços em dólares cotados online através do site \href{https://pt.aliexpress.com}{https://pt.aliexpress.com}
+e também dos própiros fabricantes \href{https://www.sdrplay.com/rspduo/}{SDRplay}, \href{https://www.analog.com/en/design-center/evaluation-hardware-and-software/evaluation-boards-kits/adalm-pluto.html}{Analog Devices} (Adalm Pluto),
+\href{https://www.nuand.com/bladerf-1/}{Nuand} (BladeRF) e \href{https://www.ettus.com/all-products/ub210-kit/}{Ettus} (USRP B210). O SDR escolhido para este trabalho foi o \textit{HackRF One}, que será abordado com mais detalhes na próxima seção.
 
 \begin{table}[!htb]
-  \caption{Comparativo de SDR's a nível de hardware e custo de investimento}
+  \caption{Comparativo de SDR's a nível de \textit{hardware} e custo de investimento.}
   \centering
   \resizebox{\linewidth}{!}{
     \begin{tabular}{|l|r|r|r|r|r|r|}
       \hline
                                           & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Faixa\\ de\\ frequência\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Largura\\ de banda\\ máxima\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}RX/\\ TX\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Half /\\ Full Duplex\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Resolução\\ do ADC\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Preço\\ (US\$)\end{tabular}}} \\ \hline
-      \textbf{RTL-SDR}                    & \begin{tabular}[c]{@{}r@{}}500 kHz\\ a\\ 1766 MHz\end{tabular}                               & 3 MHz                                                    & RX                                                       & -                                              & 8 bits                                                   & $\sim$25,00                                              \\ \hline
-      \textbf{RSPduo}                     & \begin{tabular}[c]{@{}r@{}}1 kHz\\ a\\ 2 GHz\end{tabular}                               & 10 MHz                                                   & RX                                                       & -                                              & 14 bits                                                  & $\sim$260,00                                             \\ \hline
-      \textbf{\begin{tabular}[c]{@{}l@{}}AirSpy\\ Mini\end{tabular}} & \begin{tabular}[c]{@{}r@{}}24 Hz\\ a\\ 1.7 GHz\end{tabular}                               & 6 MHz                                                    & RX                                                       & -                                              & até 16 bits                                              & $\sim$150,00                                             \\ \hline
+      \textbf{RTL-SDR}                    & \begin{tabular}[c]{@{}r@{}}500 kHz\\ a\\ 1766 MHz\end{tabular}                               & 3 MHz                                                    & RX                                                       & -                                                        & 8 bits                                                   & $\sim$25,00                                              \\ \hline
+      \textbf{RSPduo}                     & \begin{tabular}[c]{@{}r@{}}1 kHz\\ a\\ 2 GHz\end{tabular}                               & 10 MHz                                                   & RX                                                       & -                                                        & 14 bits                                                  & $\sim$260,00                                             \\ \hline
+      \textbf{\begin{tabular}[c]{@{}l@{}}AirSpy\\ Mini\end{tabular}} & \begin{tabular}[c]{@{}r@{}}24 Hz\\ a\\ 1.7 GHz\end{tabular}                               & 6 MHz                                                    & RX                                                       & -                                                        & até 16 bits                                              & $\sim$150,00                                             \\ \hline
       \textbf{\begin{tabular}[c]{@{}l@{}}USRP\\ B200/\\ B210\end{tabular}} & \begin{tabular}[c]{@{}r@{}}70 MHz\\ a\\ 6 GHz\end{tabular}                               & 56 MHz                                                   & \begin{tabular}[c]{@{}r@{}}RX/\\ TX\end{tabular}                               & Full Duplex                                              & 12 bits                                                  & \begin{tabular}[c]{@{}r@{}}a partir\\ de 890,00\end{tabular}                               \\ \hline
       \textbf{PlutoSDR}                   & \begin{tabular}[c]{@{}r@{}}325 MHz\\ a\\ 3.8 GHz\end{tabular}                               & 20 MHz                                                   & \begin{tabular}[c]{@{}r@{}}RX/\\ TX\end{tabular}                               & Full Duplex                                              & 12 bits                                                  & 249,00                                                   \\ \hline
       \textbf{\begin{tabular}[c]{@{}l@{}}LimeSDR\\ Mini\end{tabular}} & \begin{tabular}[c]{@{}r@{}}10 MHz\\ a\\ 3.5 GHz\end{tabular}                               & 30 MHz                                                   & \begin{tabular}[c]{@{}r@{}}RX/\\ TX\end{tabular}                               & Full Duplex                                              & 12 bits                                                  & \begin{tabular}[c]{@{}r@{}}de 300,00\\ a 350,00\end{tabular}                               \\ \hline
@@ -650,7 +668,7 @@ e também dos própiros fabricantes \href{https://www.sdrplay.com/rspduo/}{SDRpl
 % Compatible with Raspberry Pi, Odroid, Pine64 and UP boards
 % Operating temperature: -10°C to 40°C
 
-% Minimum hardware requirements
+% Minimum \textit{hardware} requirements
 
 % Core 2 Duo @ 2 GHz CPU or equivalent
 % 2GB of RAM (to run your own OS, airspy barely needs 1MB of memory)
@@ -726,7 +744,7 @@ e também dos própiros fabricantes \href{https://www.sdrplay.com/rspduo/}{SDRpl
 % DC power jack for running headless
 % Highly efficient, low noise power architecture
 % Stable Linux, Windows, Mac and GNURadio software support
-% Hardware capable of operating as a spectrum analyzer, vector signal analyzer, and vector signal generator
+% \textit{hardware} capable of operating as a spectrum analyzer, vector signal analyzer, and vector signal generator
 
 
 % \subsection*{USRP B210}
@@ -736,7 +754,7 @@ e também dos própiros fabricantes \href{https://www.sdrplay.com/rspduo/}{SDRpl
 
 % Overview
 
-% The USRP B210 provides a fully integrated, single-board, Universal Software Radio Peripheral (USRP™) platform with continuous frequency coverage from 70 MHz – 6 GHz. Designed for low-cost experimentation, it combines the AD9361 RFIC direct-conversion transceiver providing up to 56MHz of real-time bandwidth, an open and reprogrammable Spartan6 FPGA, and fast SuperSpeed USB 3.0 connectivity with convenient bus-power. Full support for the USRP Hardware Driver™ (UHD) software allows you to immediately begin developing with GNU Radio, prototype your own GSM base station with OpenBTS, and seamless transition code from the USRP B210 to higher performance, industry-ready USRP platforms. An enclosure accessory kit is available to users of green PCB devices (revision 6 or later) to assemble a protective steel case.
+% The USRP B210 provides a fully integrated, single-board, Universal Software Radio Peripheral (USRP™) platform with continuous frequency coverage from 70 MHz – 6 GHz. Designed for low-cost experimentation, it combines the AD9361 RFIC direct-conversion transceiver providing up to 56MHz of real-time bandwidth, an open and reprogrammable Spartan6 FPGA, and fast SuperSpeed USB 3.0 connectivity with convenient bus-power. Full support for the USRP \textit{hardware} Driver™ (UHD) software allows you to immediately begin developing with GNU Radio, prototype your own GSM base station with OpenBTS, and seamless transition code from the USRP B210 to higher performance, industry-ready USRP platforms. An enclosure accessory kit is available to users of green PCB devices (revision 6 or later) to assemble a protective steel case.
 
 % Experimentation with Low-cost SDR
 
@@ -754,7 +772,7 @@ e também dos própiros fabricantes \href{https://www.sdrplay.com/rspduo/}{SDRpl
 
 % Fast and convenient SuperSpeed USB 3.0 connectivity
 
-% GNURadio and OpenBTS support through the open-source USRP Hardware Driver™ (UHD)
+% GNURadio and OpenBTS support through the open-source USRP \textit{hardware} Driver™ (UHD)
 
 % Open and reconfigurable Spartan 6 XC6SLX150 FPGA (for advanced users)
 
@@ -770,24 +788,38 @@ e também dos própiros fabricantes \href{https://www.sdrplay.com/rspduo/}{SDRpl
 O \textit{HackRF One} é um SDR com \textit{hardware} de código aberto que foi desenvolvido pelo pesquisador em segurança de redes sem fio, Michael Ossmann. Trata-se de um transceptor \textit{half-duplex}
 com largura de banda máxima de 20 MHz preparado para atuar em uma grande faixa de frequências que vão de 1 MHz a 6 GHz, possibilitando o processamento de até 20 milhões de amostras por
 segundo (tendo 8 bits por amostra em quadratura - sinais I/Q com 8 bits para o I e 8 bits para o Q) recebidas ou transmitidas por meio de uma antena fixada em seu conector SMA fêmea, de
-forma que o ganho - de recepção (RX) ou de transmissão (TX) - é configurável pelo software utilizado, que neste caso é o GNURadio. O \textit{HackRF One} é alimentado pela tensão VCC fornecida
-pela porta de comunicação USB 2.0 que possibilita que o SDR trasnmita até 40 MB por segundo (20 milhões de amostras de 2 bytes). A potência máxima do \textit{HackRF One} varia de acordo com a
-faixa de frequência de operação e é suficiente para a realização de testes de curto alcance.
+forma que o ganho - de recepção (RX) ou de transmissão (TX) - é configurável pelo \textit{software} utilizado, que neste caso é o GNURadio. O \textit{HackRF One} é alimentado pela tensão VCC fornecida
+pela porta de comunicação USB 2.0 que possibilita que o SDR trasnmita até 40 MB por segundo (20 milhões de amostras de 2 bytes).
+
+Em quinze de maio de dois mil e quinze, Michael Ossmann publicou que seu SDR é capaz de operar em frequências menores que 10 MHz \cite{HACKRF-1mhz}, reafirmando a faixa de operação do \textit{HackRF One}.
+A potência máxima de transmissão do \textit{HackRF One} varia de acordo com a faixa de frequência de operação e é suficiente para a realização de testes de curto alcance. Para recepção, o máximo de
+potência fica na ordem de -5 dBm e exceder este valor pode resultar em danos permanentes ao \textit{HackRF One} \cite{HACKRF-hardware-receive-power}.
+
+Os valores apresentados a seguir estão relacionados à potência de transmissão do \textit{HackRF One} e foram coletados e disponibilizados pelo fabricante \cite{HACKRF-hardware-transmit-power}:
 
 \begin{itemize}
-  \item[$-$] 10 MHz a 2150 MHz: 5 dBm a 15 dBm (3 mW a 30 mW);
+  \item[$-$] 1 MHz a 10 MHz: 5 dBm a 15 dBm (3 mW a 30 mW), crescente com a frequência;
+  \item[$-$] 10 MHz a 2150 MHz: 5 dBm a 15 dBm (3 mW a 30 mW), decrescente com a frequência;
   \item[$-$] 2150 MHz a 2750 MHz: 13 dBm a 15 dBm (20 mW a 30 mW);
-  \item[$-$] 2750 MHz a 4000 MHz: de 0 dBm a 5 dBm (0-3 mW);
-  \item[$-$] 4000 MHz a 6000 MHz: -10 dBm a 0 dBm.
+  \item[$-$] 2750 MHz a 4000 MHz: de 0 dBm a 5 dBm (0-3 mW), decrescente com a frequência;
+  \item[$-$] 4000 MHz a 6000 MHz: -10 dBm a 0 dBm, decrescente com a frequência.
 \end{itemize}
 
-Por se tratar de um equipamento que lida com radiofrequência, o uso do \textit{HackRF One} deve estar dentro das observações legais da região em que for aplicado. No Brasil é importante que o
+A Fig. \ref{fig:hackrf_block_diagram} ilustra o diagrama de blocos simplificado do \textit{HackRF One}. Por se tratar de um equipamento que lida com radiofrequência, o uso do \textit{HackRF One} deve estar dentro das observações legais da região em que for aplicado. No Brasil é importante que o
 engenheiro esteja atento às regras reguladas pela Agência Nacional de Telecomunicações, ANATEL, como por exemplo a Resolução nº 716, de 31 de outubro de 2019 em que foi aprovado o plano de
 atribuição, destinação e distribuição de faixas de frequências no Brasil (PDFF). O Anexo \ref{attachment:freq_range_brasil} contém o quadro de atribuição de faixas de frequências no Brasil, edição 2019.
 
-O kit que foi adquirido no site \href{https://pt.aliexpress.com}{https://pt.aliexpress.com} veio com uma placa de circuito impresso do SDR \textit{HackRF One}, um oscilador TCXO (\textit{Temperature Compensated Crystal Oscillator})
-uma antena telescópica (banda passante de 40 MHz a 6 GHz), uma antena Omnidirecional (para recepção de sinais GSM, 3G e 4G), um cabo USB e peças de acrílico para montagem do kit. As fotos da Fig.
-\ref{fig:hack_rf_hdk} foram tiradas após a montagem do kit.
+\begin{figure}[!htb]
+  \centering
+  \caption{Diagrama de blocos simplificado do \textit{HackRF One}.}
+  \includegraphics[width = \linewidth, page=1, clip=true]{attachments/hackrf_SDR_diagram}
+  Fonte: Elaborada pelo autor com base na documentação fornecida pelo fabricante \cite{HACKRF-hardware-components}.
+  \label{fig:hackrf_block_diagram}
+\end{figure}
+
+O \textit{kit} que foi adquirido no site \href{https://pt.aliexpress.com}{https://pt.aliexpress.com} veio com uma placa de circuito impresso do SDR \textit{HackRF One}, um oscilador TCXO (\textit{Temperature Compensated Crystal Oscillator})
+uma antena telescópica (banda passante de 40 MHz a 6 GHz), uma antena omnidirecional (para recepção de sinais GSM, 3G e 4G), um cabo USB e peças de acrílico para montagem do \textit{kit}. As fotos da Fig.
+\ref{fig:hack_rf_hdk} foram tiradas após a montagem do \textit{kit} e os diagramas esquemático e de montagem referentes ao projeto foram anexados a este trabalho (Anexos \ref{attachment:hackrf-one-schematic-1} a \ref{attachment:hackrf-one-assembly}).
 
 % \subsubsection*{ANTENA}
 
@@ -847,7 +879,7 @@ uma antena telescópica (banda passante de 40 MHz a 6 GHz), uma antena Omnidirec
     \caption{Kit completo.}
     \label{fig:hack_rf_kit}
   \end{subfigure}
-  \caption{Kit de desenvolvimento de aplicações de rádio definido por software.}
+  \caption{\textit{Kit} de desenvolvimento de aplicações de rádio definido por software.}
   \label{fig:hack_rf_hdk}
 \end{figure}
 
@@ -865,12 +897,11 @@ serão tratados aqui.
 \section*{GNURadio}
 
 O GNURadio é um SDK (\textit{software development kit}) de um projeto \textit{OpenSource} criado com o intuito de auxiliar no desenvolvimento de aplicações de
-rádio definido por \textit{software} inicialmente publicado no ano de 2001 como um pacote oficial GNU.
-O GNURadio pode ser utilizado tanto por \textit{hobbystas}, como também em meio acadêmico ou para suprir necessidades do mercado no que tange comunicações sem
-fio ou qualquer tipo de sistema de rádio digital do mundo real.
+rádio definido por \textit{software} inicialmente publicado no ano de 2001 como um pacote oficial GNU. Este \textit{software} pode ser utilizado tanto por \textit{hobbystas}, como
+também em meio acadêmico ou para suprir necessidades do mercado no que tange comunicações sem fio ou qualquer tipo de sistema de rádio digital do mundo real.
 O GNURadio está sob uma licença pública geral — GNU GPLv3 — da \textit{Free Software Foundation} (FSF).
 
-Por ser um projeto de \textit{software} agnóstico ao hardware das plataformas de desenvolvimento (SDR — \textit{Software-defined Radio}), o GNURadio é idealizado
+Por ser um projeto de \textit{software} agnóstico ao \textit{hardware} das plataformas de desenvolvimento (SDR — \textit{Software-defined Radio}), o GNURadio é idealizado
 para trabalhar apenas com dados digitalizados e a partir disso executar todo um processamento digital de sinais (DSP — \textit{Digital Signal Processing})
 definido por aplicações escritas para receber ou enviar dados de sistemas de \textit{streaming} digital programaticamente, utilizando a linguagem de programação
 Python — que é considerado mais fácil — ou C++ — para escrita de códigos de desempenho crítico — além de também ser possível através de uma interface gráfica de
@@ -882,17 +913,17 @@ usuário (\textbf{GNURadio Companion} — GRC) por diagramas de blocos.
 O \textit{Docker} é uma unidade padrão de \textit{software} da empresa \textit{Docker} Inc., que fornece uma camada de abstração e automação em containers, ou seja, grupos isolados de
 processos do \textit{kernel} Linux sendo executados e compartilhando os recursos de um mesmo \textit{host}. Um bom entendimento sobre os \textit{namespaces} do  sistema operacional
 Linux (\textbf{mnt}, \textbf{pid}, \textbf{net}, \textbf{ipc}, \textbf{uts}, \textbf{user} e \textbf{cgroups}) pode ajudar na compreensão de quais soluções os
-containers podem oferecer.
+\textit{containers} podem oferecer.
 
 Um questionamento bastante pertinente que pode vir à tona neste momento é: Seria mesmo necessário utilizar \textit{container}'s para criação
 do ambiente de desenvolvimento, sendo que o próprio GNURadio já é distribuído oficialmente em pacotes compatíveis com os principais sistemas
 operacionais encontrados no mercado? Com o decorrer do próximo capítulo o porquê se tornará mais claro e por agora a ideia principal é de
 que quanto mais isolado possível for o ambiente de desenvolvimento, mais fácil será para testar hipóteses, criar diferentes soluções e tornar
-possível que elas sejam reproduzidas com facilidade independentemente da plataforma de hardware.
+possível que elas sejam reproduzidas com facilidade independentemente da plataforma de \textit{hardware}.
 
-Muitas ferramentas que podem ser úteis para engenheiros e desenvolvedores de software para gerenciar ou solucionar problemas podem não estar
+Muitas ferramentas que podem ser úteis para engenheiros e desenvolvedores de \textit{software} para gerenciar ou solucionar problemas podem não estar
 incluídas no sistema \textit{host} de suas máquinas por padrão e a melhor maneira de adicionar ferramentas a um \textit{host} seria
-incluindo-as em um \textit{container} possibilitando que o \textit{host} seja o mais enxuto possível.
+incluindo-as em um \textit{container} possibilitando que o \textit{host} seja o mais "enxuto" possível.
 
 Os \textit{container}'s são projetados para manter suas próprias visualizações contidas de \textit{namespaces} e têm acesso limitado aos \textit{hosts} nos quais
 são executados. Por padrão, os \textit{container}'s têm uma tabela de processos, interfaces de rede, sistemas de arquivos e recursos IPC
@@ -902,11 +933,11 @@ Muitos recursos de segurança, como por exemplo o SELinux (\textit{Security-Enha
 limitada de interagir diretamente com o \textit{host}.
 
 Alguns \textit{container}'s, entretanto, têm como objetivo acessar, monitorar e, possivelmente, alterar recursos no sistema \textit{host}
-diretamente. Eles são chamados de \textit{container}'s super privilegiados (SPC - \textit{Super Privileged Container}). Um desenvolvedor
+diretamente \cite{RHEL-container:2020}. Eles são chamados de \textit{container}'s super privilegiados (SPC - \textit{Super Privileged Container}). Um desenvolvedor
 pode \textit{subir} um SPC em um \textit{host}, solucionar um problema e removê-lo quando não for mais necessário para liberar recursos.
 
 No próximo capítulo é mostrado como utilizar dos \textit{container}'s super privilegiados para a criação do ambiente de
-desenvolvimento de aplicações de software e como os recursos de um sistema \textit{host} são acessados a partir desse SPC.
+desenvolvimento de aplicações de \textit{software} e como os recursos de um sistema \textit{host} são acessados a partir desse SPC.
 
 \section*{Criação do ambiente de desenvolvimento}
 
@@ -931,10 +962,12 @@ de arquitetura 64-bit (\textbf{x86\_64} ou \textbf{amd64}, \textbf{armhf} e \tex
 do \textit{software} (\textbf{docker}, \textbf{docker.io}, ou \textbf{docker-engine}) e, caso hajam, é necessário removê-las. No sistema
 operacional Ubuntu basta utilizar o gerenciador de pacotes \textbf{apt}/\textbf{apt-get} para fazê-lo, conforme é exemplificado a seguir:
 
-\begin{lstlisting}[language=bash]
+\begin{adjustbox}{max width=\linewidth}
+  \begin{lstlisting}[language=bash]
   $ sudo apt-get remove docker-engine \
     docker docker.io containerd runc
   \end{lstlisting}
+\end{adjustbox}
 
 \subsubsection*{Instalação utilizando o repositório ofical}
 
@@ -944,7 +977,8 @@ passo é atualizar a lista de pacotes através do comando \textbf{apt-get update
 Os comandos são exemplificados como segue:
 
 \newpage
-\begin{lstlisting}[language=bash]
+\begin{adjustbox}{max width=\linewidth}
+  \begin{lstlisting}[language=bash]
 
   $ sudo apt-get update
 
@@ -955,57 +989,70 @@ Os comandos são exemplificados como segue:
     gnupg-agent \
     software-properties-common
   \end{lstlisting}
+\end{adjustbox}
 
 
 Após isso é necessário adicionar a chave GPG (\textit{GNU Privacy Guard}) oficial do\textit{Docker} através do comando:
 
-\begin{lstlisting}[language=bash]
+\begin{adjustbox}{max width=\linewidth}
+  \begin{lstlisting}[language=bash]
   $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
     | sudo apt-key add -
   \end{lstlisting}
+\end{adjustbox}
 
 Para verificar se o sistema já possui a chave com o \textit{fingerprint} \textit{Docker} (no momento em que este texto foi escrito,
 era \textbf{9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88}), o usuário deve pesquisar os últimos 8 caracteres desse \textit{fingerprint}. Neste caso, basta utilizar o comando:
 
-\begin{lstlisting}[language=bash]
+\begin{adjustbox}{max width=\linewidth}
+  \begin{lstlisting}[language=bash]
     $ sudo apt-key fingerprint 0EBFCD88
     \end{lstlisting}
+\end{adjustbox}
 
 E o retorno do terminal ficará:
 
-\begin{lstlisting}[language=bash]
+\begin{adjustbox}{max width=\linewidth}
+  \begin{lstlisting}[language=bash]
   pub   rsa4096 2017-02-22 [SCEA]
   9DC8 5822 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88
   uid  [unknown] Docker Release (CE deb) <docker@docker.com>
   sub   rsa4096 2017-02-22 [S]
 \end{lstlisting}
+\end{adjustbox}
 
 Feito isso, o próximo passo será configurar que o repositório mais estável ("\textit{stable}") do \textit{Docker} seja indexado ao gerenciador de
 pactotes do sistema, o \textbf{apt}:
 
-\begin{lstlisting}[language=bash]
+\begin{adjustbox}{max width=\linewidth}
+  \begin{lstlisting}[language=bash]
   $ sudo add-apt-repository \
   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
   $(lsb_release -cs) \
   stable"
 \end{lstlisting}
+\end{adjustbox}
 
 
 Finalmente, as versões mais recentes do \textbf{containerd} e do \textit{Engine} do \textit{Docker} podem ser instaladas após atualizar os índices do
 gerenciador de pacotes \textbf{apt}.
 
-\begin{lstlisting}[language=bash]
+\begin{adjustbox}{max width=\linewidth}
+  \begin{lstlisting}[language=bash]
   $ sudo apt-get update
   $ sudo apt-get install docker-ce \
     docker-ce-cli containerd.io
 \end{lstlisting}
+\end{adjustbox}
 
 Para verificar se a instalação foi bem-sucedida, basta executar o comando de testes a seguir que é o "\textit{hello-world}" do \textit{Docker}. Se tudo ocorrer bem,
 o terminal responderá com uma saída semelhante ao que é mostrado na Fig. \ref{fig:docker-hello-world}.
 
-\begin{lstlisting}[language=bash]
+\begin{adjustbox}{max width=\linewidth}
+  \begin{lstlisting}[language=bash]
   $ sudo docker run hello-world
 \end{lstlisting}
+\end{adjustbox}
 
 \begin{figure}[!htb]
   \centering
@@ -1018,7 +1065,7 @@ o terminal responderá com uma saída semelhante ao que é mostrado na Fig. \ref
 Neste ponto, o \textit{Docker} encontra-se devidamente instalado no sistema operacional e o usuário pode optar por executar alguns comandos de pós-instalação
 para, por exemplo, possibilitar a execução do \textit{Docker} sem a necessidade de ter privilégios de usuário \textit{root}, iniciar o serviço \textit{Docker} na inicialização do
 sistema operacional, usar uma \textit{engine} de armazenamento diferente da que vem como padrão de instalação (\textit{overlay2}) dentre outras coisas descritas
-na seção de \href{https://docs.docker.com/engine/install/linux-postinstall/}{pós-instalação} da documentação oficial.
+na seção de \href{https://docs.docker.com/engine/install/linux-postinstall/}{pós-instalação} da documentação oficial \cite{Docker:post-installation-2020}.
 
 \subsection*{Criação do container}
 
@@ -1030,7 +1077,8 @@ Agora, executando o seguinte comando será criado um \textit{container} a partir
 \ref{fig:docker-run-gnuradio} exemplifica o uso do comando e as saídas retornadas pelo terminal e é dentro do \textit{container}
 criado que será feita a instalação do GNURadio.
 
-\begin{lstlisting}[language=bash]
+\begin{adjustbox}{max width=\linewidth}
+  \begin{lstlisting}[language=bash]
 $  docker run -i -t --privileged \
     --ipc=host --net=host --pid=host -e HOST=/host \
     -e DISPLAY=$DISPLAY \
@@ -1053,6 +1101,7 @@ $  docker run -i -t --privileged \
     --name gnuradio \
     ubuntu:20.04
   \end{lstlisting}
+\end{adjustbox}
 
 
 \begin{figure}[!htb]
@@ -1079,7 +1128,7 @@ intactas usando \textbf{docker start}. Agora, sobre as \textit{flags} passadas:
   \item[$-$] \textbf{name}: o nome que se dará ao \textit{container} criado.
   \item[$-$] As \textit{flags} \textbf{--ipc=host}, \textbf{--net=host} e \textbf{--pid=host} desligam os \textit{namespaces} \textbf{ipc},
         \textbf{net} e \textbf{pid} dentro do \textit{container}. Isso significa que os processos dentro do \textit{container} veem a mesma rede e
-        tabela de processos, bem como compartilham quaisquer IPCs com os processos do \textit{host}.
+        tabela de processos, bem como compartilham quaisquer IPCs \cite{Rusling-IPC:1999} com os processos do \textit{host}.
 \end{itemize}
 
 Indo um pouco mais a fundo, tem-se a configuração de algumas variáveis de ambiente e a definição dos pontos de montagem e vinculação de alguns
@@ -1091,19 +1140,19 @@ desenvolvimento deste trabalho, tais quais:
         arquivos e diretórios a partir da raiz do \textit{filesystem} do \textit{host};
   \item[$-$] \textbf{DISPLAY=\$DISPLAY}: definir uma variável que identifique onde serão exibidos recursos pelo servidor gráfico \textbf{X};
   \item[$-$] \textbf{DCONF\_PROFILE=/etc/dconf/profile/}: definir a variável relacionada a um sistema de armazenamento das
-        preferências de usuário;
+        preferências de usuário \cite{GNOME-dconf-overview:2020};
   \item[$-$] \textbf{XDG\_DATA\_HOME=/config/xdg/data}: definir qual será o único diretório base relativo ao qual os arquivos
-        de dados específicos do usuário devem ser gravados;
+        de dados específicos do usuário devem ser gravados \cite{freedesktop-XDG:2020};
   \item[$-$] \textbf{XDG\_CONFIG\_HOME=/config/xdg/config}: definir qual será o único diretório base relativo ao qual os arquivos
-        de configuração específicos do usuário devem ser gravados;
+        de configuração específicos do usuário devem ser gravados \cite{freedesktop-XDG:2020};
   \item[$-$] \textbf{XDG\_CACHE\_HOME=/config/xdg/cache}: definir qual será o único diretório base relativo ao qual os dados não
-        essenciais específicos do usuário (em cache) devem ser gravados.
+        essenciais específicos do usuário (em cache) devem ser gravados \cite{freedesktop-XDG:2020};
   \item[$-$] \textbf{XDG\_RUNTIME\_DIR=/tmp/runtime-root}: definir qual será o único diretório base relativo ao qual os arquivos de
         tempo de execução específicos do usuário e outros objetos de arquivo devem ser colocados;
   \item[$-$] \textbf{DBUS\_SESSION\_BUS\_ADDRESS=}
 
-        \textbf{"\$DBUS\_SESSION\_BUS\_ADDRESS"}: possibilitar a inicialização de uma sessão de barramento usando o utilitário D-Bus;
-  \item[$-$] \textbf{DEBIAN\_FRONTEND="noninteractive"}: definir variável para silenciar os \textit{prompt}'s de configuração do \textit{container};
+        \textbf{"\$DBUS\_SESSION\_BUS\_ADDRESS"}: possibilitar a inicialização de uma sessão de barramento usando o utilitário D-Bus \cite{freedesktop-DBUS:2020};
+  \item[$-$] \textbf{DEBIAN\_FRONTEND="noninteractive"}: definir variável para silenciar os \textit{prompt}'s de configuração do \textit{container} \cite{Debian:non-interactive};
   \item[$-$] \textbf{IMAGE=jeffcandido/gnuradio}: definir a variável para identificar o nome da imagem.
 \end{itemize}
 
@@ -1122,7 +1171,7 @@ Com relação aos \textit{volumes} que foram montados, seguem suas definições:
   \item[$-$] \textbf{/}:\textbf{/host}: montar a raiz da árvore de diretórios do \textit{host} (mais conhecida como \textbf{/}) no  ponto
         de montagem \textbf{/host} para permitir que processos dentro do \textit{container} consigam modificar facilmente o conteúdo no \textit{host};
 
-  \item[$-$] \textbf{/etc/dconf/profile/}:\textbf{/etc/dconf/profile/}: vincular o sistema de armazenamento de preferências do usuário ao mesmo do \textit{host};
+  \item[$-$] \textbf{/etc/dconf/profile/}:\textbf{/etc/dconf/profile/}: vincular o sistema de armazenamento de preferências do usuário ao mesmo do \textit{host} \cite{RHEL-dconf-profile:2020};
 
   \item[$-$] \textbf{/tmp/runtime-root/}:\textbf{/tmp/runtime-root/}: montar e vincular o diretório base relativo aos arquivos de
         tempo de execução específicos do usuário e outros objetos de arquivo devem ser colocados ;
@@ -1143,9 +1192,10 @@ interface visual com uma vinculação de volumes montados no \textit{container} 
 
 Algo importante a se notar na Fig. \ref{fig:docker-run-gnuradio} é que depois da criação do \textit{container} o terminal “mudou” do usuário \textbf{jefferson} para \textbf{root}
 e manteve o \textit{hostname}. Isso ocorre porque a partir desse momento o que aparece na tela é o terminal visto de "dentro"
-do \textbf{container}, ou seja com o usuário \textbf{root} em um \textit{container} que está enxerga o mesmo \textit{namespace} \textbf{net} que o \textbf{host}.
+do \textbf{container}, ou seja com o usuário \textbf{root} em um \textit{container} que está enxergando o mesmo \textit{namespace} \textbf{net} que o
+sistema \textit{host}.
 
-Em um outro terminal é possível obter mais informações como, por exemplo, quais \textit{container}'s estão sendo executados no momento ou inspecionar algum
+Em outro terminal é possível obter mais informações como, por exemplo, quais \textit{container}'s estão sendo executados no momento ou inspecionar algum
 \textit{container} específico em busca de maiores detalhes, como é mostrado na Fig. \ref{fig:docker-inspect}.
 
 \begin{figure}[!htb]
@@ -1163,20 +1213,24 @@ Até o momento apenas foi feito o provisionamento de um \textit{container} \text
 o gerenciador de pacotes \textbf{apt} disponível na distribuição Ubuntu deste \textit{container}. É recomendável atualizar a lista dos repositórios e verificar
 as depedências para esta instalação bastando executar os seguintes comandos no terminal do \textit{container} criado:
 
-\begin{lstlisting}[language=bash]
+\begin{adjustbox}{max width=\linewidth}
+  \begin{lstlisting}[language=bash]
   $ apt-get update && apt-get upgrade
   $ apt-get install gir1.2-gtk-3.0 libx11-dev
   $ apt-get install gnuradio
 \end{lstlisting}
+\end{adjustbox}
 
 A partir desse ponto, o GNURadio estará instalado no \textit{container} \textit{Docker} e é possível verificar a versão, o local de instalação e os
 componentes já habilitados através dos seguintes comandos que foram exemplificados na Fig. \ref{fig:gnuradio-config-info}:
 
-\begin{lstlisting}[language=bash]
+\begin{adjustbox}{max width=\linewidth}
+  \begin{lstlisting}[language=bash]
   $ gnuradio-config-info --version
   $ gnuradio-config-info --prefix
   $ gnuradio-config-info --enabled-components
 \end{lstlisting}
+\end{adjustbox}
 
 \begin{figure}[!htb]
   \centering
@@ -1210,12 +1264,12 @@ e disponibilizar um repositório de imagens \textit{Docker} por meio da implanta
 Na Fig. \ref{fig:docker-gnuradio_base_image}, ao executar o comando \textbf{docker images} apenas a imagem \textbf{ubuntu}
 foi listada, pois ainda não foi criada uma imagem do container \textbf{gnuradio}, o qual pode ser conferido com o comando
 \textbf{docker ps -a}. Utilizando o commando \textbf{docker commit} referenciando para o container \textbf{gnuradio}, uma imagem
-\textit{Docker} é criada localmente, onde as \textit{flags} utilizadas, \textbf{-a} e \textbf{-m} são uma descrição
-sobre o autor e uma breve mensagem sobre a imagem que será criada, respectivamente.
+\textit{Docker} é criada localmente, onde as \textit{flags} utilizadas, \textbf{-a} e \textbf{-m}, são uma descrição
+sobre o autor e uma breve mensagem sobre a imagem criada, respectivamente.
 
 \begin{figure}[!htb]
   \centering
-  \caption{Fazendo o \textit{commit} da imagem base GNURadio}
+  \caption{Fazendo o \textit{commit} da imagem base GNURadio.}
   \includegraphics[width = \linewidth]{figures/docker-gnuradio_base_image.png}
   Fonte: Elaborada pelo autor.
   \label{fig:docker-gnuradio_base_image}
@@ -1225,7 +1279,7 @@ Após o \textit{commit} da imagem, ao executar o comando \textbf{docker images} 
 um \textbf{IMAGE ID} igual a \textbf{1c66799cf780} faltando apenas que seja associada a um repositório e que tenha uma \textit{tag} de versionamento.
 Como exemplo foi criada a \textit{tag} para a imagem e associada a um repositório público através do comando \textbf{docker tag 1c66799cf780 jeffcandido/gnuradio}.
 Ao executar \textbf{docker images} novamente, a imagem do \textit{container} contendo a instalação do GNURadio na versão 3.8.1.0
-está pronta para ser levada ao repositório de imagens \textit{Docker} para que possa ser acessada por outros desenvolvedores. Para
+está pronta para ser levada ao repositório de imagens \textit{Docker} e se tornar acessível a outros desenvolvedores. Para
 fazer esse procedimento, foi necessário criar uma conta (gratuita) no \textit{DockerHub} e fazer o login via linha de comando e por fim
 executar o \textit{push} da imagem para levá-la até o repositório remoto, como é demonstrado nos passos executados na Fig. \ref{fig:docker-push_image}.
 
@@ -1242,7 +1296,7 @@ conectado à \textit{Internet} poderá buscar e utilizar essa imagem.
 
 \begin{figure}[!htb]
   \centering
-  \caption{Interface \textit{web} do \textit{DockerHub} com a imagem criada.}
+  \caption{Interface \textit{web} do \textit{DockerHub} com a imagem \textit{Docker} criada.}
   \includegraphics[width = \linewidth]{figures/dockerhub-general.png}
   Fonte: Elaborada pelo autor.
   \label{fig:dockerhub-general}
@@ -1253,28 +1307,62 @@ de arquivos para composição do \textit{container} (\textit{Dockerfile}, \texti
 não adicionaria vigor e relevância ao propósito deste trabalho de forma que tais otimizações podem ser realizadas em trabalhos futuros nessa mesma
 área de estudo.
 
+\subsection*{Instalação do firmware do \textit{HackRF One}}
+
+A forma de instalação do \textit{firmware} e utilitários do \textit{HackRF One} recomendada pelo fabricante é utilizando o gerenciador de pacotes disponibilizado pelo
+sistema operacional que neste caso é o \textit{apt}, porém o \textit{software} a ser executado na máquina \textit{host} também pode ser compilado através do código-fonte \cite{HACKRF-build-host-software}. Foi necessário instalar o \textit{HackRF One} como um periférico de rádio definido por \textit{software} com o
+apoio dos pacotes \textbf{hackrf} (utilitários), \textbf{libhackrf-dev} (biblioteca para desenvolvimento), \textbf{libhackrf0} (biblioteca para tempo de execução),
+\textbf{gr-osmosdr} (Blocos do GNURadio do projeto OsmoSDR) e \textbf{gqrx-sdr} (receptor de rádio definido por \textit{software}).
+
+\begin{adjustbox}{max width=\linewidth}
+  \begin{lstlisting}[language=bash]
+  $ apt-get install hackrf libhackrf-dev libhackrf0 gqrx-sdr gr-osmosdr
+\end{lstlisting}
+\end{adjustbox}
+
+Para atualizar o firmware do \textit{HackRF One} basta baixar a versão desejada diretamente do repositório oficial do projeto e seguir os passos
+definidos na documentação \cite{HACKRF-updating-firmware} que nada mais é que escrever o executável na memória \textit{flash} da placa (\textit{hackrf\_spiflash -w hackrf\_one\_usb.bin}).
+Realizado este procedimento, é possível verificar que o dispositivo foi instalado corretamente utilizando os comandos \textbf{hackrf\_info} e \textbf{hackrf\_transfer} \cite{HACKRF-tools}, conforme mostra a Fig. \ref{fig:hackrf_info}.
+
+\begin{figure}[!htb]
+  \centering
+  \caption{Verificação de versão do \textit{firmware} do \textit{HackRF One}.}
+  \includegraphics[width = \linewidth]{figures/hackrf/hackrf_info_version_transfer}
+  Fonte: Elaborada pelo autor.
+  \label{fig:hackrf_info}
+\end{figure}
 % ----------------------------------------------------------
 % Parte de desenvolvimento
 % ----------------------------------------------------------
 \part{Desenvolvimento}
+
+FAZER O HELLO-WORLD DO GNURADIO. EXPLICAR TUDO PASSO A PASSO.
+
+Fazer alguns exemplos que já tenho prontos.
+
+Fazer o bloco OOT.
+
+Tentar criar meu próprio bloco OOT de um modulador 16-QAM.
 
 % ----------------------------------------------------------
 % Parte de resultados
 % ----------------------------------------------------------
 \part{Resultados}
 
+
+
 % ---
 % Capitulo de revisão de literatura
 % ---
-\chapter{Lorem ipsum dolor sit amet}
+% \chapter{Lorem ipsum dolor sit amet}
 
 % ---
-\section{Aliquam vestibulum fringilla lorem}
+% \section{Aliquam vestibulum fringilla lorem}
 % ---
 
-\lipsum[1]
+% \lipsum[1]
 
-\lipsum[2-3]
+% \lipsum[2-3]
 
 % ---
 % Finaliza a parte no bookmark do PDF
@@ -1289,7 +1377,7 @@ não adicionaria vigor e relevância ao propósito deste trabalho de forma que t
 \chapter{Considerações Finais}
 % ---
 
-\lipsum[31-33]
+% \lipsum[31-33]
 
 % ----------------------------------------------------------
 % ELEMENTOS PÓS-TEXTUAIS
@@ -1325,13 +1413,13 @@ não adicionaria vigor e relevância ao propósito deste trabalho de forma que t
   % \chapter{Quisque libero justo}
   % ----------------------------------------------------------
 
-  \lipsum[50]
+  % \lipsum[50]
 
   % ----------------------------------------------------------
-  \chapter{Nullam elementum urna vel imperdiet sodales elit ipsum pharetra ligula
-    ac pretium ante justo a nulla curabitur tristique arcu eu metus}
-  % ----------------------------------------------------------
-  \lipsum[55-57]
+  % \chapter{Nullam elementum urna vel imperdiet sodales elit ipsum pharetra ligula
+  %   ac pretium ante justo a nulla curabitur tristique arcu eu metus}
+  % % ----------------------------------------------------------
+  % \lipsum[55-57]
 
 \end{apendicesenv}
 % ---
@@ -1362,13 +1450,45 @@ não adicionaria vigor e relevância ao propósito deste trabalho de forma que t
 
     Fonte: Agência Nacional de Telecomunicações.
   \end{figure}
+
+  \chapter{Diagrama esquemático do \textit{HackRF One} - página 1.}
+  \label{attachment:hackrf-one-schematic-1}
+  \begin{figure}[!htb]
+    \centering
+    \includegraphics[height = 0.8\linewidth, angle=90, page=1]{attachments/hackrf-one-schematic.pdf}
+
+    Fonte: GitHub \cite{HACKRF-hardware}.
+  \end{figure}
+
+  \chapter{Diagrama esquemático do \textit{HackRF One} - página 2.}
+  \label{attachment:hackrf-one-schematic-2}
+  \begin{figure}[!htb]
+    \centering
+    \includegraphics[height = 0.8\linewidth, angle=90, page=2]{attachments/hackrf-one-schematic.pdf}
+
+    Fonte: GitHub \cite{HACKRF-hardware}.
+  \end{figure}
+
+  \chapter{Diagrama esquemático do \textit{HackRF One} - página 3.}
+  \label{attachment:hackrf-one-schematic-3}
+  \begin{figure}[!htb]
+    \centering
+    \includegraphics[height = 0.8\linewidth, angle=90, page=3]{attachments/hackrf-one-schematic.pdf}
+
+    Fonte: GitHub \cite{HACKRF-hardware}.
+  \end{figure}
+
+  \chapter{Diagrama para montagem dos componentes eletrônicos no PCB do \textit{HackRF One}.}
+  \label{attachment:hackrf-one-assembly}
+  \begin{figure}[!htb]
+    \centering
+    \includegraphics[height = 0.8\linewidth]{attachments/hackrf-one-assembly.pdf}
+
+    Fonte: GitHub \cite{HACKRF-hardware}.
+  \end{figure}
   % ---
 
   % ---
-  \chapter{Fusce facilisis lacinia dui}
-  % ---
-
-  \lipsum[32]
 
 \end{anexosenv}
 
@@ -1383,51 +1503,51 @@ não adicionaria vigor e relevância ao propósito deste trabalho de forma que t
 %---------------------------------------------------------------------
 % Formulário de Identificação (opcional)
 %---------------------------------------------------------------------
-\chapter*[Formulário de Identificação]{Formulário de Identificação}
-\addcontentsline{toc}{chapter}{Exemplo de Formulário de Identificação}
-\label{formulado-identificacao}
+% \chapter*[Formulário de Identificação]{Formulário de Identificação}
+% \addcontentsline{toc}{chapter}{Exemplo de Formulário de Identificação}
+% \label{formulado-identificacao}
 
-Exemplo de Formulário de Identificação, compatível com o Anexo A (informativo)
-da ABNT NBR 10719:2015. Este formulário não é um anexo. Conforme definido na
-norma, ele é o último elemento pós-textual e opcional do relatório.
+% Exemplo de Formulário de Identificação, compatível com o Anexo A (informativo)
+% da ABNT NBR 10719:2015. Este formulário não é um anexo. Conforme definido na
+% norma, ele é o último elemento pós-textual e opcional do relatório.
 
-\bigskip
+% \bigskip
 
-\begin{tabular}{|p{8cm}|p{5cm}|}
-  \hline
-  \multicolumn{2}{|c|}{\textbf{\large Dados do Relatório Técnico e/ou científico}}               \\
-  \hline
-  \multirow{3}{8cm}[24pt]{Título e subtítulo} & Classificação de segurança                       \\
-                                              &                                                  \\
-  \cline{2-2}
-                                              & No.                                              \\
-                                              &                                                  \\
+% \begin{tabular}{|p{8cm}|p{5cm}|}
+%   \hline
+%   \multicolumn{2}{|c|}{\textbf{\large Dados do Relatório Técnico e/ou científico}}               \\
+%   \hline
+%   \multirow{3}{8cm}[24pt]{Título e subtítulo} & Classificação de segurança                       \\
+%                                               &                                                  \\
+%   \cline{2-2}
+%                                               & No.                                              \\
+%                                               &                                                  \\
 
-  \hline
-  Tipo de relatório                           & Data                                             \\
-  \hline
-  Título do projeto/programa/plano            & No.                                              \\
-  \hline
-  \multicolumn{2}{|l|}{Autor(es)}                                                                \\
-  \hline
-  \multicolumn{2}{|l|}{Instituição executora e endereço completo}                                \\
-  \hline
-  \multicolumn{2}{|l|}{Instituição patrocinadora e endereço completo}                            \\
-  \hline
-  \multicolumn{2}{|l|}{Resumo}                                                                   \\[3cm]
-  \hline
-  \multicolumn{2}{|l|}{Palavras-chave/descritores}                                               \\
-  \hline
-  \multicolumn{2}{|l|}{
-    Edição \hfill No. de páginas \hfill No. do volume \hfill Nº de classificação \phantom{XXXX}} \\
-  \hline
-  \multicolumn{2}{|l|}{
-    ISSN \hfill \hfill Tiragem \hfill Preço \phantom{XXXXXXXX}}                                  \\
-  \hline
-  \multicolumn{2}{|l|}{Distribuidor}                                                             \\
-  \hline
-  \multicolumn{2}{|l|}{Observações/notas}                                                        \\[3cm]
-  \hline
-\end{tabular}
+%   \hline
+%   Tipo de relatório                           & Data                                             \\
+%   \hline
+%   Título do projeto/programa/plano            & No.                                              \\
+%   \hline
+%   \multicolumn{2}{|l|}{Autor(es)}                                                                \\
+%   \hline
+%   \multicolumn{2}{|l|}{Instituição executora e endereço completo}                                \\
+%   \hline
+%   \multicolumn{2}{|l|}{Instituição patrocinadora e endereço completo}                            \\
+%   \hline
+%   \multicolumn{2}{|l|}{Resumo}                                                                   \\[3cm]
+%   \hline
+%   \multicolumn{2}{|l|}{Palavras-chave/descritores}                                               \\
+%   \hline
+%   \multicolumn{2}{|l|}{
+%     Edição \hfill No. de páginas \hfill No. do volume \hfill Nº de classificação \phantom{XXXX}} \\
+%   \hline
+%   \multicolumn{2}{|l|}{
+%     ISSN \hfill \hfill Tiragem \hfill Preço \phantom{XXXXXXXX}}                                  \\
+%   \hline
+%   \multicolumn{2}{|l|}{Distribuidor}                                                             \\
+%   \hline
+%   \multicolumn{2}{|l|}{Observações/notas}                                                        \\[3cm]
+%   \hline
+% \end{tabular}
 
 \end{document}
