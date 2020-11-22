@@ -1336,9 +1336,99 @@ Realizado este procedimento, é possível verificar que o dispositivo foi instal
 % ----------------------------------------------------------
 \part{Desenvolvimento}
 
-FAZER O HELLO-WORLD DO GNURADIO. EXPLICAR TUDO PASSO A PASSO.
+Neste ponto o objetivo é demonstrar fluxos simples de processamento digital de sinais utilizando os GNURadio e nada mais justo que iniciar esta parte
+do trabalho desmonstrando \textit{flowgraph}'s de operações matemáticas básicas aplicadas a sinais digitais assim como utilizações convenientes do processamento de sinais.
 
-Fazer alguns exemplos que já tenho prontos.
+\chapter{Criação de \textit{flowgraph}'s no GNURadio}
+
+Para o primeiro \textit{flowgraph} foram posicionadas duas fontes de sinal de frequências distintas (2 kHz e 20 kHz) e suas saídas foram agregadas em um bloco de soma de sinais. Após isso,
+para que as formas de onda dos sinais possam ser visualizadas, foram adicionados os blocos \textit{QT GUI} para apresentação dos sinais nos domínios do tempo
+(\textit{Time Sink}) e da frequência (\textit{Frequency Sink}). O bloco \textit{Throtle} normalmente é utilizado na saída de blocos que não são de origem
+diretamente de \textit{hardware}, com o objetivo de limitar a taxa na qual esse bloco cria as amostras.
+
+\begin{figure}[!htb]
+  \centering
+  \begin{subfigure}[b]{0.8\linewidth}
+    \centering
+    \caption{\textit{Flowgraph} da soma de dois sinais.}
+    \includegraphics[width = \linewidth, trim = 0.1cm 10cm 20cm 4cm, clip=true]{figures/signals/01_sum_flowgraph}
+    \label{fig:gnuradio_sum_flowgraph}
+  \end{subfigure}
+
+  \begin{subfigure}[b]{0.8\linewidth}
+    \centering
+    \caption{Gráficos da soma de dois sinais no GNURadio.}
+    \includegraphics[width = \linewidth]{figures/signals/sum}
+    \label{fig:gnuradio_sum}
+  \end{subfigure}
+  \caption{Processamento da soma de dois sinais utilizando o GNURadio.}
+  \label{fig:gnuradio_signals_sum}
+\end{figure}
+
+Ao executar o código gerado pelo \textit{flowgraph} da Fig. \ref{fig:gnuradio_sum_flowgraph}, a interface do \textit{GNURadio-companion} constrói na Fig. \ref{fig:gnuradio_sum} os gráficos
+relacionados à soma dos sinais, tanto no domínio do tempo como no domínio dam frequência. De forma semelhante, na Fig. \ref{fig:gnuradio_product_flowgraph} está o \textit{flowgraph} para
+operação do produto de dois sinais que podem ser visualizados pela interface gráfica na Fig. \ref{fig:gnuradio_product}.
+
+\begin{figure}[!htb]
+  \centering
+  \begin{subfigure}[b]{0.8\linewidth}
+    \centering
+    \caption{\textit{Flowgraph} do produto de dois sinais.}
+    \includegraphics[width = \linewidth, trim = 0.1cm 10cm 20cm 4cm, clip=true]{figures/signals/02_product_flowgraph}
+    \label{fig:gnuradio_product_flowgraph}
+  \end{subfigure}
+
+  \begin{subfigure}[b]{0.8\linewidth}
+    \centering
+    \caption{Gráficos do produto de dois sinais no GNURadio.}
+    \includegraphics[width = \linewidth]{figures/signals/product}
+    \label{fig:gnuradio_product}
+  \end{subfigure}
+  \caption{Processamento do produto de dois sinais utilizando o GNURadio.}
+  \label{fig:gnuradio_signals_product}
+\end{figure}
+
+Na imagens apresentadas na Fig. \ref{fig:gnuradio_signals_operations} foram criados dois \textit{flowgraph}'s que têm objetivos bastante conhecidos
+por engenheiros em eletrônica e telecomunicações que é o entendimento da defasagem entre sinais (Figs. \ref{fig:gnuradio_delay_flowgraph} e \ref{fig:gnuradio_delay})
+e também do conceito de histerése (Figs. \ref{fig:gnuradio_hysteresis_flowgraph} \ref{fig:gnuradio_hysteresis}) utilizado na comparação de sinais,
+principalmente aqueles sobre o efeito de ruído.
+
+\begin{figure}[!htb]
+  \centering
+  \begin{subfigure}[b]{0.52\linewidth}
+    \centering
+    \caption{\textit{Flowgraph} para geração de dois sinais defasados no tempo.}
+    \includegraphics[width = \linewidth]{figures/signals/03_delay_flowgraph}
+    \label{fig:gnuradio_delay_flowgraph}
+  \end{subfigure}
+  \hspace{0.5cm}
+  \begin{subfigure}[b]{0.52\linewidth}
+    \centering
+    \caption{Sinais defasados no domínio do tempo.}
+    \includegraphics[width = \linewidth]{figures/signals/delay}
+    \label{fig:gnuradio_delay}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{0.52\linewidth}
+    \centering
+    \caption{\textit{Flowgraph} para simulação de um comparador de sinais com histerése.}
+    \includegraphics[width = \linewidth]{figures/signals/04_hysteresis_flowgraph}
+    \label{fig:gnuradio_hysteresis_flowgraph}
+  \end{subfigure}
+  \hspace{0.5cm}
+  \begin{subfigure}[b]{0.52\linewidth}
+    \centering
+    \caption{Comparação de sinais com histerése.}
+    \includegraphics[width = \linewidth]{figures/signals/hysteresis}
+    \label{fig:gnuradio_hysteresis}
+  \end{subfigure}
+  \caption{Defasagem e comparação com histerése de sinais utilizando o GNURadio.}
+  \label{fig:gnuradio_signals_operations}
+\end{figure}
+
+\chapter{O \textit{Hello-World} do GNURadio}
+
+\chapter{Criando blocos customizados para o GNURadio}
 
 Fazer o bloco OOT.
 
