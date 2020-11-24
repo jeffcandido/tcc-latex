@@ -409,10 +409,12 @@
   \item[DSP]        \textit{Digital Signal Processing}
   \item[EIRP]       \textit{Effective Isotropic Radiated Power}
   \item[ERP]        \textit{Effective Radiated Power}
-  \item[FSF]        \textit{Free Software Foundation}
+  \item[FFT]        \textit{Fast Fourier Transform}
+  \item[FIR]        \textit{Finite Impulse Response}
   \item[FEC]        \textit{Forward Error Correction}
   \item[FM]         \textit{Frequency Modulation}
   \item[FPGA]       \textit{Field Programmable Gate Array}
+  \item[FSF]        \textit{Free Software Foundation}
   \item[FSK]        \textit{Frequency Shift Keying}
   \item[GNU]        \textit{GNU's Not Unix}
   \item[GPG]        \textit{GNU Privacy Guard}
@@ -420,7 +422,7 @@
   \item[GRC]        \textit{GNURadio Companion}
   \item[GUI]        \textit{Graphical User Interface}
   \item[GPSDO]      \textit{GPS disciplined oscillator}
-  \item[LPF]         \textit{Low-Pass Filter}
+  \item[LPF]        \textit{Low-Pass Filter}
   \item[OCXO]       \textit{Oven Controlled Crystal Oscillator}
   \item[SDR]        \textit{Software-defined Radio}
   \item[STDIN]      \textit{Standard Input}
@@ -480,50 +482,6 @@
 ----------- USAR ESSE EXEMPLO E FALAR DE GNURADIO, DESENVOLVIMENTO DE SOFTWARE, BOAS PRÁTICAS, ENGENHARIA DE SOFTWARE, CONTAINERS, LINGUAGENS DE PROGRAMAÇÃO, C++, PYTHON
 ----------- \textit{Docker}, RÁDIO DEFINIDO POR SOFTWARE, SOFTWARE-DEFINED RADIO, HACKRF, MICHAEL OSSMAN, LIMESDR, ANALOG DEVICES, SIMULINK, GNURADIO-COMPANION
 
-A Internet das Coisas (IoT - Internet of Things) é uma rede de dispositivos físicos do cotidiano que podem se comunicar, levando em consideração que o seu foco é a interconexão entre dispositivos (conceito M2M) e, não apenas, dispositivos a seres humanos. A previsão é que mais de 25 bilhões de dispositivos estarão conectados à Internet até 2020 \cite[p. 1]{sanchez2017transmission}.
-
-However, the solutions deployed for human’s cellular communication (e.g., Global System for Mobile communications (GSM), General Packet Radio Service (GPRS), or Long Term Evolution (LTE)) present important drawbacks that make them unsuitable to be directly used by constrained IoT devices. These technologies were designed for applications with
-different requirements that those needed by IoT systems. Thus, a telephony cell is designed for providing broadband services to a limited number of users; meanwhile, an IoT cell will \textit{host} a massive number of devices generating sporadic transmissions of
-short packets. This potentially huge population of devices gaining connectivity through a single base station raises new challenges related to signaling and traffic control [4] pegar referencia no \cite[p. 1]{sanchez2017transmission}.
-
-\cite[p. 1]{AN1200.13}. lORA MODEM
-
-
-Este documento e seu código-fonte são exemplos de referência de uso da classe
-\textsf{abntex2} e do pacote \textsf{abntex2cite}. O documento
-exemplifica a elaboração de relatórios técnicos e/ou científicos produzidos
-conforme a ABNT NBR 10719:2015 \emph{Informação e documentação - Relatório
-  técnico e/ou científico - Apresentação}.
-
-A expressão ``Modelo canônico'' é utilizada para indicar que \abnTeX\ não é
-modelo específico de nenhuma universidade ou instituição, mas que implementa tão
-somente os requisitos das normas da ABNT. Uma lista completa das normas
-% observadas pelo \abnTeX\ é apresentada em \citeonline{abntex2classe}.
-
-Sinta-se convidado a participar do projeto \abnTeX! Acesse o site do projeto em
-\url{http://www.abntex.net.br/}. Também fique livre para conhecer,
-estudar, alterar e redistribuir o trabalho do \abnTeX, desde que os arquivos
-modificados tenham seus nomes alterados e que os créditos sejam dados aos
-autores originais, nos termos da ``The \LaTeX\ Project Public
-License''\footnote{\url{http://www.latex-project.org/lppl.txt}}.
-
-Encorajamos que sejam realizadas customizações específicas deste exemplo para
-universidades e outras instituições --- como capas, folhas de rosto, etc.
-Porém, recomendamos que ao invés de se alterar diretamente os arquivos do
-\abnTeX, distribua-se arquivos com as respectivas customizações.
-Isso permite que futuras versões do \abnTeX~não se tornem automaticamente
-incompatíveis com as customizações promovidas. Consulte
-% \citeonline{abntex2-wiki-como-customizar} para mais informações.
-
-Este documento deve ser utilizado como complemento dos manuais do \abnTeX\
-% \cite{abntex2classe,abntex2cite,abntex2cite-alf} e da classe \textsf{memoir}
-% \cite{memoir}.
-
-Equipe \abnTeX
-
-Lauro César Araujo
-
-
 % ----------------------------------------------------------
 % PARTE - preparação do ambiente de desenvolvimento
 % ----------------------------------------------------------
@@ -546,7 +504,7 @@ Com relação ao computador utilizado, trata-se de um notebook de arquitetura \t
   \centering
   \caption{Configurações de CPU e memória do computador utilizado.}
   \includegraphics[width = \linewidth]{figures/host-pc/stats.png}
-  Fonte: Elaborada pelo autor.
+  Fonte: Elaborado pelo autor.
   \label{fig:host_pc_stats}
 \end{figure}
 
@@ -813,7 +771,7 @@ atribuição, destinação e distribuição de faixas de frequências no Brasil 
   \centering
   \caption{Diagrama de blocos simplificado do \textit{HackRF One}.}
   \includegraphics[width = \linewidth, page=1, clip=true]{attachments/hackrf_SDR_diagram}
-  Fonte: Elaborada pelo autor com base na documentação fornecida pelo fabricante \cite{HACKRF-hardware-components}.
+  Fonte: Elaborado pelo autor com base na documentação fornecida pelo fabricante \cite{HACKRF-hardware-components}.
   \label{fig:hackrf_block_diagram}
 \end{figure}
 
@@ -1058,7 +1016,7 @@ o terminal responderá com uma saída semelhante ao que é mostrado na Fig. \ref
   \centering
   \caption{Teste de verificação de instalação do \textit{Docker Engine}.}
   \includegraphics[width = \linewidth]{figures/docker-hello-world.png}
-  Fonte: Elaborada pelo autor.
+  Fonte: Elaborado pelo autor.
   \label{fig:docker-hello-world}
 \end{figure}
 
@@ -1108,7 +1066,7 @@ $  docker run -i -t --privileged \
   \centering
   \caption{Criação do \textit{container} de desenvolvimento a partir de uma imagem Ubuntu.}
   \includegraphics[width = \linewidth]{figures/docker-run-gnuradio.png}
-  Fonte: Elaborada pelo autor.
+  Fonte: Elaborado pelo autor.
   \label{fig:docker-run-gnuradio}
 \end{figure}
 
@@ -1174,7 +1132,7 @@ Com relação aos \textit{volumes} que foram montados, seguem suas definições:
   \item[$-$] \textbf{/etc/dconf/profile/}:\textbf{/etc/dconf/profile/}: vincular o sistema de armazenamento de preferências do usuário ao mesmo do \textit{host} \cite{RHEL-dconf-profile:2020};
 
   \item[$-$] \textbf{/tmp/runtime-root/}:\textbf{/tmp/runtime-root/}: montar e vincular o diretório base relativo aos arquivos de
-        tempo de execução específicos do usuário e outros objetos de arquivo devem ser colocados ;
+        tempo de execução específicos do usuário;
 
   \item[$-$] \textbf{/tmp/.X11-unix/}:\textbf{/tmp/.X11-unix/}: montar um volume para o \textit{unix socket} X11 (servidor gráfico);
 
@@ -1202,7 +1160,7 @@ Em outro terminal é possível obter mais informações como, por exemplo, quais
   \centering
   \caption{Detalhamento de informações sobre \textit{container}’s \textit{Docker}.}
   \includegraphics[width = \linewidth]{figures/docker-inspect.png}
-  Fonte: Elaborada pelo autor.
+  Fonte: Elaborado pelo autor.
   \label{fig:docker-inspect}
 \end{figure}
 
@@ -1236,7 +1194,7 @@ componentes já habilitados através dos seguintes comandos que foram exemplific
   \centering
   \caption{Conferência de versão, \textit{path} e componentes habilitados do GNURadio.}
   \includegraphics[width = \linewidth]{figures/gnuradio-config-info.png}
-  Fonte: Elaborada pelo autor.
+  Fonte: Elaborado pelo autor.
   \label{fig:gnuradio-config-info}
 \end{figure}
 
@@ -1249,7 +1207,7 @@ através do comando \textbf{gnuradio-companion} (GRC).
   \centering
   \caption{\textit{GUI} do \textit{GNURadio Companion}.}
   \includegraphics[width = \linewidth]{figures/gnuradio-companion.png}
-  Fonte: Elaborada pelo autor.
+  Fonte: Elaborado pelo autor.
   \label{fig:gnuradio-companion}
 \end{figure}
 
@@ -1271,7 +1229,7 @@ sobre o autor e uma breve mensagem sobre a imagem criada, respectivamente.
   \centering
   \caption{Fazendo o \textit{commit} da imagem base GNURadio.}
   \includegraphics[width = \linewidth]{figures/docker-gnuradio_base_image.png}
-  Fonte: Elaborada pelo autor.
+  Fonte: Elaborado pelo autor.
   \label{fig:docker-gnuradio_base_image}
 \end{figure}
 
@@ -1287,7 +1245,7 @@ executar o \textit{push} da imagem para levá-la até o repositório remoto, com
   \centering
   \caption{Submetendo a imagem base ao repositório remoto.}
   \includegraphics[width = \linewidth]{figures/docker-push_image.png}
-  Fonte: Elaborada pelo autor.
+  Fonte: Elaborado pelo autor.
   \label{fig:docker-push_image}
 \end{figure}
 
@@ -1298,7 +1256,7 @@ conectado à \textit{Internet} poderá buscar e utilizar essa imagem.
   \centering
   \caption{Interface \textit{web} do \textit{DockerHub} com a imagem \textit{Docker} criada.}
   \includegraphics[width = \linewidth]{figures/dockerhub-general.png}
-  Fonte: Elaborada pelo autor.
+  Fonte: Elaborado pelo autor.
   \label{fig:dockerhub-general}
 \end{figure}
 
@@ -1328,7 +1286,7 @@ Realizado este procedimento, é possível verificar que o dispositivo foi instal
   \centering
   \caption{Verificação de versão do \textit{firmware} do \textit{HackRF One}.}
   \includegraphics[width = \linewidth]{figures/hackrf/hackrf_info_version_transfer}
-  Fonte: Elaborada pelo autor.
+  Fonte: Elaborado pelo autor.
   \label{fig:hackrf_info}
 \end{figure}
 % ----------------------------------------------------------
@@ -1336,10 +1294,10 @@ Realizado este procedimento, é possível verificar que o dispositivo foi instal
 % ----------------------------------------------------------
 \part{Desenvolvimento}
 
+\chapter{Criação de \textit{flowgraph}'s no GNURadio}
+
 Neste ponto o objetivo é demonstrar fluxos simples de processamento digital de sinais utilizando os GNURadio e nada mais justo que iniciar esta parte
 do trabalho desmonstrando \textit{flowgraph}'s de operações matemáticas básicas aplicadas a sinais digitais assim como utilizações convenientes do processamento de sinais.
-
-\chapter{Criação de \textit{flowgraph}'s no GNURadio}
 
 Para o primeiro \textit{flowgraph} foram posicionadas duas fontes de sinal de frequências distintas (2 kHz e 20 kHz) e suas saídas foram agregadas em um bloco de soma de sinais. Após isso,
 para que as formas de onda dos sinais possam ser visualizadas, foram adicionados os blocos \textit{QT GUI} para apresentação dos sinais nos domínios do tempo
@@ -1388,45 +1346,130 @@ operação do produto de dois sinais que podem ser visualizados pela interface g
   \label{fig:gnuradio_signals_product}
 \end{figure}
 
-Na imagens apresentadas na Fig. \ref{fig:gnuradio_signals_operations} foram criados dois \textit{flowgraph}'s que têm objetivos bastante conhecidos
-por engenheiros em eletrônica e telecomunicações que é o entendimento da defasagem entre sinais (Figs. \ref{fig:gnuradio_delay_flowgraph} e \ref{fig:gnuradio_delay})
-e também do conceito de histerése (Figs. \ref{fig:gnuradio_hysteresis_flowgraph} \ref{fig:gnuradio_hysteresis}) utilizado na comparação de sinais,
-principalmente aqueles sobre o efeito de ruído.
+Foram criados também dois \textit{flowgraph}'s, apresentados nas Figs. \ref{fig:gnuradio_delay_flowgraph} e \ref{fig:gnuradio_hysteresis_flowgraph}, que têm objetivos bastante
+conhecidos por engenheiros em eletrônica e telecomunicações, que são o entendimento sobre a defasagem entre sinais (Figs. \ref{fig:gnuradio_delay_flowgraph} e \ref{fig:gnuradio_delay})
+e também o conceito de histerése (Figs. \ref{fig:gnuradio_hysteresis_flowgraph}
+\ref{fig:gnuradio_hysteresis}) utilizado na comparação de sinais, principalmente aqueles sobre o efeito de ruído.
 
 \begin{figure}[!htb]
   \centering
-  \begin{subfigure}[b]{0.52\linewidth}
+  \begin{subfigure}[b]{\linewidth}
     \centering
     \caption{\textit{Flowgraph} para geração de dois sinais defasados no tempo.}
     \includegraphics[width = \linewidth]{figures/signals/03_delay_flowgraph}
     \label{fig:gnuradio_delay_flowgraph}
   \end{subfigure}
-  \hspace{0.5cm}
-  \begin{subfigure}[b]{0.52\linewidth}
+
+  \begin{subfigure}[b]{\linewidth}
     \centering
     \caption{Sinais defasados no domínio do tempo.}
     \includegraphics[width = \linewidth]{figures/signals/delay}
     \label{fig:gnuradio_delay}
   \end{subfigure}
-  \quad
-  \begin{subfigure}[b]{0.52\linewidth}
+  \caption{Variação de fase entre sinais utilizando o GNURadio.}
+  \label{fig:gnuradio_signals_delay}
+\end{figure}
+
+\begin{figure}[!htb]
+  \centering
+  \begin{subfigure}[b]{\linewidth}
     \centering
     \caption{\textit{Flowgraph} para simulação de um comparador de sinais com histerése.}
     \includegraphics[width = \linewidth]{figures/signals/04_hysteresis_flowgraph}
     \label{fig:gnuradio_hysteresis_flowgraph}
   \end{subfigure}
-  \hspace{0.5cm}
-  \begin{subfigure}[b]{0.52\linewidth}
+
+  \begin{subfigure}[b]{\linewidth}
     \centering
     \caption{Comparação de sinais com histerése.}
     \includegraphics[width = \linewidth]{figures/signals/hysteresis}
     \label{fig:gnuradio_hysteresis}
   \end{subfigure}
-  \caption{Defasagem e comparação com histerése de sinais utilizando o GNURadio.}
-  \label{fig:gnuradio_signals_operations}
+  \caption{Comparação com histerése de sinais utilizando o GNURadio.}
+  \label{fig:gnuradio_signals}
 \end{figure}
 
 \chapter{O \textit{Hello-World} do GNURadio}
+
+Neste capítulo será reproduzido o \textit{flowgraph} que é considerado o "\textit{hello-world}" do GNURadio com o hardware do SDR: o receptor de rádio FM. Trata-se de um \textit{flowgraph}
+bastante simples, pois todos os blocos necessários já foram disponibilizados anteriormente nos procedimentos de instalação do GNURadio e do \textit{firmware} do \textit{HackRF One}.
+
+O sinal de rádio FM recebido pelo \textit{hardware} do \textit{HackRF One} sintonizado na frequência portadora de 106.5 MHz (um canal de rádio local com programação ativa na cidade
+de Uberlândia, Minas Gerais) passa por um filtro passa-baixas (LPF - \textit{Low-Pass Filter}) de ganho unitário com resposta finita ao impulso unitário
+(FIR - \textit{Finite Impulse Response}), frequência de corte de 75 kHz, largura de banda de transição de 25 kHz (com janela de Hamming) e fator de redução da frequência de amostragem
+(decimação) de 20:1. Em cascata o sinal é convoluído com um filtro FIR polifásico de reamostragem racional (Rational Resampler) com fator da razão entre as constantes de interpolação
+e decimação do sinal igual a $\frac{12}{5}$ e, por fim, é demodulado e novamente decimado para que possa ser consumido pelo bloco \textit{Audio Sink} (repodução do áudio nos
+alto-falantes do computador) e que seu espectro seja apresentado utilizando um bloco coletor gráfico para exibição de sinais em frequência (via FFT - \textit{Fast Fourier Transform}),
+o \textit{QT GUI Frequency Sink}.
+
+\begin{figure}[!htb]
+  \centering
+  \caption{\textit{Flowgraph} para simulação de um receptor de rádio FM.}
+  \includegraphics[width = \linewidth]{figures/signals/fm_receiver_flowgraph}
+  \label{fig:gnuradio_fm_receiver_flowgraph}
+  Fonte: Elaborado pelo autor.
+  \label{fig:gnuradio_signals_fm_receiver_flowgraph}
+\end{figure}
+
+\begin{figure}[!htb]
+  \centering
+  \caption{\textit{FFT plot} extraída durante simulação do receptor FM.}
+  \includegraphics[width = \linewidth]{figures/signals/demodulated_fm_signal}
+  \label{fig:gnuradio_demodulated_fm_signal}
+  Fonte: Elaborado pelo autor.
+  \label{fig:gnuradio_signals_demodulated_fm_signal}
+\end{figure}
+
+% AUDIO SINK
+
+% Permite que um sinal seja reproduzido por meio de seus alto-falantes ou outro dispositivo de áudio
+
+% Parâmetros
+% Taxa de amostragem
+
+% Para definir a taxa de amostragem de áudio, clique no menu suspenso para ver as taxas populares. Nota: nem todas as taxas de amostragem serão suportadas por seu hardware. Para aplicações típicas, isso deve ser definido para 48 kHz.
+% Nome do dispositivo
+% Deixe o nome do dispositivo em branco para escolher o dispositivo de áudio padrão. A seleção de um nome de dispositivo específico depende do sistema operacional.
+
+% Linux
+
+% No Linux, as opções típicas incluem:
+
+% hw: 0,0
+% plughw: 0,0
+% pulso
+
+% Para usuários ALSA com problemas de áudio, siga este procedimento:
+
+% em uma janela de terminal, digite:
+
+% aplay -L
+
+% encontre a entrada como:
+
+% hw: CARD = Genérico, DEV = 0
+% HD-Audio genérico, ALC662 rev3 analógico
+% Dispositivo de hardware direto sem nenhuma conversão
+
+% da lista que corresponde ao seu dispositivo. Para usar um monitor HDMI com alto-falantes, encontre uma entrada apropriada com "HDMI" nele.
+
+% use a primeira linha dessa entrada (por exemplo, "hw: CARD = Generic, DEV = 0") como o nome do dispositivo. A menos que o nome contenha espaços, as aspas são opcionais.
+
+% OK para bloquear
+
+% Ativado por padrão, que deve ser usado quando este coletor não for regulado por nenhum outro bloco.
+% Num Inputs
+% O coletor de áudio pode ter várias entradas dependendo do seu hardware. Por exemplo, defina as entradas como 2 para estéreo ou 1 para mono.
+
+
+% http://sdr.osmocom.org/trac/wiki/GrOsmoSDR
+
+
+% https://osmocom.org/projects/gr-osmosdr/wiki/GrOsmoSDR
+% osmocom\_siggen\_nogui -a hackrf -f 100e6 --sine
+% osmocom\_siggen\_nogui -a hackrf -f 100e6 --sweep -x 2M -y 1 -c34
+% osmocom\_siggen\_nogui -a hackrf -f 100e6 --sweep -x 2e6 -y 10 -v
+
 
 \chapter{Criando blocos customizados para o GNURadio}
 
@@ -1494,24 +1537,24 @@ Tentar criar meu próprio bloco OOT de um modulador 16-QAM.
 % ---
 % Inicia os apêndices
 % ---
-\begin{apendicesenv}
+% \begin{apendicesenv}
 
-  % Imprime uma página indicando o início dos apêndices
-  % \partapendices
+% Imprime uma página indicando o início dos apêndices
+% \partapendices
 
-  % ----------------------------------------------------------
-  % \chapter{Quisque libero justo}
-  % ----------------------------------------------------------
+% ----------------------------------------------------------
+% \chapter{Quisque libero justo}
+% ----------------------------------------------------------
 
-  % \lipsum[50]
+% \lipsum[50]
 
-  % ----------------------------------------------------------
-  % \chapter{Nullam elementum urna vel imperdiet sodales elit ipsum pharetra ligula
-  %   ac pretium ante justo a nulla curabitur tristique arcu eu metus}
-  % % ----------------------------------------------------------
-  % \lipsum[55-57]
+% ----------------------------------------------------------
+% \chapter{Nullam elementum urna vel imperdiet sodales elit ipsum pharetra ligula
+%   ac pretium ante justo a nulla curabitur tristique arcu eu metus}
+% % ----------------------------------------------------------
+% \lipsum[55-57]
 
-\end{apendicesenv}
+% \end{apendicesenv}
 % ---
 
 
