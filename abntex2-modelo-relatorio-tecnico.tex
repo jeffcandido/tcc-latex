@@ -184,7 +184,6 @@
 \begin{document}
 
 % Seleciona o idioma do documento (conforme pacotes do babel)
-%\selectlanguage{english}
 \selectlanguage{brazil}
 
 % Retira espaço extra obsoleto entre as frases.
@@ -207,36 +206,6 @@
 % ---
 \imprimirfolhaderosto
 % ---
-
-% ---
-% Anverso da folha de rosto:
-% ---
-
-% \begin{fichacatalografica}
-%   \vspace*{15cm} % Posição vertical
-%   \hrule % Linha horizontal
-%   \begin{center} % Minipage Centralizado
-%     \begin{minipage}[c]{12.5cm} % Largura
-%       \imprimirautor
-%       \hspace{0.5cm} \imprimirtitulo / \imprimirautor. --
-%       \imprimirlocal, \imprimirdata-
-%       \hspace{0.5cm} \pageref{LastPage} p. : il.(alguma color.); 30 cm.\\
-%       \hspace{0.5cm} \imprimirorientadorRotulo \imprimirorientador\\
-%       \hspace{0.5cm}
-%       \parbox[t]{\textwidth}{\imprimirtipotrabalho~--~\imprimirinstituicao,
-%         \imprimirdata.}\\
-%       \hspace{0.5cm}
-%       1. LoRaWAN.
-%       2. LoRa Server.
-%       I. Orientador.
-%       II. Universidade xxx.
-%       III. Faculdade de xxx.
-%       IV. Título\\
-%       \hspace{8.75cm} CDU 02:141:005.7\\
-%     \end{minipage}
-%   \end{center}
-%   \hrule
-% \end{fichacatalografica}
 
 \begin{folhadeaprovacao}
 
@@ -298,8 +267,6 @@
 % Fim da dedicatória
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-
 % ---
 % Agradecimentos
 % ---
@@ -347,30 +314,19 @@
 % resumo na língua vernácula (obrigatório)
 \setlength{\absparsep}{18pt} % ajusta o espaçamento dos parágrafos do resumo
 \begin{resumo}
-  % Segundo a \citeonline[3.1-3.2]{NBR6028:2003}, o resumo deve ressaltar o
-  objetivo, o método, os resultados e as conclusões do documento. A ordem e a extensão
-  destes itens dependem do tipo de resumo (informativo ou indicativo) e do
-  tratamento que cada item recebe no documento original. O resumo deve ser
-  precedido da referência do documento, com exceção do resumo inserido no
-  próprio documento. (\ldots) As palavras-chave devem figurar logo abaixo do
-  resumo, antecedidas da expressão Palavras-chave:, separadas entre si por
-  ponto e finalizadas também por ponto.
 
-  Objetivo: ser um pontapé inicial para que estudantes de engenharia eletrônica e de Telecomunicações
-  possam ter um primeiro contato prático com técnicas de processamento digital de sinais aplicadas a
-  um sistema de rádio definido por software.
+  Este é um trabalho introdutório e prático de pesquisa direcionado às áreas de processamento digital de sinais e, transmissão e recepção de sinais de radiofrequência.
+  O objetivo é que ele se torne um pontapé inicial para que estudantes de engenharia eletrônica e de Telecomunicações possam ter um primeiro contato prático com
+  técnicas de processamento digital de sinais aplicadas a partir de um sistema de rádio definido por software.
 
-  Método: utilização de programação em C++/Python de blocos de processamento de sinais, juntamente ao
-  uso do \textit{hardware} do SDR para realizar experimentações em radiofrequência.
+  A proposta de realização dos expertimento conta com a  utilização de métodos e técnicas de programação em C++/Python para a construção de módulos e blocos de processamento
+  de sinais em conjunto ao uso de um \textit{hardware} dedicado ao propósito de ser a interface entre um computador e o \textit{frontend} de radiofrequência.
 
-  Resultados obtidos: foi possível receber sinais RF, principalmente FM,transmitir sinais, simular uma
-  estação base de transmissão.
-
-  Conclusões: A possibilidade de utilização de um \textit{hardware} que simule sistemas reais de recepção/transmissão
-  de sinais de radiofrequência potencializa o aprendizado de estudantes de engenharia eltrônica e de
-  telecomunicações.
-
-
+  No decorrer do trabalho serão demonstrados detalhes de implementação, comunicação entre o \textit{hardware} e provisionamento do ambiente e das ferramentas de
+  \textit{software} necessárias para a sua realização. Todos os esforços direcionados resultaram no êxito de se demonstrar o uso prático da ferramenta GNURadio, como também
+  a possibilidade de que o engenheiro também atue como um desenvolvedor, o que traz ganhos extremamente benéficos ao seu aprendizado, especialização profissional e a completa
+  possibilidade de aplicação dos conceitos teóricos adquiridos sobre sinais e sistemas, processamento digital de sinais, programação de sistemas de alta criticidade, sistemas
+  de comunicações, modulação e demodulação e etc \ldots
 
   \noindent
   \textbf{Palavras-chaves}: rádio, software, gnuradio, hackrf, sdr.
@@ -399,53 +355,32 @@
 \begin{siglas}
 
   \item[ADC]         \textit{Analog to Digital Converter}
-  \item[AM]         \textit{Amplitude Modulation}
   \item[ARM]        \textit{Advanced RISC}
-  \item[ASK]        \textit{Amplitude-shift keying}
   \item[BW]         \textit{Bandwidth}
-  \item[CR]         \textit{Coding Rate}
   \item[CLI]        \textit{Command Line Interface}
   \item[DAC]        \textit{Digital to Analog Converter}
   \item[DSP]        \textit{Digital Signal Processing}
-  \item[EIRP]       \textit{Effective Isotropic Radiated Power}
-  \item[ERP]        \textit{Effective Radiated Power}
   \item[FFT]        \textit{Fast Fourier Transform}
   \item[FIR]        \textit{Finite Impulse Response}
-  \item[FEC]        \textit{Forward Error Correction}
   \item[FM]         \textit{Frequency Modulation}
-  \item[FPGA]       \textit{Field Programmable Gate Array}
   \item[FSF]        \textit{Free Software Foundation}
-  \item[FSK]        \textit{Frequency Shift Keying}
   \item[GNU]        \textit{GNU's Not Unix}
   \item[GPG]        \textit{GNU Privacy Guard}
   \item[GPLv3]      \textit{General Public License version 3}
+  \item[GPSDO]      \textit{GPS disciplined oscillator}
   \item[GRC]        \textit{GNURadio Companion}
   \item[GUI]        \textit{Graphical User Interface}
-  \item[GPSDO]      \textit{GPS disciplined oscillator}
   \item[LPF]        \textit{Low-Pass Filter}
-  \item[OOT]        \textit{Out of Three}
   \item[OCXO]       \textit{Oven Controlled Crystal Oscillator}
-  \item[SDR]        \textit{Software-defined Radio}
-  \item[STDIN]      \textit{Standard Input}
+  \item[OOT]        \textit{Out of Three}
   \item[SDK]        \textit{Software Development Kit}
+  \item[SDR]        \textit{Software-defined Radio}
   \item[SELinux]    \textit{Security-Enhanced Linux}
   \item[SPC]        \textit{Super Privileged Container}
+  \item[STDIN]      \textit{Standard Input}
   \item[TCXO]       \textit{Temperature Compensated Crystal Oscillator}
-  \item[TTY]        \textit{TeleTYpewriter}
-  \item[DAC]        \textit{Digital-to-Analog Converter}
-  \item[DR]         \textit{Data Rate}
-  \item[GPS]        \textit{Global Positioning System}
-  \item[gRPC]       \textit{Google Remote Procedure Call}
-  \item[IoT]        \textit{Internet of Things}
-  \item[ISM band]   \textit{Industrial, Scientific and Medical band}
-  \item[LO]         \textit{Local Oscillator}
-  \item[PM]         \textit{Phase Modulation}
-  \item[PSK]        \textit{Phase-shift keying}
-  \item[RF]         \textit{Radiofrequency}
-  \item[SF]         \textit{Spreading Factor}
-  \item[SI]         \textit{Sistema Internacional}
-  \item[SNR]        \textit{Signal-to-Noise Ratio}
   \item[TDD]        \textit{Test Driven Development}
+  \item[TTY]        \textit{TeleTYpewriter}
 
 \end{siglas}
 % ---
@@ -454,10 +389,14 @@
 % inserir lista de símbolos
 % ---
 \begin{simbolos}
-  \item[$ Rb $] Taxa de bits
-  \item[$ Rs $] Taxa de símbolos
+  \item[$ R_b $] Taxa de bits [bits/s]
+  \item[$ R_s $] Taxa de símbolos [amostras/s]
   \item[$ dB $] Decibel
-  \item[$ P $] Potência
+  \item[$ P $] Potência [W]
+  \item[$f$] Frequência [Hz]
+  \item[$\omega$] Frequência angular [rad/s]
+  \item[$f_s$] Frequência de amostragem [Hz]
+  \item[$f_c$] Frequência de corte [Hz]
 \end{simbolos}
 % ---
 
@@ -468,7 +407,6 @@
 \tableofcontents*
 \cleardoublepage
 % ---
-
 
 % ----------------------------------------------------------
 % ELEMENTOS TEXTUAIS
@@ -481,8 +419,26 @@
 \chapter*[Introdução]{Introdução}
 \addcontentsline{toc}{chapter}{Introdução}
 
------------ USAR ESSE EXEMPLO E FALAR DE GNURADIO, DESENVOLVIMENTO DE SOFTWARE, BOAS PRÁTICAS, ENGENHARIA DE SOFTWARE, CONTAINERS, LINGUAGENS DE PROGRAMAÇÃO, C++, PYTHON
------------ \textit{Docker}, RÁDIO DEFINIDO POR SOFTWARE, SOFTWARE-DEFINED RADIO, HACKRF, MICHAEL OSSMAN, LIMESDR, ANALOG DEVICES, SIMULINK, GNURADIO-COMPANION
+O processamento digital de sinais que é conhecido por engenheiros atualmente começou a florescer por volta dos anos 1960 \cite{hayes:1999} passando por uma evolução
+dramática até alcançar solidez em técnicas e implementações. O cenário atual que o mundo se encontra é altamente favorável para que estudantes de engenharia
+direcionem seus esforços para esta área, pois o processo de transformação digital da indústria e da sociedade está ocorrendo de forma acelerada
+\cite{ebert:digital_transformation} mantendo alta a demanda por profissionais com habilidades técnicas correlatas.
+
+Os grandes aliados do engenheiro na obtenção do êxito em seus trabalhos estão diretamente relacionados com a sua capacidade de descobrir e aplicar ferramentas que facilitem a execução de suas
+tarefas e a geração de relatórios e métricas que auxiliem em diagnósticos e na tomada de decisões que impactam os negócios que ele está envolvido, seja como funcionário ou como empreendedor.
+Dentre as principais ferramentas que o engenheiro pode ter ao seu lado, está o uso de boas práticas no que tange o desenvolvimento de \textit{software} e, mais especificamente para este trabalho,
+está a ferramenta GNURadio que vem como uma proposta livre de integração e multi-disciplinaridade dentro das áreas estudadas por engenheiros em eletrônica e telecomunicações.
+
+Para utilizar o \textit{software} escrito utilizando o GNURadio além das simulações, o engenheiro precisa de um \textit{hardware}, chamado SDR, capaz receber este \textit{software} fazer as devidas
+conversões de frequência e transmitir/receber o sinal de radiofrequência desejado. As vantagens na utilização do SDR como o reuso de \textit{hardware} e a utilização de níveis mais altos de abstração do \textit{software} como também algumas desvantagens (desempenho inferior
+se comparado a \textit{hardware}'s dedicados,  problemas  de  interoperabilidade e segurança) devem sempre ser avaliados para cada projeto \cite{sbrc:minicurso_gnuradio}
+
+Um dos diferenciais alcançados durante o desenvolvimento dessa pesquisa foi a inserção do uso de \textit{container}'s para o isolamento do ambiente de desenvolvimento de \textit{software}, o que
+flexibiliza o processo de criação e o impacto esperado por este projeto é incentivar que outros estudantes também apliquem seus conhecimentos teóricos sobre processamento digital de sinais
+utilizando as ferramentas e boas práticas que aqui serão mencionadas.
+
+O objetivo principal deste trabalho será trazer a visão de um estudante de engenharia eletrônica e de telecomunicações de sobre o contato inicial com o desenvolvimento de \textit{software} para
+aplicações de rádio definido por \textit{software} utilizando GNURadio para a realização do processamento digital de sinais.
 
 % ----------------------------------------------------------
 % PARTE - preparação do ambiente de desenvolvimento
@@ -496,7 +452,7 @@ podem ser encontrados no mercado atualmente e quais as especificações técnica
 é necessário um dispositivo \textit{host} (arquiteturas \textbf{x86\_64} ou \textbf{amd64}, \textbf{armhf} e \textbf{arm64}/\textbf{aarch64}, por exemplo),
 preferencialmente com alguma distribuição \textit{Linux} e o \textit{GNURadio-companion} instalados, uma placa de circuito impresso do sistema de rádio
 definido por \textit{software} contendo algum cabo para comunicação com o computador \textit{host} (normalmente USB 2.0/3.0), as antenas para transmissão e/ou recepção
-e algum oscilador (TCXO, OCXO, GPSDO, etc...)
+e algum oscilador (TCXO (\textit{Temperature Compensated Crystal Oscillator}), OCXO (\textit{Oven Controlled Crystal Oscillator}), GPSDO (\textit{GPS disciplined oscillator}), etc...)
 caso a aplicação exija sincronismo por \textit{clock} externo.
 
 Com relação ao computador utilizado, trata-se de um notebook de arquitetura \textbf{amd64} com 8 GB de memória DDR3 e processador Intel® Core™ i7 de terceira geração com quatro núcleos e
@@ -746,7 +702,7 @@ e também dos própiros fabricantes \href{https://www.sdrplay.com/rspduo/}{SDRpl
 % HACKRF: https://pt.aliexpress.com/item/32889992261.html
 
 O \textit{HackRF One} é um SDR com \textit{hardware} de código aberto que foi desenvolvido pelo pesquisador em segurança de redes sem fio, Michael Ossmann. Trata-se de um transceptor \textit{half-duplex}
-com largura de banda máxima de 20 MHz preparado para atuar em uma grande faixa de frequências que vão de 1 MHz a 6 GHz, possibilitando o processamento de até 20 milhões de amostras por
+com largura de banda máxima de 20 MHz (BW - \textit{Bandwidth}) preparado para atuar em uma grande faixa de frequências que vão de 1 MHz a 6 GHz, possibilitando o processamento de até 20 milhões de amostras por
 segundo (tendo 8 bits por amostra em quadratura - sinais I/Q com 8 bits para o I e 8 bits para o Q) recebidas ou transmitidas por meio de uma antena fixada em seu conector SMA fêmea, de
 forma que o ganho - de recepção (RX) ou de transmissão (TX) - é configurável pelo \textit{software} utilizado, que neste caso é o GNURadio. O \textit{HackRF One} é alimentado pela tensão VCC fornecida
 pela porta de comunicação USB 2.0 que possibilita que o SDR trasnmita até 40 MB por segundo (20 milhões de amostras de 2 bytes).
@@ -848,7 +804,7 @@ uma antena telescópica (banda passante de 40 MHz a 6 GHz), uma antena omnidirec
 O conceito e as boas práticas relacionadas ao desenvolvimento de \textit{software} evoluiu bastante desde os primórdios da computação e algo que sempre esteve
 em pauta é o problema de incompatibilidade de ambientes de desenvolvimento, o que acabou dando origem ao jargão: “na minha máquina funciona”.
 Configurar o ambiente de desenvolvimento e depois ter incompatibilidade de versão de alguma biblioteca ou então não ter a facilidade de replicar o ambiente
-que foi utilizado durante o desenvolvimento é um grande problema enfrentado por engenheiros e/ou programadores, principalmente os que estão em início de carreira.
+que foi utilizado durante o desenvolvimento é um grande problema enfrentado por engenheiros e/ou programadores \cite{meng2017facilitating}, principalmente os que estão em início de carreira.
 Nesta parte deste trabalho será demonstrada a criação de um ambiente para desenvolvimento de aplicações de rádio definido por \textit{software} utilizando
 o \textbf{GNURadio} instalado em um \textit{container} \textbf{Docker}.
 Os conceitos de \textit{container}'s e do \textit{Docker} com certeza já são amplamente abordados na atualidade e então, apenas alguns pontos relacionados ao tema
@@ -901,7 +857,7 @@ desenvolvimento de aplicações de \textit{software} e como os recursos de um si
 
 \section*{Criação do ambiente de desenvolvimento}
 
-Primeiramente é necessário ter a CLI (\textit{command line interface}) do \textbf{docker engine} instalada (na máquina \textit{host}) e tal procedimento de
+Primeiramente é necessário ter a CLI (\textit{Command Line Interface}) do \textbf{docker engine} instalada (na máquina \textit{host}) e tal procedimento de
 instalação se torna extremamente simples bastando seguir o passo-a-passo fornecido pela \href{https://docs.docker.com/engine/install/}{documentação oficial}
 do \textit{Docker} \cite{Docker:2020}.
 Esta CLI está disponível para várias distribuições Linux na versão \textit{Server} e também para Windows e Mac na versão \textit{Desktop}. Neste trabalho será
@@ -1296,7 +1252,7 @@ Realizado este procedimento, é possível verificar que o dispositivo foi instal
 % ----------------------------------------------------------
 \part{Desenvolvimento}
 
-\chapter{Criação de \textit{flowgraph}'s no GNURadio}
+\chapter{Criação de \textit{flowgraph}'s no GNURadio} \label{chapter:flowgraphs}
 
 Neste ponto o objetivo é demonstrar fluxos simples de processamento digital de sinais utilizando os GNURadio e nada mais justo que iniciar esta parte
 do trabalho desmonstrando \textit{flowgraph}'s de operações matemáticas básicas aplicadas a sinais digitais assim como utilizações convenientes do processamento de sinais.
@@ -1326,7 +1282,7 @@ diretamente de \textit{hardware}, com o objetivo de limitar a taxa na qual esse 
 \end{figure}
 
 Ao executar o código gerado pelo \textit{flowgraph} da Fig. \ref{fig:gnuradio_sum_flowgraph}, a interface do \textit{GNURadio-companion} constrói na Fig. \ref{fig:gnuradio_sum} os gráficos
-relacionados à soma dos sinais, tanto no domínio do tempo como no domínio dam frequência. De forma semelhante, na Fig. \ref{fig:gnuradio_product_flowgraph} está o \textit{flowgraph} para
+relacionados à soma dos sinais, tanto no domínio do tempo como no domínio da frequência. De forma semelhante, na Fig. \ref{fig:gnuradio_product_flowgraph} está o \textit{flowgraph} para
 operação do produto de dois sinais que podem ser visualizados pela interface gráfica na Fig. \ref{fig:gnuradio_product}.
 
 \begin{figure}[!htb]
@@ -1536,19 +1492,19 @@ o \textit{QT GUI Frequency Sink}.
 %   \begin{lstlisting}[language=C++]
 %     #ifndef INCLUDED_FOO_BAR_H
 %     #define INCLUDED_FOO_BAR_H
-    
+
 %     #include <foo/api.h>
 %     #include <gr_sync_block.h>
-    
+
 %     namespace gr {
 %       namespace foo {
-        
+
 %       class FOO_API bar : virtual public gr_sync_block
 %       {
 %       public:
 %         // gr::foo::bar::sptr
 %         typedef boost::shared_ptr sptr;
-        
+
 %         /*!
 %         * \class bar
 %         * \brief A brief description of what foo::bar does
@@ -1561,13 +1517,13 @@ o \textit{QT GUI Frequency Sink}.
 %         */
 
 %         static sptr make(dtype var);
-        
+
 %         virtual void set_var(dtype var) = 0;
 %         virtual dtype var() = 0;
 %       };
 %     } /* namespace foo */
 %   } /* namespace gr */
-  
+
 %   #endif /* INCLUDED_FOO_BAR_H */
 %   \end{lstlisting}
 % \end{adjustbox}
@@ -1597,29 +1553,29 @@ o \textit{QT GUI Frequency Sink}.
 %     #define INCLUDED_FOO_BAR_IMPL_H
 
 %     #include <foo/bar.h>
-    
+
 %     namespace gr {
 %       namespace foo {
-        
+
 %       class FOO_API bar_impl : public bar
 %       {
 %       private:
 %         dtype d_var;
 %       public:
 %         bar_impl(dtype var);
-        
+
 %         ~bar_impl();
-        
+
 %         void set_var(dtype var);
 %         dtype var();
-        
+
 %         int work(int noutput_items,
 %             gr_vector_const_void_star &input_items,
 %             gr_vector_void_star &output_items);
 %       };
 %     } /* namespace foo */
 %   } /* namespace gr */
-  
+
 %   #endif /* INCLUDED_FOO_BAR_IMPL_H */
 %   \end{lstlisting}
 % \end{adjustbox}
@@ -1636,18 +1592,18 @@ o \textit{QT GUI Frequency Sink}.
 %     #ifdef HAVE_CONFIG_H
 %     #include "config.h"
 %     #endif
-    
+
 %     #include "bar_impl.h"
 %     #include <gr_io_signature.h>
 
 %     namespace gr {
 %       namespace foo {
-        
+
 %         bar::sptr bar::make(dtype var)
 %         {
 %           return gnuradio::get_initial_sptr(new bar_impl(var));
 %         }
-    
+
 %         bar_impl::bar_impl(dtype var)
 %           : gr_sync_block("bar",
 %                   gr_make_io_signature(1, 1, sizeof(in_type)),
@@ -1655,24 +1611,24 @@ o \textit{QT GUI Frequency Sink}.
 %         {
 %           set_var(var);
 %         }
-    
+
 %         bar_impl::~bar_impl()
 %         {
 %           // any cleanup code here
 %         }
-        
+
 %         dtype
 %         bar_impl::var()
 %         {
 %           return d_var;
 %         }
-    
+
 %         void
 %         bar_impl::set_var(dtype var)
 %         {
 %           d_var = var;
 %         }
-        
+
 %         int
 %         bar_impl::work(int noutput_items,
 %                         gr_vector_const_void_star &input_items,
@@ -1680,7 +1636,7 @@ o \textit{QT GUI Frequency Sink}.
 %         {
 %           const in_type *in = (const in_type*)input_items[0];
 %           out_type *out = (out_type*)output_items[0];
-      
+
 %           // Perform work; read from in, write to out.
 %           return noutput_items;
 %         }
@@ -1727,17 +1683,17 @@ o \textit{QT GUI Frequency Sink}.
 %               gr_vector_const_void_star &input_items,
 %               gr_vector_void_star &output_items)
 %     {
-      
+
 %       //cast buffers
 %       const float* in0 = reinterpret_cast<const float*>(input_items[0]);
 %       const float* in1 = reinterpret_cast<const float*>(input_items[1]);
 %       float* out = reinterpret_cast<float*>(output_items[0]);
-  
+
 %       //process data
 %       for(size_t i = 0; i < noutput_items; i++) {
 %         out[i] = in0[i] + in1[i];
 %       }
-  
+
 %       //return produced
 %       return noutput_items;
 %     }
@@ -1818,7 +1774,7 @@ o \textit{QT GUI Frequency Sink}.
 % \begin{adjustbox}{max width=\linewidth}
 %   \begin{lstlisting}[language=C++]
 %     #include <gr_sync_block.h>
-    
+
 %     class my_sync_block : public gr_sync_block
 %     {
 %     public:
@@ -1829,7 +1785,7 @@ o \textit{QT GUI Frequency Sink}.
 %       {
 %         //constructor stuff
 %       }
-  
+
 %       int work(int noutput_items,
 %                 gr_vector_const_void_star &input_items,
 %                 gr_vector_void_star &output_items)
@@ -1856,7 +1812,7 @@ o \textit{QT GUI Frequency Sink}.
 % \begin{adjustbox}{max width=\linewidth}
 %   \begin{lstlisting}[language=C++]
 %     #include <gr_sync_decimator.h>
-    
+
 %     class my_decim_block : public gr_sync_decimator
 %     {
 %     public:
@@ -1868,7 +1824,7 @@ o \textit{QT GUI Frequency Sink}.
 %       {
 %         //constructor stuff
 %       }
-  
+
 %       //work function here...
 %     };
 %   \end{lstlisting}
@@ -1887,7 +1843,7 @@ o \textit{QT GUI Frequency Sink}.
 % \begin{adjustbox}{max width=\linewidth}
 %   \begin{lstlisting}[language=C++]
 %     #include <gr_sync_interpolator.h>
-    
+
 %     class my_interp_block : public gr_sync_interpolator
 %     {
 %     public:
@@ -1899,7 +1855,7 @@ o \textit{QT GUI Frequency Sink}.
 %       {
 %         //constructor stuff
 %       }
-  
+
 %       //work function here...
 %     };
 %   \end{lstlisting}
@@ -1999,7 +1955,7 @@ o \textit{QT GUI Frequency Sink}.
 %     class my_topblock(gr.top_block):
 %     def __init__(self, ):
 %         gr.top_block.__init__(self)
-    
+
 %     def main():
 %         tb = mytb()
 %         tb.run()
@@ -2044,7 +2000,7 @@ o \textit{QT GUI Frequency Sink}.
 %     int work(int noutput_items,
 %               gr_vector_const_void_star &input_items,
 %               gr_vector_void_star &output_items)
-              
+
 %     {
 %       std::vector tags;
 %       //number of items read on port 0
@@ -2074,10 +2030,10 @@ o \textit{QT GUI Frequency Sink}.
 %       const uint64_t offset = this->nitems_written(0) + item_index;
 %       pmt::pmt_t key = pmt::string_to_symbol("example_key");
 %       pmt::pmt_t value = pmt::string_to_symbol("example_value");
-  
+
 %       //write at tag to output port 0 with given absolute item offset
 %       this->add_item_tag(0, offset, key, value);
-  
+
 %       //work stuff here...
 %     }
 %   \end{lstlisting}
@@ -2111,7 +2067,7 @@ O objetivo deste capítulo é disponibilizar uma visão geral de como é possív
 de processamento digital de sinais no GNURadio e não apenas usuários da ferramenta \textit{GNURadio-companion}. Para auxiliar no entendimento, será mostrado um passo a passo de como criar
 um módulo do GNURadio, adicionar blocos a ele e depois disponibilizar pacotes de instalação que podem ser aproveitados por outros desenvolvedores que estejam direcionados a esse mesmo propósito.
 
-\section*{Módulos \textit{OutOfThree}}
+\section*{Módulos \textit{OutOfThree}} \label{section:modules_oot}
 
 \begin{figure}[!htb]
   \centering
@@ -2193,7 +2149,7 @@ este procedimento também é realizável utilizando a ferramenta \textit{gr\_mod
 Para finalizar, é necessário realizar alguns procedimentos para compilar o código, gerar os arquivos binários executáveis e também os pacotes (\textbf{.deb} e \textbf{.rpm}) que tornam
 possível a disponibilização do trabalho realizado para outros desenvolvedores através dos gerenciadores de pacotes dos sistemas operacionais. Estes procedimentos são muito importantes,
 pois um grande diferencial do engenheiro é ir além da função de programar as aplicações, estando preparado para atuar em todos os passos do processo de criação,
-implantação e suporte do \textit{software} que pode ser ou não comercializado.
+implantação e suporte do \textit{software}, o qual pode ser comercializado ou também uma contribuição de \textit{software} livre.
 
 Para tornar possível a geração de um pacote \textbf{.deb} do bloco customizado, foi necessário adicionar ao final do arquivo \textit{CMakeLists.txt}
 que fica na raiz do módulo (\textbf{gr-exemplo}) as três seguintes linhas:
@@ -2242,8 +2198,33 @@ Fig. \ref{fig:gr_exemplo_build}.
 % ---
 \chapter{Revisão Literária}
 
+Com o intuito de reforçar a consistência prática deste trabalho, é necessário fazer a ligação entre os passos que foram executados até agora e suas fundamentações teóricas. Conceitos cruciais
+que foram aplicados durante a criação e execução de \textit{flowgraph}'s é o de decimação e interpolação, que são parâmetros a serem definidos durante o projeto de filtros digitais.
+Em todos os \textit{flowgraph}'s também foi necessário passar o parâmetro \textbf{samp\_rate} que é a taxa de amostragem. Este parâmetro sempre deve ser observado, para que esteja de acordo com o
+Teorema da amostragem de Nyquist-Shannon, pois a utilização de valores que sejam inferiores ao dobro ad largura de banda do sinal em banda-base resulta em efeitos indesejados caso fosse necessário
+recuperar este mesmo sinal após a recepção, transmissão e/ou processamento.
+
+FALAR SOBRE FILTROS digitais, Teorema de Nyquist
+Decimação
+interpolação
+FFT
+
+Capítulo sobre os sinais e os gráficos no GNURadio: \ref{chapter:flowgraphs}
+Falar sobre as propriedades dos sinais (soma no tempo, soma na frequência, multiplica no tempo, deslocamento na frequencia)
+
+Aproveitar para colocar aqui os símbolos e assim fechar a lista de símbolos
+
+samp\_rate
+potencia
+SNR
+Bandwidth
+bit
+byte
+
 % ---
-\section*{Aliquam vestibulum fringilla lorem}
+\section*{Análise dos resultados}
+
+Bloco OOT criado na seção \ref{section:modules_oot}
 
 \begin{figure}[!htb]
   \centering
@@ -2281,6 +2262,14 @@ no auxílio a engenheiros e desenvolvedores de aplicações de rádio definido p
 * Criação de transmissores dentro dos padrões do mercado (DVB, ISDB, ATSC, etc \ldots);
 
 * Implementação prática de filtros digitais customizados.
+
+DIFICULDADES ENCONTRADAS
+
+ONEROSIDADE NA CHECKAGEM DE dependências
+
+BENEFÍCIOS DA UTILIZAÇÃO DO DOCKER.
+
+
 
 
 % \lipsum[31-33]
