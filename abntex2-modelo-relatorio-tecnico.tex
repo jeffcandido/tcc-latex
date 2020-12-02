@@ -87,6 +87,8 @@
 % Pacotes adicionais, usados apenas no âmbito do Modelo Canônico do abnteX2
 % ---
 \usepackage{lipsum}				% para geração de dummy text
+\usepackage{amssymb}
+\usepackage{empheq,amsmath}
 % ---
 
 % ---
@@ -316,15 +318,15 @@
 \begin{resumo}
 
   Este é um trabalho introdutório e prático de pesquisa direcionado às áreas de processamento digital de sinais e, transmissão e recepção de sinais de radiofrequência.
-  O objetivo é que ele se torne um pontapé inicial para que estudantes de engenharia eletrônica e de Telecomunicações possam ter um primeiro contato prático com
+  O objetivo é que ele se torne um pontapé inicial para que estudantes de engenharia eletrônica e de telecomunicações possam ter um primeiro contato prático com
   técnicas de processamento digital de sinais aplicadas a partir de um sistema de rádio definido por software.
 
-  A proposta de realização dos expertimento conta com a  utilização de métodos e técnicas de programação em C++/Python para a construção de módulos e blocos de processamento
-  de sinais em conjunto ao uso de um \textit{hardware} dedicado ao propósito de ser a interface entre um computador e o \textit{frontend} de radiofrequência.
+  A proposta de realização dos expertimentos conta com a  utilização de métodos e técnicas de programação em C++/Python para a construção de módulos e blocos de processamento
+  de sinais em conjunto ao uso de um \textit{hardware} (o SDR \textit{HackRF One}) dedicado ao propósito de ser a interface entre um computador e o \textit{frontend} de radiofrequência.
 
   No decorrer do trabalho serão demonstrados detalhes de implementação, comunicação entre o \textit{hardware} e provisionamento do ambiente e das ferramentas de
-  \textit{software} necessárias para a sua realização. Todos os esforços direcionados resultaram no êxito de se demonstrar o uso prático da ferramenta GNURadio, como também
-  a possibilidade de que o engenheiro também atue como um desenvolvedor, o que traz ganhos extremamente benéficos ao seu aprendizado, especialização profissional e a completa
+  \textit{software} necessárias para a sua realização. Todos os esforços direcionados resultaram no êxito da demonstração do uso prático da ferramenta GNURadio, assim como
+  a possibilidade de que o engenheiro também atue como um desenvolvedor, o que traz ganhos extremamente benéficos ao seu aprendizado e especialização profissional, além da
   possibilidade de aplicação dos conceitos teóricos adquiridos sobre sinais e sistemas, processamento digital de sinais, programação de sistemas de alta criticidade, sistemas
   de comunicações, modulação e demodulação e etc \ldots
 
@@ -424,21 +426,21 @@ dramática até alcançar solidez em técnicas e implementações. O cenário at
 direcionem seus esforços para esta área, pois o processo de transformação digital da indústria e da sociedade está ocorrendo de forma acelerada
 \cite{ebert:digital_transformation} mantendo alta a demanda por profissionais com habilidades técnicas correlatas.
 
-Os grandes aliados do engenheiro na obtenção do êxito em seus trabalhos estão diretamente relacionados com a sua capacidade de descobrir e aplicar ferramentas que facilitem a execução de suas
+Os grandes aliados do engenheiro na execução de seus trabalhos estão diretamente relacionados com a sua capacidade de descobrir e aplicar ferramentas que facilitem a execução de suas
 tarefas e a geração de relatórios e métricas que auxiliem em diagnósticos e na tomada de decisões que impactam os negócios que ele está envolvido, seja como funcionário ou como empreendedor.
 Dentre as principais ferramentas que o engenheiro pode ter ao seu lado, está o uso de boas práticas no que tange o desenvolvimento de \textit{software} e, mais especificamente para este trabalho,
 está a ferramenta GNURadio que vem como uma proposta livre de integração e multi-disciplinaridade dentro das áreas estudadas por engenheiros em eletrônica e telecomunicações.
 
-Para utilizar o \textit{software} escrito utilizando o GNURadio além das simulações, o engenheiro precisa de um \textit{hardware}, chamado SDR, capaz receber este \textit{software} fazer as devidas
+Para utilizar o \textit{software} escrito utilizando o GNURadio além das simulações, o engenheiro precisa de um \textit{hardware}, chamado SDR (\textit{Software-defined Radio}), capaz de receber este \textit{software} fazer as devidas
 conversões de frequência e transmitir/receber o sinal de radiofrequência desejado. As vantagens na utilização do SDR como o reuso de \textit{hardware} e a utilização de níveis mais altos de abstração do \textit{software} como também algumas desvantagens (desempenho inferior
 se comparado a \textit{hardware}'s dedicados,  problemas  de  interoperabilidade e segurança) devem sempre ser avaliados para cada projeto \cite{sbrc:minicurso_gnuradio}
 
-Um dos diferenciais alcançados durante o desenvolvimento dessa pesquisa foi a inserção do uso de \textit{container}'s para o isolamento do ambiente de desenvolvimento de \textit{software}, o que
-flexibiliza o processo de criação e o impacto esperado por este projeto é incentivar que outros estudantes também apliquem seus conhecimentos teóricos sobre processamento digital de sinais
+Um dos diferenciais alcançados durante o desenvolvimento dessa pesquisa foi a utilização de \textit{container}'s para o isolamento do ambiente de desenvolvimento de \textit{software}, o que
+flexibiliza o processo de criação, sendo que o impacto esperado é incentivar que outros estudantes também apliquem seus conhecimentos teóricos sobre processamento digital de sinais
 utilizando as ferramentas e boas práticas que aqui serão mencionadas.
 
-O objetivo principal deste trabalho será trazer a visão de um estudante de engenharia eletrônica e de telecomunicações de sobre o contato inicial com o desenvolvimento de \textit{software} para
-aplicações de rádio definido por \textit{software} utilizando GNURadio para a realização do processamento digital de sinais.
+O objetivo principal deste trabalho será trazer a visão de um estudante de engenharia eletrônica e de telecomunicações sobre o contato inicial com o desenvolvimento de aplicações de rádio
+definido por \textit{software} utilizando o GNURadio para a realização do processamento digital de sinais.
 
 % ----------------------------------------------------------
 % PARTE - preparação do ambiente de desenvolvimento
@@ -448,8 +450,9 @@ aplicações de rádio definido por \textit{software} utilizando GNURadio para a
 \chapter{Hardware}
 
 Neste capítulo serão abordados os dispositivos de \textit{hardware} utilizados no desenvolvimento deste trabalho, trazendo brevemente um comparativo de quais
-podem ser encontrados no mercado atualmente e quais as especificações técnicas disponibilizadas por alguns fabricantes. Basicamente para alcançar o êxito
-é necessário um dispositivo \textit{host} (arquiteturas \textbf{x86\_64} ou \textbf{amd64}, \textbf{armhf} e \textbf{arm64}/\textbf{aarch64}, por exemplo),
+podem ser encontrados no mercado atualmente e quais as especificações técnicas disponibilizadas por alguns fabricantes.
+
+Basicamente, é necessário um dispositivo \textit{host} (arquiteturas \textbf{x86\_64} ou \textbf{amd64}, \textbf{armhf} e \textbf{arm64}/\textbf{aarch64}, por exemplo),
 preferencialmente com alguma distribuição \textit{Linux} e o \textit{GNURadio-companion} instalados, uma placa de circuito impresso do sistema de rádio
 definido por \textit{software} contendo algum cabo para comunicação com o computador \textit{host} (normalmente USB 2.0/3.0), as antenas para transmissão e/ou recepção
 e algum oscilador (TCXO (\textit{Temperature Compensated Crystal Oscillator}), OCXO (\textit{Oven Controlled Crystal Oscillator}), GPSDO (\textit{GPS disciplined oscillator}), etc...)
@@ -476,7 +479,7 @@ os quais atuam até a casa de 2 GHz aproximadamente com laguras de banda máxima
 o LimeSDR Mini, BladeRF, \textit{HackRF One}, Ettus USRP B210 e o Adalm PlutoSDR e todos podem ser utilizados com largura de banda de pelo menos 20 MHz e podendo variar
 entre 1 MHz e 6 GHz no domínio da frequência.
 
-O resumo dos principais SDR's que podem ser encontrados no mercado é mostrado na Tabela \ref{table:SDR_comparison}, com preços em dólares cotados online através do site \href{https://pt.aliexpress.com}{https://pt.aliexpress.com}
+O resumo dos principais SDR's que podem ser encontrados no mercado é mostrado na Tabela \ref{table:SDR_comparison}, com preços em dólares cotados \textit{online} através do site \href{https://pt.aliexpress.com}{https://pt.aliexpress.com}
 e também dos própiros fabricantes \href{https://www.sdrplay.com/rspduo/}{SDRplay}, \href{https://www.analog.com/en/design-center/evaluation-hardware-and-software/evaluation-boards-kits/adalm-pluto.html}{Analog Devices} (Adalm Pluto),
 \href{https://www.nuand.com/bladerf-1/}{Nuand} (BladeRF) e \href{https://www.ettus.com/all-products/ub210-kit/}{Ettus} (USRP B210). O SDR escolhido para este trabalho foi o \textit{HackRF One}, que será abordado com mais detalhes na próxima seção.
 
@@ -705,7 +708,7 @@ O \textit{HackRF One} é um SDR com \textit{hardware} de código aberto que foi 
 com largura de banda máxima de 20 MHz (BW - \textit{Bandwidth}) preparado para atuar em uma grande faixa de frequências que vão de 1 MHz a 6 GHz, possibilitando o processamento de até 20 milhões de amostras por
 segundo (tendo 8 bits por amostra em quadratura - sinais I/Q com 8 bits para o I e 8 bits para o Q) recebidas ou transmitidas por meio de uma antena fixada em seu conector SMA fêmea, de
 forma que o ganho - de recepção (RX) ou de transmissão (TX) - é configurável pelo \textit{software} utilizado, que neste caso é o GNURadio. O \textit{HackRF One} é alimentado pela tensão VCC fornecida
-pela porta de comunicação USB 2.0 que possibilita que o SDR trasnmita até 40 MB por segundo (20 milhões de amostras de 2 bytes).
+pela porta de comunicação USB 2.0, a qual também possibilita que o SDR trasnmita até 40 MB por segundo (20 milhões de amostras de 2 bytes a cada segundo).
 
 Em quinze de maio de dois mil e quinze, Michael Ossmann publicou que seu SDR é capaz de operar em frequências menores que 10 MHz \cite{HACKRF-1mhz}, reafirmando a faixa de operação do \textit{HackRF One}.
 A potência máxima de transmissão do \textit{HackRF One} varia de acordo com a faixa de frequência de operação e é suficiente para a realização de testes de curto alcance. Para recepção, o máximo de
@@ -723,7 +726,7 @@ Os valores apresentados a seguir estão relacionados à potência de transmissã
 
 A Fig. \ref{fig:hackrf_block_diagram} ilustra o diagrama de blocos simplificado do \textit{HackRF One}. Por se tratar de um equipamento que lida com radiofrequência, o uso do \textit{HackRF One} deve estar dentro das observações legais da região em que for aplicado. No Brasil é importante que o
 engenheiro esteja atento às regras reguladas pela Agência Nacional de Telecomunicações, ANATEL, como por exemplo a Resolução nº 716, de 31 de outubro de 2019 em que foi aprovado o plano de
-atribuição, destinação e distribuição de faixas de frequências no Brasil (PDFF). O Anexo \ref{attachment:freq_range_brasil} contém o quadro de atribuição de faixas de frequências no Brasil, edição 2019.
+atribuição, destinação e distribuição de faixas de frequências no Brasil (PDFF). O Anexo \ref{attachment:freq_range_brasil} contém o quadro de atribuição de faixas de frequências no Brasil, edição de 2019.
 
 \begin{figure}[!htb]
   \centering
@@ -733,7 +736,7 @@ atribuição, destinação e distribuição de faixas de frequências no Brasil 
   \label{fig:hackrf_block_diagram}
 \end{figure}
 
-O \textit{kit} que foi adquirido no site \href{https://pt.aliexpress.com}{https://pt.aliexpress.com} veio com uma placa de circuito impresso do SDR \textit{HackRF One}, um oscilador TCXO (\textit{Temperature Compensated Crystal Oscillator})
+O \textit{kit} que foi adquirido no site \href{https://pt.aliexpress.com}{https://pt.aliexpress.com} veio com uma placa de circuito impresso do SDR \textit{HackRF One}, um oscilador TCXO,
 uma antena telescópica (banda passante de 40 MHz a 6 GHz), uma antena omnidirecional (para recepção de sinais GSM, 3G e 4G), um cabo USB e peças de acrílico para montagem do \textit{kit}. As fotos da Fig.
 \ref{fig:hack_rf_hdk} foram tiradas após a montagem do \textit{kit} e os diagramas esquemático e de montagem referentes ao projeto foram anexados a este trabalho (Anexos \ref{attachment:hackrf-one-schematic-1} a \ref{attachment:hackrf-one-assembly}).
 
@@ -817,8 +820,8 @@ rádio definido por \textit{software} inicialmente publicado no ano de 2001 como
 também em meio acadêmico ou para suprir necessidades do mercado no que tange comunicações sem fio ou qualquer tipo de sistema de rádio digital do mundo real.
 O GNURadio está sob uma licença pública geral — GNU GPLv3 — da \textit{Free Software Foundation} (FSF).
 
-Por ser um projeto de \textit{software} agnóstico ao \textit{hardware} das plataformas de desenvolvimento (SDR — \textit{Software-defined Radio}), o GNURadio é idealizado
-para trabalhar apenas com dados digitalizados e a partir disso executar todo um processamento digital de sinais (DSP — \textit{Digital Signal Processing})
+Por ser um projeto de \textit{software} agnóstico ao \textit{hardware} das plataformas de desenvolvimento, o GNURadio é idealizado
+para trabalhar apenas com dados digitalizados e a partir disso executar um processamento digital de sinais (DSP — \textit{Digital Signal Processing})
 definido por aplicações escritas para receber ou enviar dados de sistemas de \textit{streaming} digital programaticamente, utilizando a linguagem de programação
 Python — que é considerado mais fácil — ou C++ — para escrita de códigos de desempenho crítico — além de também ser possível através de uma interface gráfica de
 usuário (\textbf{GNURadio Companion} — GRC) por diagramas de blocos.
@@ -835,7 +838,7 @@ Um questionamento bastante pertinente que pode vir à tona neste momento é: Ser
 do ambiente de desenvolvimento, sendo que o próprio GNURadio já é distribuído oficialmente em pacotes compatíveis com os principais sistemas
 operacionais encontrados no mercado? Com o decorrer do próximo capítulo o porquê se tornará mais claro e por agora a ideia principal é de
 que quanto mais isolado possível for o ambiente de desenvolvimento, mais fácil será para testar hipóteses, criar diferentes soluções e tornar
-possível que elas sejam reproduzidas com facilidade independentemente da plataforma de \textit{hardware}.
+possível que elas sejam reproduzidas com facilidade independentemente se o código foi desenvolvido em um sistema \textit{host} e sendo executado em outro.
 
 Muitas ferramentas que podem ser úteis para engenheiros e desenvolvedores de \textit{software} para gerenciar ou solucionar problemas podem não estar
 incluídas no sistema \textit{host} de suas máquinas por padrão e a melhor maneira de adicionar ferramentas a um \textit{host} seria
@@ -1242,7 +1245,7 @@ Realizado este procedimento, é possível verificar que o dispositivo foi instal
 
 \begin{figure}[!htb]
   \centering
-  \caption{Verificação de versão do \textit{firmware} do \textit{HackRF One}.}
+  \caption{Verificação de versão do \textit{firmware} e taxa de transmissão do \textit{HackRF One}.}
   \includegraphics[width = \linewidth]{figures/hackrf/hackrf_info_version_transfer}
   Fonte: Elaborado pelo autor.
   \label{fig:hackrf_info}
@@ -1283,7 +1286,7 @@ diretamente de \textit{hardware}, com o objetivo de limitar a taxa na qual esse 
 
 Ao executar o código gerado pelo \textit{flowgraph} da Fig. \ref{fig:gnuradio_sum_flowgraph}, a interface do \textit{GNURadio-companion} constrói na Fig. \ref{fig:gnuradio_sum} os gráficos
 relacionados à soma dos sinais, tanto no domínio do tempo como no domínio da frequência. De forma semelhante, na Fig. \ref{fig:gnuradio_product_flowgraph} está o \textit{flowgraph} para
-operação do produto de dois sinais que podem ser visualizados pela interface gráfica na Fig. \ref{fig:gnuradio_product}.
+operação do produto de dois sinais (de frequências 10 kHz e 100 kHz) que podem ser visualizados pela interface gráfica na Fig. \ref{fig:gnuradio_product}.
 
 \begin{figure}[!htb]
   \centering
@@ -2196,43 +2199,107 @@ Fig. \ref{fig:gr_exemplo_build}.
 % ---
 % Capitulo de revisão de literatura
 % ---
-\chapter{Revisão Literária}
+\chapter{Revisão literária e análise de resultados}
 
-Com o intuito de reforçar a consistência prática deste trabalho, é necessário fazer a ligação entre os passos que foram executados até agora e suas fundamentações teóricas. Conceitos cruciais
-que foram aplicados durante a criação e execução de \textit{flowgraph}'s é o de decimação e interpolação, que são parâmetros a serem definidos durante o projeto de filtros digitais.
-Em todos os \textit{flowgraph}'s também foi necessário passar o parâmetro \textbf{samp\_rate} que é a taxa de amostragem. Este parâmetro sempre deve ser observado, para que esteja de acordo com o
-Teorema da amostragem de Nyquist-Shannon, pois a utilização de valores que sejam inferiores ao dobro ad largura de banda do sinal em banda-base resulta em efeitos indesejados caso fosse necessário
-recuperar este mesmo sinal após a recepção, transmissão e/ou processamento.
+Com o intuito de reforçar a consistência prática deste trabalho, é necessário fazer a ligação entre os passos que foram executados até agora e suas fundamentações teóricas. Tópicos essenciais
+de telecomunicações que não podem deixar de ser analisados é o Teorema de Modulação e a aplicação de filtros digitais, visto que os blocos do GNURadio necessitam de realizar operações de
+conversão de taxa a todo momento.
+Em todos os \textit{flowgraph}'s também foi necessário passar o parâmetro \textbf{samp\_rate} que é a taxa de amostragem (dada em Hz), a qual sempre deve ser observada, para que esteja de acordo com o
+Teorema da amostragem (ou Teorema de Nyquist), pois a utilização de valores que sejam inferiores ao dobro da largura de banda (ou máximo valor de frequência) do sinal em banda-base resulta em
+efeitos indesejados caso fosse necessário recuperar este mesmo sinal após a recepção, transmissão e/ou processamento.
 
-FALAR SOBRE FILTROS digitais, Teorema de Nyquist
-Decimação
-interpolação
-FFT
+\section*{Teorema da Modulação}
 
-Capítulo sobre os sinais e os gráficos no GNURadio: \ref{chapter:flowgraphs}
-Falar sobre as propriedades dos sinais (soma no tempo, soma na frequência, multiplica no tempo, deslocamento na frequencia)
+\begin{figure}[!htb]
+  \centering
+  \begin{subfigure}[b]{0.8\linewidth}
+    \centering
+    \caption{\textit{Flowgraph} de um sinal em banda base e de uma portadora.}
+    \includegraphics[width = \linewidth]{figures/signals/baseband-signals-flowgraph.png}
+    \label{fig:baseband_flowgraph}
+  \end{subfigure}
 
-Aproveitar para colocar aqui os símbolos e assim fechar a lista de símbolos
+  \begin{subfigure}[b]{0.8\linewidth}
+    \centering
+    \caption{Sinal mensagem e da portadora no domínio do tempo e da frequência.}
+    \includegraphics[width = \linewidth]{figures/signals/baseband-signals-curves.png}
+    \label{fig:baseband_curves}
+  \end{subfigure}
+  \caption{Sinal mensagem e portadora antes da modulação.}
+  \label{fig:baseband_signals}
+\end{figure}
 
-samp\_rate
-potencia
-SNR
-Bandwidth
-bit
-byte
+Para conferir o Teorema da modulação, foi montado o \textit{flowgraph} apresentado na Fig. \ref{fig:baseband_flowgraph} que ao ser executado mostra as curvas de dois sinais (Fig. \ref{fig:baseband_curves}), sendo que o
+primeiro ($f(t) = cos(\omega_mt)$, onde $\omega_m = 2 \pi f_m$) é um sinal em banda base (fonte de sinal senoidal, tom de frequência de $f_m$ = 10 kHz), aqui chamado de mensagem e, o segundo é
+o sinal de uma portadora ($c(t) = cos(\omega_ct)$, onde $\omega_c = 2 \pi f_c$) com $f_c$ = 100 kHz. Sabendo que $f(t)$ e $c(t)$ são lineares e invariantes no tempo e, suas transformadas de Fourier
+são, respectivamente, $F(\omega)$ e $C(\omega)$ e sabendo que o Teorema da Modulação (REFERENCIA LIVRO LATHI) determina que ao se multiplicar um sinal mensagem (em banda base) por outro sinal com uma portadora de frequência (\textit{Flowgraph} da
+Fig. \ref{fig:modulation_flowgraph}), o reflexo no espectro em frequência deste produto é entendido como o sinal original apenas deslocado exatamente do valor da frequência da onda portadora, ou
+seja, o sinal que antes se encontrava em todo da frequência 0 Hz ($F(\omega)$) passa a ficar em torno da frequência da portadora ($F(\omega + \omega_c) + F(\omega - \omega_c)$). A
+Fig. \ref{fig:modulation_curves} mostra esse deslocamento em frequência como um exemplo prático de demonstração do Teorema da Modulação.
 
-% ---
-\section*{Análise dos resultados}
+\begin{figure}[!htb]
+  \centering
+  \begin{subfigure}[b]{0.8\linewidth}
+    \centering
+    \caption{\textit{Flowgraph} para modulação de um sinal.}
+    \includegraphics[width = \linewidth]{figures/signals/modulation-flowgraph.png}
+    \label{fig:modulation_flowgraph}
+  \end{subfigure}
 
-Bloco OOT criado na seção \ref{section:modules_oot}
+  \begin{subfigure}[b]{0.8\linewidth}
+    \centering
+    \caption{Modulação do sinal mensagem, curvas no tempo e na frequência.}
+    \includegraphics[width = \linewidth]{figures/signals/modulation-curves.png}
+    \label{fig:modulation_curves}
+  \end{subfigure}
+  \caption{Modulação de um sinal no GNURadio.}
+  \label{fig:modulation_signals}
+\end{figure}
+
+\newpage
+\section*{Decimação e Interpolação}
+
+Decimação e interpolação são outros dois conceitos bastante importantes e que demandam do desenvolvedor alguma afinidade teórica com o processamento de sinais, pois a qualquer momento pode ser
+necessário fazer a conversão da frequência de amostragem por algum fator, aqui denominados $L$ (para interpolação) e $M$ (para decimação). Basicamente, dizer que está sendo realizado o processo
+de decimação de um sinal significa que sua taxa de amostragem foi reduzida por um fator $M$ inteiro e para a interpolação seria o caso de ocorrer um aumento dessa taxa por um fator $L$.
+Às vezes é necessário fazer uma coversão de taxa que não pode ser usando um fator inteiro e é aí que entra uma conversão fracionário (ou racional) dessa taxa.
+
+Matematicamente falando, dado o sinal discreto $x[n]$ que possui transformada de Fourier $X(e^{j\omega})$, o qual deseja-se elevar ou diminuir a frequência de amostragem por um fator $L$
+- para interpolação - ou $M$ - para decimação - constante (e inteiro por se tratar de sinais discretos), gerando um novo sinal discreto ($x_L[n]$ ou $x_M[n]$), basta recordar a propriedade de
+escalonamento aplicada à transformada de Fourier (REFERENCIA-LIVRO-LATHI), onde:
+
+\begin{equation*}
+  x_L[n] = x[\frac{n}{L}] <==> L X(e^{j\omega L})
+\end{equation*}
+
+sendo $x_L[n]$ o sinal após o procedimento de interpolação e,
+
+\begin{equation*}
+  x_M[n] = x[nM] <==> \frac{1}{M} X(e^{\frac{j\omega}{M}})
+\end{equation*}
+
+com $x_M[n]$ o sinal em que ocorreu a decimação.
+
+Quando deseja-se fazer um procedimento de reamostragem por um fator não inteiro, então entra uma relação entre os fatores de interpolação e decimação ao mesmo tempo fazendo com que o sinal
+reamostrado racionalmente seja:
+
+\begin{equation*}
+  x_{L/M}[n] = x[\frac{nM}{L}] <==> \frac{L}{M} X(e^{\frac{j\omega L}{M}})
+\end{equation*}
+
+sendo $L$ e $M$ valores inteiros.
+
+O bloco OOT que foi criado na seção \ref{section:modules_oot} foi testado conforme mostra a Fig. \ref{fig:exemplo_flowgraph}, sendo criado um \textit{flowgraph} propriamente para verificar
+sua funcionalidade receber amostras do tipo ponto fluatuante, elevar seus valores ao quadrado e apresentá-los na saída.
 
 \begin{figure}[!htb]
   \centering
   \caption{Utilização do bloco customizado em um \textit{flowgrpah}.}
-  \includegraphics[width = \linewidth]{figures/gr_modtool/exemplo_flowgraph.png}
+  \includegraphics[trim=0.1cm 4cm 0.1cm 0.1cm, width = \linewidth]{figures/gr_modtool/exemplo_flowgraph.png}
   Fonte: Elaborado pelo autor.
   \label{fig:exemplo_flowgraph}
 \end{figure}
+
 % ---
 
 % \lipsum[1]
@@ -2255,21 +2322,23 @@ Bloco OOT criado na seção \ref{section:modules_oot}
 Todos os objetivos previstos para este trabalho foram alcançados e felizmente foi possível trazer em uma abordagem ampla, mesmo que introdutória, alguns conceitos importantes essenciais
 no auxílio a engenheiros e desenvolvedores de aplicações de rádio definido por software. Trabalhos futuros a partir deste podem ser realizados de diversas maneiras, como por exemplo:
 
-* utilização do SDR para levantamento da resposta em frequência de dispositivos transmissores;
+\begin{itemize}
+  \item[$-$] utilização do SDR para levantamento da resposta em frequência de dispositivos transmissores;
+  \item[$-$] construção de diferentes tipos de moduladores de sinais digitais (BPSK, QPSK, QAM, etc \ldots);
+  \item[$-$] criação de transmissores dentro dos padrões do mercado (DVB, ISDB, ATSC, etc \ldots);
+  \item[$-$] implementação prática de filtros digitais customizados.
+\end{itemize}
 
-* Construção de diferentes tipos de moduladores de sinais digitais (BPSK, QPSK, QAM, etc \ldots);
-
-* Criação de transmissores dentro dos padrões do mercado (DVB, ISDB, ATSC, etc \ldots);
-
-* Implementação prática de filtros digitais customizados.
+Foi possível abordar diferentes temáticas que estão relacionadas ao desenvolvimento de aplicações com GNURadio, passando desde questões relacionadas ao \textit{hardware} necessário até detalhes
+de implementação e geração de pacotes do \textit{software}. O foco dado ao provisionamento do ambiente de desenvolvimento se deu ao fato de que essa não é diretamente uma das áreas de estudo dos
+estudantes de engenharia eletrônica e de telecomunicações da UFU e o conhecimento sobre servidores Linux, utilização de linhas de comando, conectividade entre sistemas e etc \ldots têm grande chances
+de serem úteis e necessários na bagagem de um profissional formado neste contexto.
 
 DIFICULDADES ENCONTRADAS
 
 ONEROSIDADE NA CHECKAGEM DE dependências
 
 BENEFÍCIOS DA UTILIZAÇÃO DO DOCKER.
-
-
 
 
 % \lipsum[31-33]
