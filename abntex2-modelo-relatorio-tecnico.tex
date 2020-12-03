@@ -398,7 +398,6 @@
   \item[$f$] Frequência [Hz]
   \item[$\omega$] Frequência angular [rad/s]
   \item[$f_s$] Frequência de amostragem [Hz]
-  \item[$f_c$] Frequência de corte [Hz]
 \end{simbolos}
 % ---
 
@@ -2232,7 +2231,7 @@ efeitos indesejados caso fosse necessário recuperar este mesmo sinal após a re
 Para conferir o Teorema da modulação, foi montado o \textit{flowgraph} apresentado na Fig. \ref{fig:baseband_flowgraph} que ao ser executado mostra as curvas de dois sinais (Fig. \ref{fig:baseband_curves}), sendo que o
 primeiro ($f(t) = cos(\omega_mt)$, onde $\omega_m = 2 \pi f_m$) é um sinal em banda base (fonte de sinal senoidal, tom de frequência de $f_m$ = 10 kHz), aqui chamado de mensagem e, o segundo é
 o sinal de uma portadora ($c(t) = cos(\omega_ct)$, onde $\omega_c = 2 \pi f_c$) com $f_c$ = 100 kHz. Sabendo que $f(t)$ e $c(t)$ são lineares e invariantes no tempo e, suas transformadas de Fourier
-são, respectivamente, $F(\omega)$ e $C(\omega)$ e sabendo que o Teorema da Modulação (REFERENCIA LIVRO LATHI) determina que ao se multiplicar um sinal mensagem (em banda base) por outro sinal com uma portadora de frequência (\textit{Flowgraph} da
+são, respectivamente, $F(\omega)$ e $C(\omega)$ e sabendo que o Teorema da Modulação \cite{Lathi:1998} determina que ao se multiplicar um sinal mensagem (em banda base) por outro sinal com uma portadora de frequência (\textit{Flowgraph} da
 Fig. \ref{fig:modulation_flowgraph}), o reflexo no espectro em frequência deste produto é entendido como o sinal original apenas deslocado exatamente do valor da frequência da onda portadora, ou
 seja, o sinal que antes se encontrava em todo da frequência 0 Hz ($F(\omega)$) passa a ficar em torno da frequência da portadora ($F(\omega + \omega_c) + F(\omega - \omega_c)$). A
 Fig. \ref{fig:modulation_curves} mostra esse deslocamento em frequência como um exemplo prático de demonstração do Teorema da Modulação.
@@ -2260,13 +2259,13 @@ Fig. \ref{fig:modulation_curves} mostra esse deslocamento em frequência como um
 \section*{Decimação e Interpolação}
 
 Decimação e interpolação são outros dois conceitos bastante importantes e que demandam do desenvolvedor alguma afinidade teórica com o processamento de sinais, pois a qualquer momento pode ser
-necessário fazer a conversão da frequência de amostragem por algum fator, aqui denominados $L$ (para interpolação) e $M$ (para decimação). Basicamente, dizer que está sendo realizado o processo
+necessário fazer a conversão da frequência de amostragem do sinal por algum fator \cite{hayes:1999}, aqui denominados $L$ (para interpolação) e $M$ (para decimação). Basicamente, dizer que está sendo realizado o processo
 de decimação de um sinal significa que sua taxa de amostragem foi reduzida por um fator $M$ inteiro e para a interpolação seria o caso de ocorrer um aumento dessa taxa por um fator $L$.
 Às vezes é necessário fazer uma coversão de taxa que não pode ser usando um fator inteiro e é aí que entra uma conversão fracionário (ou racional) dessa taxa.
 
 Matematicamente falando, dado o sinal discreto $x[n]$ que possui transformada de Fourier $X(e^{j\omega})$, o qual deseja-se elevar ou diminuir a frequência de amostragem por um fator $L$
 - para interpolação - ou $M$ - para decimação - constante (e inteiro por se tratar de sinais discretos), gerando um novo sinal discreto ($x_L[n]$ ou $x_M[n]$), basta recordar a propriedade de
-escalonamento aplicada à transformada de Fourier (REFERENCIA-LIVRO-LATHI), onde:
+escalonamento aplicada à transformada de Fourier \cite{Lathi:1998}, onde:
 
 \begin{equation*}
   x_L[n] = x[\frac{n}{L}] <==> L X(e^{j\omega L})
@@ -2290,7 +2289,7 @@ reamostrado racionalmente seja:
 sendo $L$ e $M$ valores inteiros.
 
 O bloco OOT que foi criado na seção \ref{section:modules_oot} foi testado conforme mostra a Fig. \ref{fig:exemplo_flowgraph}, sendo criado um \textit{flowgraph} propriamente para verificar
-sua funcionalidade receber amostras do tipo ponto fluatuante, elevar seus valores ao quadrado e apresentá-los na saída.
+sua funcionalidade de receber amostras do tipo ponto fluatuante, elevar seus valores ao quadrado e apresentá-los na saída.
 
 \begin{figure}[!htb]
   \centering
@@ -2319,13 +2318,13 @@ sua funcionalidade receber amostras do tipo ponto fluatuante, elevar seus valore
 \chapter{Considerações Finais}
 % ---
 
-Todos os objetivos previstos para este trabalho foram alcançados e felizmente foi possível trazer em uma abordagem ampla, mesmo que introdutória, alguns conceitos importantes essenciais
-no auxílio a engenheiros e desenvolvedores de aplicações de rádio definido por software. Trabalhos futuros a partir deste podem ser realizados de diversas maneiras, como por exemplo:
+Todos os objetivos previstos para este trabalho foram alcançados e felizmente foi possível trazer em uma abordagem ampla, mesmo que introdutória, alguns conceitos importantes e essenciais
+para auxiliar engenheiros e desenvolvedores de aplicações de rádio definido por software. Trabalhos futuros a partir deste podem ser realizados de diversas maneiras, como por exemplo:
 
 \begin{itemize}
   \item[$-$] utilização do SDR para levantamento da resposta em frequência de dispositivos transmissores;
   \item[$-$] construção de diferentes tipos de moduladores de sinais digitais (BPSK, QPSK, QAM, etc \ldots);
-  \item[$-$] criação de transmissores dentro dos padrões do mercado (DVB, ISDB, ATSC, etc \ldots);
+  \item[$-$] criação de transmissores dentro dos padrões do mercado (DVB, ISDB, ATSC, NTSC, etc \ldots);
   \item[$-$] implementação prática de filtros digitais customizados.
 \end{itemize}
 
@@ -2334,12 +2333,11 @@ de implementação e geração de pacotes do \textit{software}. O foco dado ao p
 estudantes de engenharia eletrônica e de telecomunicações da UFU e o conhecimento sobre servidores Linux, utilização de linhas de comando, conectividade entre sistemas e etc \ldots têm grande chances
 de serem úteis e necessários na bagagem de um profissional formado neste contexto.
 
-DIFICULDADES ENCONTRADAS
+Um ponto importante a ser observado que a visão trazida neste trabalho é despertar no engenheiro que desejar ter contato com o GNURadio a vontade de ser um desenvolvedor e não apenas um usuário
+da ferramenta. Na visão do autor os passos considerados mais onerosos são os que foram realizados neste trabalho, visto que os estudantes de engenharia eletrônica e de telecomunicações da UFU
+possuem o foco mais voltado para a área de processamento digital de sinais utilizando ferramentas como MATLAB® e/ou Simulink®.
 
-ONEROSIDADE NA CHECKAGEM DE dependências
-
-BENEFÍCIOS DA UTILIZAÇÃO DO DOCKER.
-
+O esperado é que este seja um ponto de partida e todo o material aqui apresentado ficará disponível na conta do github do autor para que possa ser reproduzido posteriormente.
 
 % \lipsum[31-33]
 
