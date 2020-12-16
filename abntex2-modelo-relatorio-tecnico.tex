@@ -87,6 +87,8 @@
 % Pacotes adicionais, usados apenas no âmbito do Modelo Canônico do abnteX2
 % ---
 \usepackage{lipsum}				% para geração de dummy text
+\usepackage{amssymb}
+\usepackage{empheq,amsmath}
 % ---
 
 % ---
@@ -94,6 +96,7 @@
 % ---
 \usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
 \usepackage[ieeetr]{abntex2cite}	% Citações padrão ABNT
+\citebrackets[]
 
 % --- 
 % CONFIGURAÇÕES DE PACOTES
@@ -227,7 +230,7 @@
 
   \vspace{1cm}
 
-  Trabalho aprovado. Uberlândia, \today
+  Trabalho aprovado. Uberlândia, 09 de dezembro de 2020
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -315,21 +318,49 @@
 \setlength{\absparsep}{18pt} % ajusta o espaçamento dos parágrafos do resumo
 \begin{resumo}
 
-  Este é um trabalho introdutório e prático de pesquisa direcionado às áreas de processamento digital de sinais e, transmissão e recepção de sinais de radiofrequência.
-  O objetivo é que ele se torne um pontapé inicial para que estudantes de engenharia eletrônica e de Telecomunicações possam ter um primeiro contato prático com
+  Este é um trabalho introdutório e prático de pesquisa direcionado às áreas de processamento digital de sinais e transmissão e recepção de sinais de radiofrequência.
+  O objetivo é que ele se torne um pontapé inicial para que estudantes de engenharia eletrônica e de telecomunicações possam ter um primeiro contato prático com
   técnicas de processamento digital de sinais aplicadas a partir de um sistema de rádio definido por software.
 
-  A proposta de realização dos expertimento conta com a  utilização de métodos e técnicas de programação em C++/Python para a construção de módulos e blocos de processamento
-  de sinais em conjunto ao uso de um \textit{hardware} dedicado ao propósito de ser a interface entre um computador e o \textit{frontend} de radiofrequência.
+  A proposta de realização dos experimentos conta com a  utilização de métodos e técnicas de programação em C++/Python para a construção de módulos e blocos de processamento
+  de sinais em conjunto ao uso de um \textit{hardware} (o SDR \textit{HackRF One}) dedicado ao propósito de ser a interface entre um computador e o \textit{frontend} de radiofrequência.
 
-  No decorrer do trabalho serão demonstrados detalhes de implementação, comunicação entre o \textit{hardware} e provisionamento do ambiente e das ferramentas de
-  \textit{software} necessárias para a sua realização. Todos os esforços direcionados resultaram no êxito de se demonstrar o uso prático da ferramenta GNURadio, como também
-  a possibilidade de que o engenheiro também atue como um desenvolvedor, o que traz ganhos extremamente benéficos ao seu aprendizado, especialização profissional e a completa
+  No decorrer do trabalho são demonstrados detalhes de implementação, comunicação entre o \textit{hardware} e provisionamento do ambiente e das ferramentas de
+  \textit{software} necessárias para a sua realização. Todos os esforços direcionados resultaram no êxito da demonstração do uso prático da ferramenta GNURadio, assim como
+  a possibilidade de que o engenheiro também atue como um desenvolvedor, o que traz ganhos extremamente benéficos ao seu aprendizado e especialização profissional, além da
   possibilidade de aplicação dos conceitos teóricos adquiridos sobre sinais e sistemas, processamento digital de sinais, programação de sistemas de alta criticidade, sistemas
   de comunicações, modulação e demodulação e etc \ldots
 
   \noindent
   \textbf{Palavras-chaves}: rádio, software, gnuradio, hackrf, sdr.
+\end{resumo}
+
+% Resumo em inglês
+
+\begin{resumo}[Abstract]
+  \begin{otherlanguage*}{english}
+    This is an introductory and practical research work aimed at the areas of digital signal processing and the
+    transmission and reception of radio frequency signals. The goal is that it becomes a starting point for
+    students of electronic and telecommunications engineering to have a first practical contact with digital
+    signal processing techniques applied from a software-defined radio system.
+
+    The proposal for carrying out the experiments relies on the use of programming methods and techniques in
+    C++/Python for the construction of modules and signal processing blocks together with the use of a
+    \textit{hardware} (SDR \textit{HackRF One}) dedicated to the purpose of being the interface between a
+    computer and the radio frequency \textit{frontend}.
+
+    During the work, details of implementation, communication between \textit{hardware} and provisioning of
+    the environment and the \textit{software} tools necessary for its realization are demonstrated. All directed
+    efforts resulted in the successful demonstration of the practical use of the GNURadio tool, as well as the
+    possibility that the engineer also acts as a developer, which brings extremely beneficial gains to his
+    learning and professional specialization, in addition to the possibility of applying of the theoretical
+    concepts acquired about signals and systems, digital signal processing, programming of high criticality
+    systems, communication systems, modulation and demodulation and etc \ldots
+
+    \vspace{\onelineskip}
+    \noindent
+    \textbf{Keywords}: radio, software, gnuradio, hackrf, sdr.
+  \end{otherlanguage*}
 \end{resumo}
 % ---
 
@@ -367,12 +398,12 @@
   \item[GNU]        \textit{GNU's Not Unix}
   \item[GPG]        \textit{GNU Privacy Guard}
   \item[GPLv3]      \textit{General Public License version 3}
-  \item[GPSDO]      \textit{GPS disciplined oscillator}
+  \item[GPSDO]      \textit{GPS Disciplined Oscillator}
   \item[GRC]        \textit{GNURadio Companion}
   \item[GUI]        \textit{Graphical User Interface}
   \item[LPF]        \textit{Low-Pass Filter}
   \item[OCXO]       \textit{Oven Controlled Crystal Oscillator}
-  \item[OOT]        \textit{Out of Three}
+  \item[OOT]        \textit{Out of Tree}
   \item[SDK]        \textit{Software Development Kit}
   \item[SDR]        \textit{Software-defined Radio}
   \item[SELinux]    \textit{Security-Enhanced Linux}
@@ -396,7 +427,6 @@
   \item[$f$] Frequência [Hz]
   \item[$\omega$] Frequência angular [rad/s]
   \item[$f_s$] Frequência de amostragem [Hz]
-  \item[$f_c$] Frequência de corte [Hz]
 \end{simbolos}
 % ---
 
@@ -424,21 +454,21 @@ dramática até alcançar solidez em técnicas e implementações. O cenário at
 direcionem seus esforços para esta área, pois o processo de transformação digital da indústria e da sociedade está ocorrendo de forma acelerada
 \cite{ebert:digital_transformation} mantendo alta a demanda por profissionais com habilidades técnicas correlatas.
 
-Os grandes aliados do engenheiro na obtenção do êxito em seus trabalhos estão diretamente relacionados com a sua capacidade de descobrir e aplicar ferramentas que facilitem a execução de suas
+Os grandes aliados do engenheiro na execução de seus trabalhos estão diretamente relacionados com a sua capacidade de descobrir e aplicar ferramentas que facilitem a execução de suas
 tarefas e a geração de relatórios e métricas que auxiliem em diagnósticos e na tomada de decisões que impactam os negócios que ele está envolvido, seja como funcionário ou como empreendedor.
 Dentre as principais ferramentas que o engenheiro pode ter ao seu lado, está o uso de boas práticas no que tange o desenvolvimento de \textit{software} e, mais especificamente para este trabalho,
 está a ferramenta GNURadio que vem como uma proposta livre de integração e multi-disciplinaridade dentro das áreas estudadas por engenheiros em eletrônica e telecomunicações.
 
-Para utilizar o \textit{software} escrito utilizando o GNURadio além das simulações, o engenheiro precisa de um \textit{hardware}, chamado SDR, capaz receber este \textit{software} fazer as devidas
+Para utilizar o \textit{software} escrito utilizando o GNURadio além das simulações, o engenheiro precisa de um \textit{hardware}, chamado SDR (\textit{Software-defined Radio}), capaz de receber este \textit{software} fazer as devidas
 conversões de frequência e transmitir/receber o sinal de radiofrequência desejado. As vantagens na utilização do SDR como o reuso de \textit{hardware} e a utilização de níveis mais altos de abstração do \textit{software} como também algumas desvantagens (desempenho inferior
 se comparado a \textit{hardware}'s dedicados,  problemas  de  interoperabilidade e segurança) devem sempre ser avaliados para cada projeto \cite{sbrc:minicurso_gnuradio}
 
-Um dos diferenciais alcançados durante o desenvolvimento dessa pesquisa foi a inserção do uso de \textit{container}'s para o isolamento do ambiente de desenvolvimento de \textit{software}, o que
-flexibiliza o processo de criação e o impacto esperado por este projeto é incentivar que outros estudantes também apliquem seus conhecimentos teóricos sobre processamento digital de sinais
+Um dos diferenciais alcançados durante o desenvolvimento dessa pesquisa foi a utilização de \textit{container}'s para o isolamento do ambiente de desenvolvimento de \textit{software}, o que
+flexibiliza o processo de criação, sendo que o impacto esperado é incentivar que outros estudantes também apliquem seus conhecimentos teóricos sobre processamento digital de sinais
 utilizando as ferramentas e boas práticas que aqui serão mencionadas.
 
-O objetivo principal deste trabalho será trazer a visão de um estudante de engenharia eletrônica e de telecomunicações de sobre o contato inicial com o desenvolvimento de \textit{software} para
-aplicações de rádio definido por \textit{software} utilizando GNURadio para a realização do processamento digital de sinais.
+O objetivo principal deste trabalho será trazer a visão de um estudante de engenharia eletrônica e de telecomunicações sobre o contato inicial com o desenvolvimento de aplicações de rádio
+definido por \textit{software} utilizando o GNURadio para a realização do processamento digital de sinais.
 
 % ----------------------------------------------------------
 % PARTE - preparação do ambiente de desenvolvimento
@@ -447,12 +477,13 @@ aplicações de rádio definido por \textit{software} utilizando GNURadio para a
 
 \chapter{Hardware}
 
-Neste capítulo serão abordados os dispositivos de \textit{hardware} utilizados no desenvolvimento deste trabalho, trazendo brevemente um comparativo de quais
-podem ser encontrados no mercado atualmente e quais as especificações técnicas disponibilizadas por alguns fabricantes. Basicamente para alcançar o êxito
-é necessário um dispositivo \textit{host} (arquiteturas \textbf{x86\_64} ou \textbf{amd64}, \textbf{armhf} e \textbf{arm64}/\textbf{aarch64}, por exemplo),
+Neste capítulo são abordados os dispositivos de \textit{hardware} utilizados no desenvolvimento deste trabalho, trazendo brevemente um comparativo de quais
+podem ser encontrados no mercado atualmente e quais as especificações técnicas disponibilizadas por alguns fabricantes.
+
+Basicamente, é necessário um dispositivo \textit{host} (arquiteturas \textbf{x86\_64} ou \textbf{amd64}, \textbf{armhf} e \textbf{arm64}/\textbf{aarch64}, por exemplo),
 preferencialmente com alguma distribuição \textit{Linux} e o \textit{GNURadio-companion} instalados, uma placa de circuito impresso do sistema de rádio
 definido por \textit{software} contendo algum cabo para comunicação com o computador \textit{host} (normalmente USB 2.0/3.0), as antenas para transmissão e/ou recepção
-e algum oscilador (TCXO (\textit{Temperature Compensated Crystal Oscillator}), OCXO (\textit{Oven Controlled Crystal Oscillator}), GPSDO (\textit{GPS disciplined oscillator}), etc...)
+e algum oscilador (TCXO (\textit{Temperature Compensated Crystal Oscillator}), OCXO (\textit{Oven Controlled Crystal Oscillator}), GPSDO (\textit{GPS Disciplined Oscillator}), etc...)
 caso a aplicação exija sincronismo por \textit{clock} externo.
 
 Com relação ao computador utilizado, trata-se de um notebook de arquitetura \textbf{amd64} com 8 GB de memória DDR3 e processador Intel® Core™ i7 de terceira geração com quatro núcleos e
@@ -476,7 +507,7 @@ os quais atuam até a casa de 2 GHz aproximadamente com laguras de banda máxima
 o LimeSDR Mini, BladeRF, \textit{HackRF One}, Ettus USRP B210 e o Adalm PlutoSDR e todos podem ser utilizados com largura de banda de pelo menos 20 MHz e podendo variar
 entre 1 MHz e 6 GHz no domínio da frequência.
 
-O resumo dos principais SDR's que podem ser encontrados no mercado é mostrado na Tabela \ref{table:SDR_comparison}, com preços em dólares cotados online através do site \href{https://pt.aliexpress.com}{https://pt.aliexpress.com}
+O resumo dos principais SDR's que podem ser encontrados no mercado é mostrado na Tabela \ref{table:SDR_comparison}, com preços em dólares cotados \textit{online} através do site \href{https://pt.aliexpress.com}{https://pt.aliexpress.com}
 e também dos própiros fabricantes \href{https://www.sdrplay.com/rspduo/}{SDRplay}, \href{https://www.analog.com/en/design-center/evaluation-hardware-and-software/evaluation-boards-kits/adalm-pluto.html}{Analog Devices} (Adalm Pluto),
 \href{https://www.nuand.com/bladerf-1/}{Nuand} (BladeRF) e \href{https://www.ettus.com/all-products/ub210-kit/}{Ettus} (USRP B210). O SDR escolhido para este trabalho foi o \textit{HackRF One}, que será abordado com mais detalhes na próxima seção.
 
@@ -500,203 +531,6 @@ e também dos própiros fabricantes \href{https://www.sdrplay.com/rspduo/}{SDRpl
   \label{table:SDR_comparison}
 \end{table}
 
-% \subsection*{RTL-SDR}
-% RTL-SDR: \href{https://produto.mercadolivre.com.br/MLB-1276411271-rtl2832u-receptor-rtl-sdr-r820t2-dongle-usb-rtl-sdr-com-_JM}{https://produto.mercadolivre.com.br/MLB-1276411271-rtl2832u-receptor-rtl-sdr-r820t2-dongle-usb-rtl-sdr-com-\_JM}
-
-% https://www.rtl-sdr.com/about-rtl-sdr/
-
-% O que é RTL-SDR?
-
-% RTL-SDR é um dongle USB de $\sim$ \$ 25 dólares que pode ser usado como um scanner de rádio baseado em computador para receber sinais de rádio ao vivo em sua área (sem necessidade de Internet). Dependendo do modelo específico, ele pode receber frequências de 500 kHz a 1,75 GHz. A maioria dos softwares para o RTL-SDR também é desenvolvida pela comunidade e fornecida gratuitamente.
-% As origens do RTLSDR derivam de dongles sintonizadores de TV DVB-T produzidos em massa que foram baseados no chipset RTL2832U.
-% Com os esforços combinados de Antti Palosaari, Eric Fry e Osmocom (em particular Steve Markgraf), descobriu-se que os dados I - Q
-% % brutos no chipset RTL2832U podiam ser acessados ​​diretamente, o que permitiu que o sintonizador de tv dvb=t fosse convertido em um radio
-% de banda larga definido por software por meio de um driver de software personalizado desenvolvido por Steve Markgraf.
-% Se você já gostou do projeto RTL-SDR, por favor, considere fazer uma doação para Osmocom via Open Collective, pois foram eles que
-% desenvolveram os drivers e deram vida ao RTL-SDR.
-% Ao longo dos anos, desde sua descoberta, o RTL-SDR se tornou extremamente popular e democratizou o acesso ao espectro de rádio. Agora, qualquer pessoa com orçamento limitado, incluindo amadores, pode acessar o espectro de rádio. É importante notar que esse tipo de capacidade SDR teria custado centenas ou mesmo milhares de dólares apenas alguns anos atrás. O RTL-SDR também é às vezes referido como RTL2832U, DVB-T SDR, dongle DVB-T, dongle RTL ou o "rádio definido por software barato".
-
-% Frequency range: 24 - 1766 MHz
-% Max BW: 3 MHz
-% ADC Resolution: 8 bit
-% RX
-% Preço: ~R\$200,00
-% Software Support: Excellent
-
-
-% \subsection*{AirSpy Mini}
-% AIR-SPY MINI: https://pt.aliexpress.com/item/32981502202.html
-
-% O Airspy Mini se baseia na arquitetura bem-sucedida do Airspy R2 para oferecer um scanner portátil de alto desempenho para as bandas VHF e UHF.
-
-% O Airspy Mini aproveita nossa comprovada arquitetura de baixo IF baseada no Rafael Micro R820T2 e um Oversampling de 12 bits ADC de alta qualidade e DSP de última geração.
-
-% No modo Oversampling, o Airspy Mini aplica filtragem analógica de RF e IF ao caminho do sinal e aumenta a resolução para até 16 bits usando a dizimação do software. O resultado líquido é um desempenho espetacular!
-
-% A cobertura pode ser estendida às bandas de HF por meio do conversor ascendente do SpyVerter.
-
-% Esta nova adição à família Airspy é 100 \% compatível com todo o software existente, incluindo o SDR padrão de digitalização de fato, mas também uma série de aplicativos de rádio definidos por software populares, como SDR-Radio, HDSDR, GQRX e GNU Radio.
-
-% Typical Applications
-
-% Portable VHF/UHF/SHF Radio Monitoring
-% Real Time Spectrum Analyzer
-% ADS-B, ATC receiver
-% Radio Astronomy
-% Satellite IF
-% Telemetry Receiver
-% Wide Band Scanner
-% Education
-% Ham Radio, etc.
-
-% Supported Software
-
-% The gold standard SDR
-% The ultimate Narrowband Signals Analysis and Decoding Suite Krypto500
-% The ultimate Wideband Signals Analysis and Decoding Suite Krypto1000
-% The other excellent SDR suite, SDR-Console
-% The Suiss-army SDR knife for Linux and Mac, GQRX
-% Check the full list of tools in our download page
-
-% Supported Operating Systems
-
-% Windows Vista, 7, 8, 8.1 and 10
-% Linux
-% *BSD
-% OSX
-
-% Technical specifications
-
-% Continuous 24 – 1700 MHz native RX range, down to DC with the SpyVerter option
-% 3.5 dB NF between 42 and 1002 MHz
-% Maximum RF input of +10 dBm
-% Tracking RF filters
-% 35dBm IIP3 RF front end
-% 12bit ADC @ 20 MSPS (10.4 ENOB, 70dB SNR, 95dB SFDR)
-% 10, 6 and 3 MSPS IQ output – Optimized for portable and tablets
-% Up to 6 MHz panoramic spectrum view
-% 0.5 ppm high precision, low phase noise clock
-% 4.5v software switchable Bias-Tee 100\% Compatible with SpyVerter and High Performance LNA
-% IQ or Real, 16bit fixed or 32bit float output streams
-% No IQ imbalance, DC offset or 1/F noise at the center of the spectrum that plagues all the other SDRs
-% Best software support of all existing SDRs
-% No drivers required! 100\% Plug-and-play on Windows Vista, Seven, 8, 8.1 and 10, all Linux Flavors, Mac and Android
-% Compatible with Raspberry Pi, Odroid, Pine64 and UP boards
-% Operating temperature: -10°C to 40°C
-
-% Minimum \textit{hardware} requirements
-
-% Core 2 Duo @ 2 GHz CPU or equivalent
-% 2GB of RAM (to run your own OS, airspy barely needs 1MB of memory)
-% High speed USB 2.0 controller
-
-% \subsection*{RSPduo}
-
-% RSPduo: https://www.sdrplay.com/rspduo/
-
-% O RSPduo é um receptor SDR de 14 bits com sintonizador duplo de alto desempenho.
-
-% Alojado em um invólucro de aço de alta qualidade, cada sintonizador pode operar individualmente em qualquer lugar entre 1kHz e 2GHz com até 10MHz de largura de banda ou ambos os sintonizadores podem operar simultaneamente em qualquer lugar entre 1kHz e 2GHz com até 2MHz de largura de banda por sintonizador.
-
-% Uma referência de alta estabilidade junto com recursos de relógio externo tornam este dispositivo ideal para aplicações industriais, científicas e educacionais.
-
-
-% \subsection*{LimeSDR Mini}
-
-% https://pt.aliexpress.com/item/1005001463402847.html
-% https://limemicro.com/products/boards/limesdr-mini/
-
-% \subsection*{Adalm Pluto}
-
-% https://www.analog.com/en/design-center/evaluation-hardware-and-software/evaluation-boards-kits/adalm-pluto.html
-
-
-% Características e benefícios
-
-% Módulo de aprendizagem RF autocontido portátil
-% Plataforma de experimentação econômica
-% Baseado em Dispositivos Analógicos AD9363 - Transceptor Agile RF Altamente Integrado e FPGA Xilinx REGISTADO Zynq Z-7010
-% Cobertura de RF de 325 MHz a 3,8 GHz
-% Até 20 MHz de largura de banda instantânea
-% Taxa flexível, ADC e DAC de 12 bits
-% Um transmissor e um receptor, half ou full duplex
-% MATLAB REGISTRADO, suporte Simulink registrado
-% Bloco GNU Radio coletor e fonte
-% libiio, uma API C, Cpluplus, Csharp e Python
-% Interface alimentada por USB 2.0 com conector Micro-USB 2.0
-% Caixa de plástico de alta qualidade
-
-% Detalhes do produto
-
-% O módulo de aprendizado ativo ADALM-PLUTO (PlutoSDR) fácil de usar ajuda a apresentar aos alunos de engenharia elétrica os fundamentos de rádio definido por software (SDR), radiofrequência (RF) e comunicações sem fio. Projetado para alunos de todos os níveis e de todas as origens, o módulo pode ser usado tanto para aprendizagem dirigida por instrutor quanto para autodirigida para ajudar os alunos a desenvolverem uma base em RF e comunicações do mundo real na qual eles podem desenvolver enquanto buscam ciência e tecnologia , ou diplomas de engenharia.
-
-% Conectando a teoria de RF com a prática de RF
-
-% O PlutoSDR funciona como um laboratório portátil que, quando usado com um host, pode aumentar o aprendizado em sala de aula. MATLAB e Simulink são dois dos muitos pacotes de software suportados pelo PlutoSDR e fornecem uma interface gráfica de usuário (GUI) intuitiva para que os alunos possam aprender mais rápido, trabalhar de maneira mais inteligente e explorar mais.
-
-% Feito para professores, alunos e autodidatas
-
-% O PlutoSDR possui canais de recepção e transmissão independentes que podem ser operados em full duplex. O módulo de aprendizado ativo pode gerar ou adquirir sinais analógicos de RF de 325 MHz a 3800 MHz em até 61,44 megaamostras por segundo (MSPS). Pequeno o suficiente para caber no bolso de uma camisa, o PlutoSDR é totalmente independente e totalmente alimentado por USB com o firmware padrão. Como o PlutoSDR é habilitado por drivers libiio, ele oferece suporte para OS X registrado, Windows registrado e Linux registrado, o que permite que os alunos aprendam e explorem em uma variedade de dispositivos.
-
-% Com dezenas de tutoriais online disponíveis para projetos baseados em SDR, PlutoSDR possui laboratórios e material de ensino cobrindo tópicos como posição da aeronave ADS-B, recepção de imagens de satélite meteorológico NOAA e Meteor-M2, análise GSM, escuta de sinais TETRA, decodificação de pager e muito mais!
-
-% \subsection*{BladeRF}
-
-% BLADERF: https://www.nuand.com/bladerf-1/
-
-% Technical Specifications:
-
-% Fully bus-powered USB 3.0 SuperSpeed Software Defined Radio
-% Portable, handheld form factor: 5" by 3.5"
-% Extensible gold plated RF SMA connectors
-% 300MHz - 3.8GHz RF frequency range
-% Independent RX/TX 12-bit 40MSPS quadrature sampling
-% Capable of achieving full-duplex 28MHz channels
-% 16-bit DAC factory calibrated 38.4MHz +/-1ppm VCTCXO
-% On-board 200MHz ARM9 with 512KB embedded SRAM (JTAG port available)
-% On-board 40KLE or 115KLE Altera Cyclone 4 E FPGA (JTAG port available)
-% 2x2 MIMO configurable with SMB cable, expandable up to 4x4
-% Modular expansion board design for adding GPIO, Ethernet, and 1PPS sync signal and expanding frequency range, and power limits
-% DC power jack for running headless
-% Highly efficient, low noise power architecture
-% Stable Linux, Windows, Mac and GNURadio software support
-% \textit{hardware} capable of operating as a spectrum analyzer, vector signal analyzer, and vector signal generator
-
-
-% \subsection*{USRP B210}
-% USRP B210 - https://www.ettus.com/all-products/ub210-kit/
-
-% https://www.youtube.com/watch?v=cygDXeZaiOM
-
-% Overview
-
-% The USRP B210 provides a fully integrated, single-board, Universal Software Radio Peripheral (USRP™) platform with continuous frequency coverage from 70 MHz – 6 GHz. Designed for low-cost experimentation, it combines the AD9361 RFIC direct-conversion transceiver providing up to 56MHz of real-time bandwidth, an open and reprogrammable Spartan6 FPGA, and fast SuperSpeed USB 3.0 connectivity with convenient bus-power. Full support for the USRP \textit{hardware} Driver™ (UHD) software allows you to immediately begin developing with GNU Radio, prototype your own GSM base station with OpenBTS, and seamless transition code from the USRP B210 to higher performance, industry-ready USRP platforms. An enclosure accessory kit is available to users of green PCB devices (revision 6 or later) to assemble a protective steel case.
-
-% Experimentation with Low-cost SDR
-
-% Experiment with the USRP B210 across a wide range of applications including: FM and TV broadcast, cellular, GPS, WiFi, ISM, and more. Users can immediately begin prototyping in GNURadio and participate in the open-source SDR community. Full support by the UHD software allows seamless code reuse from existing designs, compatibility with open-source applications like HDSDR and OpenBTS, and an upgrade path to industry-ready USRP systems to meet application requirements.  Here are some examples of what you can do with a USRP B210.
-
-% B210 System Architecture
-
-% The integrated RF frontend on the USRP B210 is designed with the new Analog Devices AD9361, a single-chip direct-conversion transceiver, capable of streaming up to 56 MHz of real-time RF bandwidth. The B210 uses both signal chains of the AD9361, providing coherent MIMO capability. Onboard signal processing and control of the AD9361 is performed by a Spartan6 XC6SLX150 FPGA connected to a host PC using SuperSpeed USB 3.0. The USRP B210 real time throughput is benchmarked at 61.44MS/s quadrature, providing the full 56 MHz of instantaneous RF bandwidth to the host PC for additional processing using GNU Radio or applications that use the UHD API. For detailed throughput capabilities in various SISO and MIMO configurations, please see the USRP B200/B210 Benchmark Table.
-
-% Features
-
-% First fully integrated, two-channel USRP device with continuous RF coverage from 70 MHz – 6 GHz
-
-% Full duplex, MIMO (2 Tx \& 2 Rx) operation with up to 56 MHz of real-time bandwidth (61.44MS/s quadrature)
-
-% Fast and convenient SuperSpeed USB 3.0 connectivity
-
-% GNURadio and OpenBTS support through the open-source USRP \textit{hardware} Driver™ (UHD)
-
-% Open and reconfigurable Spartan 6 XC6SLX150 FPGA (for advanced users)
-
-% Early access prototyping platform for the Analog Devices AD9361 RFIC, a fully integrated direct conversion transceiver with mixed-signal baseband
-
-% Steel enclosure accessory kit available for green PCB devices (revision 6 or later)
-
-
 \subsection*{HackRF One}
 
 % HACKRF: https://pt.aliexpress.com/item/32889992261.html
@@ -705,25 +539,25 @@ O \textit{HackRF One} é um SDR com \textit{hardware} de código aberto que foi 
 com largura de banda máxima de 20 MHz (BW - \textit{Bandwidth}) preparado para atuar em uma grande faixa de frequências que vão de 1 MHz a 6 GHz, possibilitando o processamento de até 20 milhões de amostras por
 segundo (tendo 8 bits por amostra em quadratura - sinais I/Q com 8 bits para o I e 8 bits para o Q) recebidas ou transmitidas por meio de uma antena fixada em seu conector SMA fêmea, de
 forma que o ganho - de recepção (RX) ou de transmissão (TX) - é configurável pelo \textit{software} utilizado, que neste caso é o GNURadio. O \textit{HackRF One} é alimentado pela tensão VCC fornecida
-pela porta de comunicação USB 2.0 que possibilita que o SDR trasnmita até 40 MB por segundo (20 milhões de amostras de 2 bytes).
+pela porta de comunicação USB 2.0, a qual também possibilita que o SDR transmita até 40 MB por segundo (20 milhões de amostras de 2 bytes a cada segundo).
 
 Em quinze de maio de dois mil e quinze, Michael Ossmann publicou que seu SDR é capaz de operar em frequências menores que 10 MHz \cite{HACKRF-1mhz}, reafirmando a faixa de operação do \textit{HackRF One}.
 A potência máxima de transmissão do \textit{HackRF One} varia de acordo com a faixa de frequência de operação e é suficiente para a realização de testes de curto alcance. Para recepção, o máximo de
 potência fica na ordem de -5 dBm e exceder este valor pode resultar em danos permanentes ao \textit{HackRF One} \cite{HACKRF-hardware-receive-power}.
 
-Os valores apresentados a seguir estão relacionados à potência de transmissão do \textit{HackRF One} e foram coletados e disponibilizados pelo fabricante \cite{HACKRF-hardware-transmit-power}:
+Os valores apresentados a seguir, aproximados, estão relacionados à potência de transmissão do \textit{HackRF One} e foram coletados e disponibilizados pelo fabricante \cite{HACKRF-hardware-transmit-power}:
 
 \begin{itemize}
-  \item[$-$] 1 MHz a 10 MHz: 5 dBm a 15 dBm (3 mW a 30 mW), crescente com a frequência;
-  \item[$-$] 10 MHz a 2150 MHz: 5 dBm a 15 dBm (3 mW a 30 mW), decrescente com a frequência;
-  \item[$-$] 2150 MHz a 2750 MHz: 13 dBm a 15 dBm (20 mW a 30 mW);
-  \item[$-$] 2750 MHz a 4000 MHz: de 0 dBm a 5 dBm (0-3 mW), decrescente com a frequência;
-  \item[$-$] 4000 MHz a 6000 MHz: -10 dBm a 0 dBm, decrescente com a frequência.
+  \item[$-$] 1 MHz a 10 MHz: 5 dBm a 15 dBm (3 mW a 30 mW) - crescente com a frequência;
+  \item[$-$] 10 MHz a 2150 MHz: 15 dBm a 5 dBm (30 mW a 3 mW) - decrescente com a frequência;
+  \item[$-$] 2150 MHz a 2750 MHz: 13 dBm a 15 dBm (20 mW a 30 mW) - tendência de crescimento/decrescimento não informada pelo fabricante;
+  \item[$-$] 2750 MHz a 4000 MHz: de 5 dBm a 0 dBm (3 mW a 1 mW) - decrescente com a frequência;
+  \item[$-$] 4000 MHz a 6000 MHz: de 0 dBm a -10 dBm (1 mW a 0.1 mW) - decrescente com a frequência.
 \end{itemize}
 
 A Fig. \ref{fig:hackrf_block_diagram} ilustra o diagrama de blocos simplificado do \textit{HackRF One}. Por se tratar de um equipamento que lida com radiofrequência, o uso do \textit{HackRF One} deve estar dentro das observações legais da região em que for aplicado. No Brasil é importante que o
 engenheiro esteja atento às regras reguladas pela Agência Nacional de Telecomunicações, ANATEL, como por exemplo a Resolução nº 716, de 31 de outubro de 2019 em que foi aprovado o plano de
-atribuição, destinação e distribuição de faixas de frequências no Brasil (PDFF). O Anexo \ref{attachment:freq_range_brasil} contém o quadro de atribuição de faixas de frequências no Brasil, edição 2019.
+atribuição, destinação e distribuição de faixas de frequências no Brasil (PDFF). O Anexo \ref{attachment:freq_range_brasil} contém o quadro de atribuição de faixas de frequências no Brasil, edição de 2019.
 
 \begin{figure}[!htb]
   \centering
@@ -733,7 +567,7 @@ atribuição, destinação e distribuição de faixas de frequências no Brasil 
   \label{fig:hackrf_block_diagram}
 \end{figure}
 
-O \textit{kit} que foi adquirido no site \href{https://pt.aliexpress.com}{https://pt.aliexpress.com} veio com uma placa de circuito impresso do SDR \textit{HackRF One}, um oscilador TCXO (\textit{Temperature Compensated Crystal Oscillator})
+O \textit{kit} que foi adquirido no site \href{https://pt.aliexpress.com}{https://pt.aliexpress.com} veio com uma placa de circuito impresso do SDR \textit{HackRF One}, um oscilador TCXO,
 uma antena telescópica (banda passante de 40 MHz a 6 GHz), uma antena omnidirecional (para recepção de sinais GSM, 3G e 4G), um cabo USB e peças de acrílico para montagem do \textit{kit}. As fotos da Fig.
 \ref{fig:hack_rf_hdk} foram tiradas após a montagem do \textit{kit} e os diagramas esquemático e de montagem referentes ao projeto foram anexados a este trabalho (Anexos \ref{attachment:hackrf-one-schematic-1} a \ref{attachment:hackrf-one-assembly}).
 
@@ -817,8 +651,8 @@ rádio definido por \textit{software} inicialmente publicado no ano de 2001 como
 também em meio acadêmico ou para suprir necessidades do mercado no que tange comunicações sem fio ou qualquer tipo de sistema de rádio digital do mundo real.
 O GNURadio está sob uma licença pública geral — GNU GPLv3 — da \textit{Free Software Foundation} (FSF).
 
-Por ser um projeto de \textit{software} agnóstico ao \textit{hardware} das plataformas de desenvolvimento (SDR — \textit{Software-defined Radio}), o GNURadio é idealizado
-para trabalhar apenas com dados digitalizados e a partir disso executar todo um processamento digital de sinais (DSP — \textit{Digital Signal Processing})
+Por ser um projeto de \textit{software} agnóstico ao \textit{hardware} das plataformas de desenvolvimento, o GNURadio é idealizado
+para trabalhar apenas com dados digitalizados e a partir disso executar um processamento digital de sinais (DSP — \textit{Digital Signal Processing})
 definido por aplicações escritas para receber ou enviar dados de sistemas de \textit{streaming} digital programaticamente, utilizando a linguagem de programação
 Python — que é considerado mais fácil — ou C++ — para escrita de códigos de desempenho crítico — além de também ser possível através de uma interface gráfica de
 usuário (\textbf{GNURadio Companion} — GRC) por diagramas de blocos.
@@ -833,9 +667,9 @@ Linux (\textbf{mnt}, \textbf{pid}, \textbf{net}, \textbf{ipc}, \textbf{uts}, \te
 
 Um questionamento bastante pertinente que pode vir à tona neste momento é: Seria mesmo necessário utilizar \textit{container}'s para criação
 do ambiente de desenvolvimento, sendo que o próprio GNURadio já é distribuído oficialmente em pacotes compatíveis com os principais sistemas
-operacionais encontrados no mercado? Com o decorrer do próximo capítulo o porquê se tornará mais claro e por agora a ideia principal é de
+operacionais encontrados no mercado? Com o decorrer do próximo capítulo o porquê se torna mais claro e por agora a ideia principal é de
 que quanto mais isolado possível for o ambiente de desenvolvimento, mais fácil será para testar hipóteses, criar diferentes soluções e tornar
-possível que elas sejam reproduzidas com facilidade independentemente da plataforma de \textit{hardware}.
+possível que elas sejam reproduzidas com facilidade independentemente se o código que foi desenvolvido em um sistema \textit{host} está sendo executado em outro.
 
 Muitas ferramentas que podem ser úteis para engenheiros e desenvolvedores de \textit{software} para gerenciar ou solucionar problemas podem não estar
 incluídas no sistema \textit{host} de suas máquinas por padrão e a melhor maneira de adicionar ferramentas a um \textit{host} seria
@@ -1023,7 +857,7 @@ $  docker run -i -t --privileged \
 \begin{figure}[!htb]
   \centering
   \caption{Criação do \textit{container} de desenvolvimento a partir de uma imagem Ubuntu.}
-  \includegraphics[width = \linewidth]{figures/docker-run-gnuradio.png}
+  \includegraphics[width = \linewidth, trim = 0.1cm 5cm 12cm 0.1cm, clip = true]{figures/docker-run-gnuradio.png}
   Fonte: Elaborado pelo autor.
   \label{fig:docker-run-gnuradio}
 \end{figure}
@@ -1040,7 +874,7 @@ intactas usando \textbf{docker start}. Agora, sobre as \textit{flags} passadas:
         \textit{container}, o que significa que um processo executado como \textit{root} dentro do \textit{container} tem o mesmo acesso ao \textit{host}
         que ele poderia também ter se fosse executado de fora do \textit{container}.);
   \item[$-$] \textbf{e} (\textbf{env}): definir variáveis de ambiente;
-  \item[$-$] \textbf{v} (\textbf{volume}): vincular a montagem de um volume dentro \textit{container};
+  \item[$-$] \textbf{v} (\textbf{volume}): vincular a montagem de um volume dentro do \textit{container};
   \item[$-$] \textbf{name}: o nome que se dará ao \textit{container} criado.
   \item[$-$] As \textit{flags} \textbf{--ipc=host}, \textbf{--net=host} e \textbf{--pid=host} desligam os \textit{namespaces} \textbf{ipc},
         \textbf{net} e \textbf{pid} dentro do \textit{container}. Isso significa que os processos dentro do \textit{container} veem a mesma rede e
@@ -1082,7 +916,7 @@ Com relação aos \textit{volumes} que foram montados, seguem suas definições:
         \textbf{/var/log} do \textit{host};
 
   \item[$-$] \textbf{/etc/localtime}:\textbf{/etc/localtime}: fazer com que o fuso horário do sistema \textit{host} seja usado
-        tambem no \textit{container};
+        também no \textit{container};
 
   \item[$-$] \textbf{/}:\textbf{/host}: montar a raiz da árvore de diretórios do \textit{host} (mais conhecida como \textbf{/}) no  ponto
         de montagem \textbf{/host} para permitir que processos dentro do \textit{container} consigam modificar facilmente o conteúdo no \textit{host};
@@ -1108,7 +942,7 @@ interface visual com uma vinculação de volumes montados no \textit{container} 
 
 Algo importante a se notar na Fig. \ref{fig:docker-run-gnuradio} é que depois da criação do \textit{container} o terminal “mudou” do usuário \textbf{jefferson} para \textbf{root}
 e manteve o \textit{hostname}. Isso ocorre porque a partir desse momento o que aparece na tela é o terminal visto de "dentro"
-do \textbf{container}, ou seja com o usuário \textbf{root} em um \textit{container} que está enxergando o mesmo \textit{namespace} \textbf{net} que o
+do \textbf{container}, ou seja, com o usuário \textbf{root} em um \textit{container} que está enxergando o mesmo \textit{namespace} \textbf{net} que o
 sistema \textit{host}.
 
 Em outro terminal é possível obter mais informações como, por exemplo, quais \textit{container}'s estão sendo executados no momento ou inspecionar algum
@@ -1117,7 +951,7 @@ Em outro terminal é possível obter mais informações como, por exemplo, quais
 \begin{figure}[!htb]
   \centering
   \caption{Detalhamento de informações sobre \textit{container}’s \textit{Docker}.}
-  \includegraphics[width = \linewidth]{figures/docker-inspect.png}
+  \includegraphics[width = \linewidth, trim= 0.1cm 0.1cm 20cm 0.1cm, clip=true]{figures/docker-inspect.png}
   Fonte: Elaborado pelo autor.
   \label{fig:docker-inspect}
 \end{figure}
@@ -1172,9 +1006,9 @@ através do comando \textbf{gnuradio-companion} (GRC).
 \subsection*{Criação da imagem \textit{Docker}}
 
 O \textit{container} criado na seção anterior pode ser disponibilizado para outros desenvolvedores por meio da criação de uma imagem
-base. A imagem base deve receber uma \textit{tag}, que normalmente está ligada à sua versão e por fim esta imagem pode ser
-"empurrada" para um repositório de imagens \textit{Docker}. Neste caso foi utilizado o \textit{DockerHub} que é um repositório
-de imagens \textit{Docker} hospedado e fornecido pela própria empresa \textit{Docker} Inc. Qualquer empresa pode hospedar, manter
+base. A imagem base deve receber uma \textit{tag}, que normalmente está ligada à sua versão e, por fim, esta imagem pode ser
+"empurrada" para um repositório de imagens \textit{Docker}. Neste caso, foi utilizado o \textit{DockerHub} que é um repositório
+de imagens \textit{Docker} público e hospedado e fornecido pela própria empresa \textit{Docker} Inc. Qualquer empresa pode hospedar, manter
 e disponibilizar um repositório de imagens \textit{Docker} por meio da implantação de um \textit{Docker Registry} próprio.
 
 Na Fig. \ref{fig:docker-gnuradio_base_image}, ao executar o comando \textbf{docker images} apenas a imagem \textbf{ubuntu}
@@ -1186,7 +1020,7 @@ sobre o autor e uma breve mensagem sobre a imagem criada, respectivamente.
 \begin{figure}[!htb]
   \centering
   \caption{Fazendo o \textit{commit} da imagem base GNURadio.}
-  \includegraphics[width = \linewidth]{figures/docker-gnuradio_base_image.png}
+  \includegraphics[width = \linewidth, trim= 0.1cm 25cm 0.1cm 0.1cm, clip=true]{figures/docker-gnuradio_base_image.png}
   Fonte: Elaborado pelo autor.
   \label{fig:docker-gnuradio_base_image}
 \end{figure}
@@ -1196,7 +1030,7 @@ um \textbf{IMAGE ID} igual a \textbf{1c66799cf780} faltando apenas que seja asso
 Como exemplo foi criada a \textit{tag} para a imagem e associada a um repositório público através do comando \textbf{docker tag 1c66799cf780 jeffcandido/gnuradio}.
 Ao executar \textbf{docker images} novamente, a imagem do \textit{container} contendo a instalação do GNURadio na versão 3.8.1.0
 está pronta para ser levada ao repositório de imagens \textit{Docker} e se tornar acessível a outros desenvolvedores. Para
-fazer esse procedimento, foi necessário criar uma conta (gratuita) no \textit{DockerHub} e fazer o login via linha de comando e por fim
+fazer esse procedimento, foi necessário criar uma conta (gratuita) no \textit{DockerHub} e realizar o \textit{login} via linha de comando e finalmente
 executar o \textit{push} da imagem para levá-la até o repositório remoto, como é demonstrado nos passos executados na Fig. \ref{fig:docker-push_image}.
 
 \begin{figure}[!htb]
@@ -1207,7 +1041,7 @@ executar o \textit{push} da imagem para levá-la até o repositório remoto, com
   \label{fig:docker-push_image}
 \end{figure}
 
-A imagem que foi criada e submetida ao repositório remoto agora pode ser visualizada pela interface \textit{web} do \textit{DockerHub} e qualquer usuário
+A imagem que foi criada e submetida ao repositório remoto agora pode ser visualizada pela interface \textit{web} do \textit{DockerHub} (Fig. \ref{fig:dockerhub-general}) e qualquer usuário
 conectado à \textit{Internet} poderá buscar e utilizar essa imagem.
 
 \begin{figure}[!htb]
@@ -1219,8 +1053,8 @@ conectado à \textit{Internet} poderá buscar e utilizar essa imagem.
 \end{figure}
 
 Algumas otimizações poderiam ser feitas com relação ao processo de criação do \textit{container} e geração de imagem \textit{Docker}, como por exemplo a criação
-de arquivos para composição do \textit{container} (\textit{Dockerfile}, \textit{docker-compose.yaml} e \textit{.dockerignore}), porém isto
-não adicionaria vigor e relevância ao propósito deste trabalho de forma que tais otimizações podem ser realizadas em trabalhos futuros nessa mesma
+de arquivos para composição do \textit{container} (\textit{Dockerfile}, \textit{docker-compose.yaml} e \textit{.dockerignore}). Entretanto, isto
+não adicionaria vigor e relevância ao propósito deste trabalho, de forma que tais otimizações podem ser realizadas em trabalhos futuros nessa mesma
 área de estudo.
 
 \subsection*{Instalação do firmware do \textit{HackRF One}}
@@ -1242,7 +1076,7 @@ Realizado este procedimento, é possível verificar que o dispositivo foi instal
 
 \begin{figure}[!htb]
   \centering
-  \caption{Verificação de versão do \textit{firmware} do \textit{HackRF One}.}
+  \caption{Verificação de versão do \textit{firmware} e taxa de transmissão do \textit{HackRF One}.}
   \includegraphics[width = \linewidth]{figures/hackrf/hackrf_info_version_transfer}
   Fonte: Elaborado pelo autor.
   \label{fig:hackrf_info}
@@ -1255,7 +1089,7 @@ Realizado este procedimento, é possível verificar que o dispositivo foi instal
 \chapter{Criação de \textit{flowgraph}'s no GNURadio} \label{chapter:flowgraphs}
 
 Neste ponto o objetivo é demonstrar fluxos simples de processamento digital de sinais utilizando os GNURadio e nada mais justo que iniciar esta parte
-do trabalho desmonstrando \textit{flowgraph}'s de operações matemáticas básicas aplicadas a sinais digitais assim como utilizações convenientes do processamento de sinais.
+do trabalho desmonstrando \textit{flowgraph}'s de operações matemáticas básicas aplicadas a sinais digitais, assim como utilizações convenientes do processamento de sinais.
 
 Para o primeiro \textit{flowgraph} foram posicionadas duas fontes de sinal de frequências distintas (2 kHz e 20 kHz) e suas saídas foram agregadas em um bloco de soma de sinais. Após isso,
 para que as formas de onda dos sinais possam ser visualizadas, foram adicionados os blocos \textit{QT GUI} para apresentação dos sinais nos domínios do tempo
@@ -1264,44 +1098,43 @@ diretamente de \textit{hardware}, com o objetivo de limitar a taxa na qual esse 
 
 \begin{figure}[!htb]
   \centering
-  \begin{subfigure}[b]{0.8\linewidth}
-    \centering
-    \caption{\textit{Flowgraph} da soma de dois sinais.}
-    \includegraphics[width = \linewidth, trim = 0.1cm 10cm 20cm 4cm, clip=true]{figures/signals/01_sum_flowgraph}
-    \label{fig:gnuradio_sum_flowgraph}
-  \end{subfigure}
+  \caption{\textit{Flowgraph} da soma de dois sinais.}
+  \includegraphics[width = 1.2\linewidth, trim = 0.2cm 14cm 25cm 4cm, clip=true, angle=90]{figures/signals/01_sum_flowgraph}
 
-  \begin{subfigure}[b]{0.8\linewidth}
-    \centering
-    \caption{Gráficos da soma de dois sinais no GNURadio.}
-    \includegraphics[width = \linewidth]{figures/signals/sum}
-    \label{fig:gnuradio_sum}
-  \end{subfigure}
-  \caption{Processamento da soma de dois sinais utilizando o GNURadio.}
-  \label{fig:gnuradio_signals_sum}
+  Fonte: Elaborado pelo autor.
+  \label{fig:gnuradio_sum_flowgraph}
 \end{figure}
-
-Ao executar o código gerado pelo \textit{flowgraph} da Fig. \ref{fig:gnuradio_sum_flowgraph}, a interface do \textit{GNURadio-companion} constrói na Fig. \ref{fig:gnuradio_sum} os gráficos
-relacionados à soma dos sinais, tanto no domínio do tempo como no domínio da frequência. De forma semelhante, na Fig. \ref{fig:gnuradio_product_flowgraph} está o \textit{flowgraph} para
-operação do produto de dois sinais que podem ser visualizados pela interface gráfica na Fig. \ref{fig:gnuradio_product}.
 
 \begin{figure}[!htb]
   \centering
-  \begin{subfigure}[b]{0.8\linewidth}
-    \centering
-    \caption{\textit{Flowgraph} do produto de dois sinais.}
-    \includegraphics[width = \linewidth, trim = 0.1cm 10cm 20cm 4cm, clip=true]{figures/signals/02_product_flowgraph}
-    \label{fig:gnuradio_product_flowgraph}
-  \end{subfigure}
+  \caption{Gráficos da soma de dois sinais no GNURadio.}
+  \includegraphics[width = 1.2\linewidth, angle=90]{figures/signals/sum}
 
-  \begin{subfigure}[b]{0.8\linewidth}
-    \centering
-    \caption{Gráficos do produto de dois sinais no GNURadio.}
-    \includegraphics[width = \linewidth]{figures/signals/product}
-    \label{fig:gnuradio_product}
-  \end{subfigure}
-  \caption{Processamento do produto de dois sinais utilizando o GNURadio.}
-  \label{fig:gnuradio_signals_product}
+  Fonte: Elaborado pelo autor.
+  \label{fig:gnuradio_sum}
+\end{figure}
+
+
+Ao executar o código gerado pelo \textit{flowgraph} da Fig. \ref{fig:gnuradio_sum_flowgraph}, a interface do \textit{GNURadio-companion} constrói na Fig. \ref{fig:gnuradio_sum} os gráficos
+relacionados à soma dos sinais, tanto no domínio do tempo como no domínio da frequência. De forma semelhante, na Fig. \ref{fig:gnuradio_product_flowgraph} está o \textit{flowgraph} para
+operação do produto de dois sinais (de frequências 10 kHz e 100 kHz) que podem ser visualizados pela interface gráfica na Fig. \ref{fig:gnuradio_product}.
+
+\begin{figure}[!htb]
+  \centering
+  \caption{\textit{Flowgraph} do produto de dois sinais.}
+  \includegraphics[width = 1.2\linewidth, trim = 0.2cm 14cm 25cm 4cm, clip=true, angle=90]{figures/signals/02_product_flowgraph}
+
+  Fonte: Elaborado pelo autor.
+  \label{fig:gnuradio_product_flowgraph}
+\end{figure}
+
+\begin{figure}[!htb]
+  \centering
+  \caption{Gráficos do produto de dois sinais no GNURadio.}
+  \includegraphics[width = 1.2\linewidth, angle=90]{figures/signals/product}
+
+  Fonte: Elaborado pelo autor.
+  \label{fig:gnuradio_product}
 \end{figure}
 
 Foram criados também dois \textit{flowgraph}'s, apresentados nas Figs. \ref{fig:gnuradio_delay_flowgraph} e \ref{fig:gnuradio_hysteresis_flowgraph}, que têm objetivos bastante
@@ -1309,42 +1142,41 @@ conhecidos por engenheiros em eletrônica e telecomunicações, que são o enten
 e também o conceito de histerése (Figs. \ref{fig:gnuradio_hysteresis_flowgraph}
 \ref{fig:gnuradio_hysteresis}) utilizado na comparação de sinais, principalmente aqueles sobre o efeito de ruído.
 
+
 \begin{figure}[!htb]
   \centering
-  \begin{subfigure}[b]{\linewidth}
-    \centering
-    \caption{\textit{Flowgraph} para geração de dois sinais defasados no tempo.}
-    \includegraphics[width = \linewidth]{figures/signals/03_delay_flowgraph}
-    \label{fig:gnuradio_delay_flowgraph}
-  \end{subfigure}
+  \caption{\textit{Flowgraph} para geração de dois sinais defasados no tempo.}
+  \includegraphics[width = 1.2\linewidth, angle=90]{figures/signals/03_delay_flowgraph}
 
-  \begin{subfigure}[b]{\linewidth}
-    \centering
-    \caption{Sinais defasados no domínio do tempo.}
-    \includegraphics[width = \linewidth]{figures/signals/delay}
-    \label{fig:gnuradio_delay}
-  \end{subfigure}
-  \caption{Variação de fase entre sinais utilizando o GNURadio.}
-  \label{fig:gnuradio_signals_delay}
+  Fonte: Elaborado pelo autor.
+  \label{fig:gnuradio_delay_flowgraph}
 \end{figure}
 
 \begin{figure}[!htb]
   \centering
-  \begin{subfigure}[b]{\linewidth}
-    \centering
-    \caption{\textit{Flowgraph} para simulação de um comparador de sinais com histerése.}
-    \includegraphics[width = \linewidth]{figures/signals/04_hysteresis_flowgraph}
-    \label{fig:gnuradio_hysteresis_flowgraph}
-  \end{subfigure}
+  \caption{Sinais defasados no domínio do tempo.}
+  \includegraphics[width = 1.2\linewidth, angle=90]{figures/signals/delay}
 
-  \begin{subfigure}[b]{\linewidth}
-    \centering
-    \caption{Comparação de sinais com histerése.}
-    \includegraphics[width = \linewidth]{figures/signals/hysteresis}
-    \label{fig:gnuradio_hysteresis}
-  \end{subfigure}
-  \caption{Comparação com histerése de sinais utilizando o GNURadio.}
-  \label{fig:gnuradio_signals}
+  Fonte: Elaborado pelo autor.
+  \label{fig:gnuradio_delay}
+\end{figure}
+
+\begin{figure}[!htb]
+  \centering
+  \caption{\textit{Flowgraph} para simulação de um comparador de sinais com histerése.}
+  \includegraphics[width = 1.2\linewidth, angle=90]{figures/signals/04_hysteresis_flowgraph}
+
+  Fonte: Elaborado pelo autor.
+  \label{fig:gnuradio_hysteresis_flowgraph}
+\end{figure}
+
+\begin{figure}[!htb]
+  \centering
+  \caption{Comparação de sinais com histerése.}
+  \includegraphics[width = 1.2\linewidth, angle=90]{figures/signals/hysteresis}
+
+  Fonte: Elaborado pelo autor.
+  \label{fig:gnuradio_hysteresis}
 \end{figure}
 
 \chapter{O \textit{Hello-World} do GNURadio}
@@ -1363,19 +1195,19 @@ o \textit{QT GUI Frequency Sink}.
 \begin{figure}[!htb]
   \centering
   \caption{\textit{Flowgraph} para simulação de um receptor de rádio FM.}
-  \includegraphics[width = \linewidth]{figures/signals/fm_receiver_flowgraph}
+  \includegraphics[width = 1.2\linewidth, angle=90]{figures/signals/fm_receiver_flowgraph}
   \label{fig:gnuradio_fm_receiver_flowgraph}
+
   Fonte: Elaborado pelo autor.
-  \label{fig:gnuradio_signals_fm_receiver_flowgraph}
 \end{figure}
 
 \begin{figure}[!htb]
   \centering
   \caption{\textit{FFT plot} extraída durante simulação do receptor FM.}
-  \includegraphics[width = \linewidth]{figures/signals/demodulated_fm_signal}
+  \includegraphics[width = 1.2\linewidth, angle=90]{figures/signals/demodulated_fm_signal}
   \label{fig:gnuradio_demodulated_fm_signal}
+
   Fonte: Elaborado pelo autor.
-  \label{fig:gnuradio_signals_demodulated_fm_signal}
 \end{figure}
 
 % AUDIO SINK
@@ -1431,643 +1263,11 @@ o \textit{QT GUI Frequency Sink}.
 
 \chapter{Criando blocos customizados}
 
-% OutOfTreeModules
-
-% Estendendo o GNU Radio com funcionalidades e blocos próprios
-
-% Este artigo se baseia muito no original (mas muito desatualizado) "Como escrever um bloco?" escrito por Eric Blossom.
-
-% O que é um módulo fora da árvore?
-
-% Um módulo fora da árvore é um componente do GNU Radio que não reside na árvore de origem do GNU Radio. Normalmente, se você deseja estender o GNU Radio com suas próprias funções e
-% blocos, esse módulo é o que você cria (ou seja, você não costuma adicionar coisas à árvore de fontes do GNU Radio real a menos que esteja planejando enviá-lo aos desenvolvedores
-% para integração upstream). Isso permite que você mesmo mantenha o código e tenha funcionalidades adicionais junto com o código principal.
-
-% Muitos projetos OOT estão hospedados na CGRAN - a Comprehensive GNU Radio Archive Network. Os projetos CGRAN estão todos disponíveis através de nossa ferramenta PyBOMBS. Na verdade,
-% quando você adiciona seu projeto ao repositório de receitas PyBOMBS, ele atualiza automaticamente o site CGRAN.
-
-% Ferramentas e recursos à minha disposição
-
-% Existem algumas ferramentas, scripts e documentos que estão disponíveis como programas de terceiros ou como parte do GNU Radio.
-
-% gr\_modtool - O canivete suíço da edição de módulos
-
-% Ao desenvolver um módulo, há muito trabalho chato e monótono envolvido: código clichê, edição de makefile, etc. gr\_modtool é um script que visa ajudar com todas essas coisas,
-% editando automaticamente makefiles, usando modelos e fazendo o máximo de trabalho possível para o desenvolvedor, de forma que você possa ir direto para a codificação DSP.
-
-% Observe que gr\_modtool faz muitas suposições sobre a aparência do código. Quanto mais o seu módulo for personalizado e tiver mudanças específicas, menos útil será o gr\_modtool,
-% mas é provavelmente o melhor lugar para começar com qualquer novo módulo ou bloco.
-
-% gr\_modtool agora está disponível na árvore de fontes do GNU Radio e é instalado por padrão.
-% Recursos para desenvolvedores na wiki
-
-% O mais importante é definitivamente o guia de codificação de blocos. Embora seja escrito para a árvore principal do GNU Radio, também deve ser aplicado a todos os módulos.
-% Especificamente, dê uma olhada nas convenções de nomenclatura!
-
-% section*{Block coding guide}
-
-% \textbf{Terminologia}
-
-% Block A unidade de processamento funcional com entradas e saídas
-% Port Uma única entrada ou saída de um bloco
-% Source de dados Fonte A
-% Sink Um consumidor de dados
-% Connection Um fluxo de dados da porta de saída para a porta de entrada
-% Flow graph Uma coleção de blocos e conexões
-% Item Uma unidade de dados. Ex: amostra de banda base, vetor fft, matriz ...
-% Stream Um fluxo contínuo de itens consecutivos
-% IO signature Uma descrição das portas de entrada e saída de blocos
-
-% \textbf{Estrutura de Código}
-
-% \textbf{Public Header Files}
-
-% Os arquivos de cabeçalho públicos são definidos em include / foo e são instalados em \$ prefix / include / foo.
-
-% As funções acessoras (set / get) que devem ser exportadas são definidas como funções virtuais puras neste cabeçalho.
-
-% Um esqueleto de um arquivo de cabeçalho público comum se parece com:
-
-% \begin{adjustbox}{max width=\linewidth}
-%   \begin{lstlisting}[language=C++]
-%     #ifndef INCLUDED_FOO_BAR_H
-%     #define INCLUDED_FOO_BAR_H
-
-%     #include <foo/api.h>
-%     #include <gr_sync_block.h>
-
-%     namespace gr {
-%       namespace foo {
-
-%       class FOO_API bar : virtual public gr_sync_block
-%       {
-%       public:
-%         // gr::foo::bar::sptr
-%         typedef boost::shared_ptr sptr;
-
-%         /*!
-%         * \class bar
-%         * \brief A brief description of what foo::bar does
-%         *
-%         * \ingroup _blk
-%         *
-%         * A more detailed description of the block.
-%         *
-%         * \param var explanation of argument var.
-%         */
-
-%         static sptr make(dtype var);
-
-%         virtual void set_var(dtype var) = 0;
-%         virtual dtype var() = 0;
-%       };
-%     } /* namespace foo */
-%   } /* namespace gr */
-
-%   #endif /* INCLUDED_FOO_BAR_H */
-%   \end{lstlisting}
-% \end{adjustbox}
-
-% \textbf{Implementation Header File}
-
-% Os arquivos de cabeçalho de implementação privada são definidos em lib e não são instalados. Normalmente definimos esses arquivos para usar o mesmo nome que o arquivo público
-% e classe com um sufixo \_impl para indicar que este é o arquivo de implementação para a classe.
-
-% Em alguns casos, esse arquivo pode ser específico para uma implementação muito particular e várias implementações podem estar disponíveis para um determinado bloco, mas com a
-% mesma API pública. Um bom exemplo é o uso da biblioteca FFTW para implementar os blocos fft\_filter. Esta é apenas uma das muitas maneiras possíveis de implementar um FFT e,
-% portanto, a implementação foi nomeada fft\_filter\_ccc\_fftw. Outra biblioteca que implementa um FFT específico para uma plataforma ou propósito pode então ser encaixada como uma
-% nova implementação como fft\_filter\_ccc\_myfft.
-
-% % Todas as variáveis ​​de membro são declaradas privadas e usam o prefixo d\_. Tanto quanto possível, todas as variáveis ​​devem ter uma função set e get. A função set se parece
-% com void set\_var (dtype var), e a função get se parece com dtype var(). Nem sempre faz sentido ter um conjunto ou obter uma determinada variável, mas todos os esforços devem
-% ser feitos para acomodá-lo.
-
-% Os comentários do Doxygen que serão incluídos no manual são definidos no arquivo de cabeçalho público. Não há necessidade de marcação Doxygen nos arquivos privados, mas é claro,
-% qualquer comentário ou documentação que faça sentido sempre deve ser usado.
-
-% Um esqueleto de um arquivo de cabeçalho privado comum se parece com:
-
-% \begin{adjustbox}{max width=\linewidth}
-%   \begin{lstlisting}[language=C++]
-%     #ifndef INCLUDED_FOO_BAR_IMPL_H
-%     #define INCLUDED_FOO_BAR_IMPL_H
-
-%     #include <foo/bar.h>
-
-%     namespace gr {
-%       namespace foo {
-
-%       class FOO_API bar_impl : public bar
-%       {
-%       private:
-%         dtype d_var;
-%       public:
-%         bar_impl(dtype var);
-
-%         ~bar_impl();
-
-%         void set_var(dtype var);
-%         dtype var();
-
-%         int work(int noutput_items,
-%             gr_vector_const_void_star &input_items,
-%             gr_vector_void_star &output_items);
-%       };
-%     } /* namespace foo */
-%   } /* namespace gr */
-
-%   #endif /* INCLUDED_FOO_BAR_IMPL_H */
-%   \end{lstlisting}
-% \end{adjustbox}
-
-% \textbf{Implementation Source File}
-
-% O arquivo fonte é lib / bar.cc e implementa o código real para a classe.
-
-% Este arquivo define a função make para a classe pública. Este é um membro da classe, o que significa que podemos, se necessário, fazer coisas interessantes, definir
-% funções de múltiplos fatores, etc. Na maioria das vezes, isso simplesmente retorna um sptr para a classe de implementação.
-
-% \begin{adjustbox}{max width=\linewidth}
-%   \begin{lstlisting}[language=C++]
-%     #ifdef HAVE_CONFIG_H
-%     #include "config.h"
-%     #endif
-
-%     #include "bar_impl.h"
-%     #include <gr_io_signature.h>
-
-%     namespace gr {
-%       namespace foo {
-
-%         bar::sptr bar::make(dtype var)
-%         {
-%           return gnuradio::get_initial_sptr(new bar_impl(var));
-%         }
-
-%         bar_impl::bar_impl(dtype var)
-%           : gr_sync_block("bar",
-%                   gr_make_io_signature(1, 1, sizeof(in_type)),
-%                   gr_make_io_signature(1, 1, sizeof(out_type)))
-%         {
-%           set_var(var);
-%         }
-
-%         bar_impl::~bar_impl()
-%         {
-%           // any cleanup code here
-%         }
-
-%         dtype
-%         bar_impl::var()
-%         {
-%           return d_var;
-%         }
-
-%         void
-%         bar_impl::set_var(dtype var)
-%         {
-%           d_var = var;
-%         }
-
-%         int
-%         bar_impl::work(int noutput_items,
-%                         gr_vector_const_void_star &input_items,
-%                         gr_vector_void_star &output_items)
-%         {
-%           const in_type *in = (const in_type*)input_items[0];
-%           out_type *out = (out_type*)output_items[0];
-
-%           // Perform work; read from in, write to out.
-%           return noutput_items;
-%         }
-%       } /* namespace foo */
-%     } /* namespace gr */
-%   \end{lstlisting}
-% \end{adjustbox}
-
-% \textbf{SWIG Interface File}
-
-% Devido ao uso do arquivo de cabeçalho público para descrever o que queremos acessível publicamente, podemos simplesmente incluir os cabeçalhos no arquivo de interface
-% principal. Portanto, no diretório swig está um único arquivo de interface foo\_swig.i:
-
-% \begin{adjustbox}{max width=\linewidth}
-%   \begin{lstlisting}[language=C++]
-%     #define FOO_API
-
-%     %include "gnuradio.i" 
-
-%     //load generated python docstrings
-%     %include "foo_swig_doc.i" 
-
-%     %{
-%       #include "foo/bar.h" 
-%     %}
-
-%     %include "foo/bar.h" 
-
-%     GR_SWIG_BLOCK_MAGIC2(foo, bar);
-%   \end{lstlisting}
-% \end{adjustbox}
-
-% \textbf{Block Structure}
-
-% The \textbf{work} function
-
-% Para implementar o processamento, o usuário deve escrever uma rotina de "trabalho" que lê entradas, processa e escreve saídas.
-
-% Um exemplo de função WORK implementando um somador em cplusplus:
-
-% \begin{adjustbox}{max width=\linewidth}
-%   \begin{lstlisting}[language=C++]
-%     int work(int noutput_items,
-%               gr_vector_const_void_star &input_items,
-%               gr_vector_void_star &output_items)
-%     {
-
-%       //cast buffers
-%       const float* in0 = reinterpret_cast<const float*>(input_items[0]);
-%       const float* in1 = reinterpret_cast<const float*>(input_items[1]);
-%       float* out = reinterpret_cast<float*>(output_items[0]);
-
-%       //process data
-%       for(size_t i = 0; i < noutput_items; i++) {
-%         out[i] = in0[i] + in1[i];
-%       }
-
-%       //return produced
-%       return noutput_items;
-%     }
-%   \end{lstlisting}
-% \end{adjustbox}
-
-% Definições de parâmetros:
-
-% noutput\_items: número total de itens em cada buffer de saída
-% input\_items: vetor de buffers de entrada, onde cada elemento corresponde a uma porta de entrada
-% output\_items: vetor de buffers de saída, onde cada elemento corresponde a uma porta de saída
-
-% Algumas observações:
-
-% Cada buffer deve ser convertido de um ponteiro void * em um tipo de dados utilizável.
-% O número de itens em cada buffer de entrada está implícito em noutput\_items
-% Mais informações sobre isso nas seções posteriores
-% O número de itens produzidos é retornado, pode ser menor que noutput\_items
-
-
-% \textbf{IO signatures}
-
-% Ao criar um bloco, o usuário deve comunicar o seguinte ao bloco:
-
-% O número de portas de entrada
-% O número de portas de saída
-% O tamanho do item de cada porta
-
-% Uma assinatura IO descreve o número de portas que um bloco pode ter e o tamanho de cada item em bytes. Cada bloco tem 2 assinaturas de E/S: uma assinatura de entrada e
-% uma assinatura de saída.
-
-% Alguns exemplos de assinaturas em cplusplus
-
-% \begin{adjustbox}{max width=\linewidth}
-%   \begin{lstlisting}[language=C++]
-%     -- A block with 2 inputs and 1 output --
-
-%     gr_sync_block("my adder", gr_make_io_signature(2, 2, sizeof(float)), gr_make_io_signature(1, 1, sizeof(float)))
-
-%     -- A block with no inputs and 1 output --
-
-%     gr_sync_block("my source", gr_make_io_signature(0, 0, 0), gr_make_io_signature(1, 1, sizeof(float)))
-
-%     -- A block with 2 inputs (float and double) and 1 output --
-
-%     std::vector input_sizes;
-
-%     input_sizes.push_back(sizeof(float));
-
-%     input_sizes.push_back(sizeof(double));
-
-%     gr_sync_block("my block", gr_make_io_signaturev(2, 2, input_sizes), gr_make_io_signature(1, 1, sizeof(float)))
-%   \end{lstlisting}
-% \end{adjustbox}
-
-% Algumas observações:
-
-% Use gr\_make\_io\_signature para blocos onde todas as portas são homogêneas em tamanho
-% Use gr\_make\_io\_signaturev para blocos que têm tamanhos de porta heterogêneos
-
-% Os primeiros dois parâmetros são o número mínimo e máximo de portas, o que permite que os blocos tenham um número selecionável de portas em tempo de execução.
-
-% Tipos de bloco
-
-% Para tirar proveito da estrutura gnuradio, os usuários criarão vários blocos para implementar o processamento de dados desejado. Existem vários tipos de blocos para escolher:
-
-% Blocos síncronos (1: 1)
-% Blocos de Decimação (N: 1)
-% Blocos de interpolação (1: M)
-% Blocos Gerais (N: M)
-
-% Bloco Síncrono
-
-% O bloco de sincronização permite aos usuários escrever blocos que consomem e produzem um número igual de itens por porta. Um bloco de sincronização pode ter qualquer número de entradas ou saídas. Quando um bloco de sincronização tem zero entradas, é chamado de fonte. Quando um bloco de sincronização tem zero saídas, é chamado de dissipador.
-
-% Um exemplo de bloco de sincronização em cplusplus.
-
-% \begin{adjustbox}{max width=\linewidth}
-%   \begin{lstlisting}[language=C++]
-%     #include <gr_sync_block.h>
-
-%     class my_sync_block : public gr_sync_block
-%     {
-%     public:
-%       my_sync_block(...):
-%         gr_sync_block("my block",
-%                       gr_make_io_signature(1, 1, sizeof(int32_t)),
-%                       gr_make_io_signature(1, 1, sizeof(int32_t)))
-%       {
-%         //constructor stuff
-%       }
-
-%       int work(int noutput_items,
-%                 gr_vector_const_void_star &input_items,
-%                 gr_vector_void_star &output_items)
-%       {
-%         //work stuff...
-%         return noutput_items;
-%       }
-%     };
-%   \end{lstlisting}
-% \end{adjustbox}
-
-% Algumas observações:
-
-% noutput\_items é o comprimento em itens de todos os buffers de entrada e saída
-% uma assinatura de entrada de gr\_make\_io\_signature (0, 0, 0) torna este um bloco de origem
-% uma assinatura de saída de gr\_make\_io\_signature (0, 0, 0) torna isso um bloco coletor
-
-% \textbf{Decimation Block}
-
-% O bloco de decimação é outro tipo de bloco de taxa fixa em que o número de itens de entrada é um múltiplo fixo do número de itens de saída.
-
-% Um exemplo de bloco de decimação em cplusplus
-
-% \begin{adjustbox}{max width=\linewidth}
-%   \begin{lstlisting}[language=C++]
-%     #include <gr_sync_decimator.h>
-
-%     class my_decim_block : public gr_sync_decimator
-%     {
-%     public:
-%       my_decim_block(...):
-%         gr_sync_decimator("my decim block",
-%                       in_sig,
-%                       out_sig,
-%                       decimation)
-%       {
-%         //constructor stuff
-%       }
-
-%       //work function here...
-%     };
-%   \end{lstlisting}
-% \end{adjustbox}
-
-% Algumas observações:
-
-% O construtor gr\_sync\_decimator leva um quarto parâmetro, o fator de decimação. O usuário deve assumir que o número de itens de entrada = itens de saída * decimação
-
-% \textbf{Interpolation Block}
-
-% O bloco de interpolação é outro tipo de bloco de taxa fixa em que o número de itens de saída é um múltiplo fixo do número de itens de entrada.
-
-% Um exemplo de bloco de interpolação em cplus
-
-% \begin{adjustbox}{max width=\linewidth}
-%   \begin{lstlisting}[language=C++]
-%     #include <gr_sync_interpolator.h>
-
-%     class my_interp_block : public gr_sync_interpolator
-%     {
-%     public:
-%       my_interp_block(...):
-%         gr_sync_interpolator("my interp block",
-%                       in_sig,
-%                       out_sig,
-%                       decimation)
-%       {
-%         //constructor stuff
-%       }
-
-%       //work function here...
-%     };
-%   \end{lstlisting}
-% \end{adjustbox}
-
-% Algumas observações:
-
-% O construtor gr\_sync\_interpolator leva um quarto parâmetro, o fator de interpolação. O usuário deve assumir que o número de itens de entrada = itens de saída / interpolação
-
-% \textbf{Basic Block}
-
-% O bloco básico não fornece relação entre o número de itens de entrada e o número de itens de saída. Todos os outros blocos são apenas simplificações do bloco básico.
-% Os usuários devem escolher herdar do bloco básico quando os outros blocos não forem adequados.
-
-% O adicionador revisitado como um bloco básico em cplusplus
-
-% \begin{adjustbox}{max width=\linewidth}
-%   \begin{lstlisting}[language=C++]
-%     #include <gr_block.h>
-
-
-%     class my_basic_block : public gr_block
-
-%     {
-%     public:
-
-%       my_basic_adder_block(...):
-%         gr_block("another adder block",
-
-%                 in_sig,
-
-%                 out_sig)
-%       {
-%         //constructor stuff
-%       }
-
-%       int general_work(int noutput_items,
-%                       gr_vector_int &ninput_items,
-%                       gr_vector_const_void_star &input_items,
-%                       gr_vector_void_star &output_items)
-%       {
-%         //cast buffers
-%         const float* in0 = reinterpret_cast<const float*>(input_items[0]);
-%         const float* in1 = reinterpret_cast<const float*>(input_items[1]);
-%         float* out = reinterpret_cast<float*>(output_items[0]);
-
-%         //process data
-%         for(size_t i = 0; i < noutput_items; i++) {
-%           out[i] = in0[i] + in1[i];
-%         }
-
-%         //consume the inputs
-
-%         //consume port 0 input
-%         this->consume(0, noutput_items);
-%         //consume port 1 input
-%         this->consume(1, noutput_items);
-%         //or shortcut to consume on all inputs
-%         //this->consume_each(noutput_items);
-
-%         //return produced
-%         return noutput_items;
-%       }
-%     };
-%   \end{lstlisting}
-% \end{adjustbox}
-
-% Algumas observações:
-
-% Esta classe sobrecarrega o método general\_work (), não work ()
-% O trabalho geral tem um parâmetro: ninput\_items
-% ninput\_items é um vetor que descreve o comprimento de cada buffer de entrada
-% Antes do retorno, general\_work deve consumir manualmente as entradas usadas
-% O número de itens nos buffers de entrada é considerado noutput\_items
-% Os usuários podem alterar esse comportamento sobrecarregando o método forecast ()
-
-% \textbf{Other Types of Blocks}
-
-% \textbf{Hierarchical Block}
-
-% Os blocos hierárquicos são blocos compostos por outros blocos. Eles instanciam os outros blocos GNU Radio (ou outros blocos hierárquicos) e os conectam. Um bloco hierárquico possui uma função “conectar” para este propósito.
-
-% Os blocos hierárquicos definem um fluxo de entrada e saída de maneira muito semelhante aos blocos normais. Para conectar a entrada i a um bloco hierárquico, a fonte é (em Python):
-
-% self.connect ((self, <i>), <block>)
-
-% Da mesma forma, para enviar o sinal para fora do bloco no fluxo de saída o:
-
-% self.connect (<block>, (self, <o>))
-
-% Top Block
-% O bloco superior é a estrutura de dados principal de um fluxograma GNU Radio. Todos os blocos estão conectados sob este bloco. O bloco superior possui as funções que controlam
-% o funcionamento do fluxograma. Geralmente, criamos uma classe que herda de um bloco superior:
-
-% \begin{adjustbox}{max width=\linewidth}
-%   \begin{lstlisting}[language=python]
-%     class my_topblock(gr.top_block):
-%     def __init__(self, ):
-%         gr.top_block.__init__(self)
-
-%     def main():
-%         tb = mytb()
-%         tb.run()
-%   \end{lstlisting}
-% \end{adjustbox}
-
-% O bloco superior tem algumas funções-membro principais:
-
-% start (N): inicia o gráfico de fluxo em execução com N como o máximo de noutput\_items que qualquer bloco pode receber.
-% parar (): pára o bloco superior
-% wait (): bloqueia até que o bloco superior seja concluído
-% executar (N): um início de bloqueio (N) (as chamadas começam e depois esperam)
-% lock (): bloqueia o fluxograma para que possamos reconfigurá-lo
-% unlock (): desbloqueia e reinicia o fluxograma
-
-% O conceito N nos permite ajustar a latência de um fluxograma. Por padrão, N é grande e os blocos passam grandes pedaços de itens entre si. Isso é projetado para maximizar
-% o rendimento e a eficiência. Como grandes blocos de itens incorrem em latência, podemos forçar esses blocos a um tamanho máximo para controlar a latência geral em detrimento
-% da eficiência. Um método set\_max\_noutput\_items (N) é definido para um bloco superior para alterar este número, mas ele só tem efeito durante um procedimento de bloqueio / desbloqueio.
-
-% \textbf{Stream Tags}
-
-% Uma tag decora um stream com metadados. Uma tag é associada a um determinado item em um fluxo. Um item pode ter mais de uma tag associada a ele. A associação de um item e tag é
-% feita por meio de uma contagem absoluta. Cada item em um fluxo tem uma contagem absoluta. As marcas usam essa contagem para identificar qual item em um fluxo ao qual estão associadas.
-
-% Uma tag tem os seguintes membros:
-
-% deslocamento: a contagem única de itens
-% chave: uma chave PMT única para o tipo de conteúdo
-% valor: um PMT contendo o conteúdo desta tag
-% srcid: um id PMT exclusivo para o produtor da tag (opcional)
-
-% Um PMT é um tipo de dados especial em gnuradio para serializar dados arbitrários. Para saber mais sobre PMTs, consulte mingau / pmt.h
-
-% Reading stream tags
-
-% As tags podem ser lidas na função de trabalho usando get\_tags\_in\_range. Cada porta / fluxo de entrada pode ter tags associadas.
-
-% Exemplo de leitura de tags em cplusplus:
-
-% \begin{adjustbox}{max width=\linewidth}
-%   \begin{lstlisting}[language=C++]
-%     int work(int noutput_items,
-%               gr_vector_const_void_star &input_items,
-%               gr_vector_void_star &output_items)
-
-%     {
-%       std::vector tags;
-%       //number of items read on port 0
-%       const uint64_t nread = this->nitems_read(0);
-%       //assumption for sync block, this can change
-%       const size_t ninput_items = noutput_items;
-%       //read all tags associated with port 0 for items in this work function
-%       this->get_tags_in_range(tags, 0, nread, nread+ninput_items);
-%       //work stuff here\dots
-%     }
-%   \end{lstlisting}
-% \end{adjustbox}
-
-% Writing stream tags
-
-% As tags podem ser escritas a partir da função de trabalho usando add\_item\_tag. Cada porta / fluxo de saída pode ter tags associadas.
-
-% Exemplo de gravação de tags em Cplusplus:
-
-% \begin{adjustbox}{max width=\linewidth}
-%   \begin{lstlisting}[language=C++]
-%     int work(int noutput_items,
-%               gr_vector_const_void_star &input_items,
-%               gr_vector_void_star &output_items)
-%     {
-%       const size_t item_index = ? //which output item gets the tag?
-%       const uint64_t offset = this->nitems_written(0) + item_index;
-%       pmt::pmt_t key = pmt::string_to_symbol("example_key");
-%       pmt::pmt_t value = pmt::string_to_symbol("example_value");
-
-%       //write at tag to output port 0 with given absolute item offset
-%       this->add_item_tag(0, offset, key, value);
-
-%       //work stuff here...
-%     }
-%   \end{lstlisting}
-% \end{adjustbox}
-
-% Tips and Tricks
-
-% Esta é a parte do guia onde damos dicas e truques para fazer blocos que funcionam de forma robusta com o planejador.
-% Bloqueio de chamadas
-
-% Se uma função de trabalho contém uma chamada de bloqueio, ela deve ser escrita de forma que possa ser interrompida por threads de reforço. Quando o gráfico de fluxo é interrompido,
-% todos os threads de trabalho serão interrompidos. A interrupção do thread ocorre quando o usuário chama desbloquear () ou parar () no gráfico de fluxo. Portanto, só é aceitável
-% bloquear indefinidamente em uma chamada de thread de impulso, uma variável de suspensão ou condição, ou algo que use essas chamadas de thread de impulso internamente, como
-% pop\_msg\_queue (). Se você precisar bloquear um recurso como um descritor de arquivo ou socket, a rotina de trabalho deve sempre chamar a rotina de bloqueio com um tempo limite.
-% Quando a operação atinge o tempo limite, a rotina de trabalho deve chamar um ponto de interrupção do thread de reforço ou verificar o thread de reforço interrompido e sair se
-% verdadeiro.
-
-% Salvando estado
-
-% % Como as funções de trabalho podem ser interrompidas, as variáveis ​​de estado do bloco podem ser indeterminadas na próxima vez que o gráfico de fluxo for executado. Para tornar os
-% blocos robustos contra o estado indeterminado, os usuários devem sobrecarregar as funções start () e stop () dos blocos. A rotina start () é chamada quando o gráfico de fluxo é
-% iniciado antes do thread de trabalho () ser gerado. A rotina stop () é chamada quando o gráfico de fluxo é interrompido depois que o thread de trabalho foi unido e encerrado.
-% % Os usuários devem garantir que as variáveis ​​de estado do bloco sejam inicializadas com propriedade na rotina start ().
-
-% \textbf{CMake, make, etc.}
-
-% GNU Radio usa CMake como um sistema de construção. Construir um módulo, portanto, requer que você tenha o cmake instalado e qualquer gerenciador de construção de sua preferência
-% (na maioria das vezes, é 'make', mas você também pode estar usando Eclipse ou MS Visual Studio).
-
-O objetivo deste capítulo é disponibilizar uma visão geral de como é possível que qualquer um seja também um desenvolvedor de módulos (os quais são chamados de módulos \textit{OOT - Out of Three} \cite{GNURADIO-oot-modules})
+O objetivo deste capítulo é disponibilizar uma visão geral de como é possível que qualquer um seja também um desenvolvedor de módulos (os quais são chamados de módulos \textit{OOT - Out of Thee} \cite{GNURADIO-oot-modules})
 de processamento digital de sinais no GNURadio e não apenas usuários da ferramenta \textit{GNURadio-companion}. Para auxiliar no entendimento, será mostrado um passo a passo de como criar
 um módulo do GNURadio, adicionar blocos a ele e depois disponibilizar pacotes de instalação que podem ser aproveitados por outros desenvolvedores que estejam direcionados a esse mesmo propósito.
 
-\section*{Módulos \textit{OutOfThree}} \label{section:modules_oot}
+\section*{Módulos \textit{OutOfTree}} \label{section:modules_oot}
 
 \begin{figure}[!htb]
   \centering
@@ -2085,7 +1285,7 @@ A Fig. \ref{fig:gr_modtool_newmod_exemplo} mostra a execução da ferramenta \te
 bloco de processamento digital  de sinais que será responsável por simplesmente receber amostras do tipo ponto flutuante e entregar em sua saída o valor da entrada elevado à segunda potência.
 Nesta mesma figura é mostrada a estrutura de pastas criada pelo comando \textbf{gr\_modtool}.
 
-Uma simples linha de comando utilizando a ferramenta \textbf{gr\_modtool} cria toda a estrutura de arquivos e pastas de um novo módulo do GNURadio. Os arquivos dos códigos escritos em
+Uma linha de comando simples utilizando a ferramenta \textbf{gr\_modtool} cria toda a estrutura de arquivos e pastas de um novo módulo do GNURadio. Os arquivos dos códigos escritos em
 \textit{python} devem ir para a pasta \textbf{python/}, os arquivos escritos em C++ devem ser colocados na pasta \textbf{lib/} e os seus arquivos de cabeçalho (\textbf{*.h}) devem ir para a pasta
 \textbf{include/}. Também é criada uma pasta relacionada ao \textbf{swig}, que é um \textit{wrapper} (um empacotador) simplificado e gerador de interfaces que cria automaticamente o
 código em \textit{python} dos blocos, mesmo que eles tenham sido escritos em C++.
@@ -2103,15 +1303,15 @@ antes da versão 3.8 eram arquivos \textbf{.xml}). A pasta \textbf{docs/} conté
 utilizando a bibliotecas \textit{Doxygen} e \textit{Sphinx}. Para compilação do código, o desenvolvedor deve se atentar ao arquivo \textit{CMakeLists.txt} e à pasta \textbf{cmake/} para garantir
 as instruções a serem passadas para o programa \textit{Cmake} sobre como encontrar as bibliotecas necessárias e também garantir que o módulo seja compilado corretamente.
 
-O passo seguinte (ilustrado na Fig. \ref{fig:gr_modtool_add_ao_quadrado}) foi criar os arquivos relacionados a um bloco de exemplo, o qual foi nomeado \textit{ao\_quadrado\_ff}, também através de uma simples linha de comando utilizando a ferramenta
+O passo seguinte (ilustrado na Fig. \ref{fig:gr_modtool_add_ao_quadrado}) foi criar os arquivos relacionados a um bloco de exemplo, o qual foi nomeado \textit{ao\_quadrado\_ff}, também através de uma linha de comando simples utilizando a ferramenta
 \textbf{gr\_modtool}. A nomeação do bloco foi escolhida seguindo uma conveção de nomenclatura dos blocos que consiste na concatenação do nome customizado do bloco com os indicadores de quais são
-os tipos de que serão recebidos na entradas e quais serão entregues na saída após serem processados ("\textit{ao\_quadrado\_}" + "\textit{\textbf{f}loat \textbf{f}loat}"). As flags passadas
+os tipos de que serão recebidos nas entradas e quais serão entregues na saída após serem processados ("\textit{ao\_quadrado\_}" + "\textit{\textbf{f}loat \textbf{f}loat}"). As flags passadas
 estão relacionadas ao tipo do bloco (-t \textit{general}, bloco de uso geral) e o tipo de linguagem (-l \textit{cpp}) a ser usada para escrever suas funções.
 
 \begin{figure}[!htb]
   \centering
   \caption{Prática do desenvolvimento guiado por testes.}
-  \includegraphics[width = \linewidth]{figures/gr_modtool/qa_ao_quadrado.png}
+  \includegraphics[width = \linewidth, trim= 0.1cm 0.1cm 7cm 0.1cm, clip = true]{figures/gr_modtool/qa_ao_quadrado.png}
   Fonte: Elaborado pelo autor.
   \label{fig:qa_ao_quadrado}
 \end{figure}
@@ -2130,7 +1330,7 @@ Outro ponto importante é que na função \textit{forecast} deve ser informada a
 \begin{figure}[!htb]
   \centering
   \caption{Classe do bloco de processamento digital de sinais customizado.}
-  \includegraphics[width = \linewidth]{figures/gr_modtool/ao_quadrado_cc.png}
+  \includegraphics[width = \linewidth, trim= 0.1cm 0.1cm 13cm 0.1cm, clip = true]{figures/gr_modtool/ao_quadrado_cc.png}
   Fonte: Elaborado pelo autor.
   \label{fig:ao_quadrado_cc}
 \end{figure}
@@ -2163,7 +1363,7 @@ que fica na raiz do módulo (\textbf{gr-exemplo}) as três seguintes linhas:
 \end{adjustbox}
 
 O procedimento de geração de uma \textit{release} do \textit{software}, quando configurado corretamente, segue um conjunto de passos simples de serem executados, os quais consistem em criar um diretório
-dentro da raiz do projeto e dentro dele realizar a construção dos arquivos para produção, a execução dos testes unitários e de integração do código e por fim a instalação.
+dentro da raiz do projeto e dentro dele realizar a construção dos arquivos para produção, a execução dos testes unitários e de integração do código e a instalação ao final.
 
 \begin{adjustbox}{max width=\linewidth}
   \begin{lstlisting}[language=bash]
@@ -2184,7 +1384,6 @@ dentro da raiz do projeto e dentro dele realizar a construção dos arquivos par
   \label{fig:gr_exemplo_build}
 \end{figure}
 
-\newpage
 Os pacotes que podem ser instalados em sistemas compatíveis com as distribuições \textit{Debian} e \textit{CentOS} foram gerados com o auxílio dos programas \textbf{cpack} e \textbf{alien} como mostra a
 Fig. \ref{fig:gr_exemplo_build}.
 
@@ -2196,43 +1395,113 @@ Fig. \ref{fig:gr_exemplo_build}.
 % ---
 % Capitulo de revisão de literatura
 % ---
-\chapter{Revisão Literária}
+\chapter{Revisão literária e análise de resultados}
 
-Com o intuito de reforçar a consistência prática deste trabalho, é necessário fazer a ligação entre os passos que foram executados até agora e suas fundamentações teóricas. Conceitos cruciais
-que foram aplicados durante a criação e execução de \textit{flowgraph}'s é o de decimação e interpolação, que são parâmetros a serem definidos durante o projeto de filtros digitais.
-Em todos os \textit{flowgraph}'s também foi necessário passar o parâmetro \textbf{samp\_rate} que é a taxa de amostragem. Este parâmetro sempre deve ser observado, para que esteja de acordo com o
-Teorema da amostragem de Nyquist-Shannon, pois a utilização de valores que sejam inferiores ao dobro ad largura de banda do sinal em banda-base resulta em efeitos indesejados caso fosse necessário
-recuperar este mesmo sinal após a recepção, transmissão e/ou processamento.
+Com o intuito de reforçar a consistência prática deste trabalho, é necessário fazer a ligação entre os passos que foram executados até agora e suas fundamentações teóricas. Tópicos essenciais
+de telecomunicações que não podem deixar de ser analisados é o Teorema de Modulação e a aplicação de filtros digitais, visto que os blocos do GNURadio necessitam de realizar operações de
+conversão de taxa a todo momento.
+Em todos os \textit{flowgraph}'s também foi necessário passar o parâmetro \textbf{samp\_rate} que é a taxa de amostragem (dada em Hz), a qual sempre deve ser observada, para que esteja de acordo com o
+Teorema da amostragem (ou Teorema de Nyquist), pois a utilização de valores que sejam inferiores ao dobro da largura de banda (ou máximo valor de frequência) do sinal em banda-base resulta em
+efeitos indesejados caso fosse necessário recuperar este mesmo sinal após a recepção, transmissão e/ou processamento.
 
-FALAR SOBRE FILTROS digitais, Teorema de Nyquist
-Decimação
-interpolação
-FFT
-
-Capítulo sobre os sinais e os gráficos no GNURadio: \ref{chapter:flowgraphs}
-Falar sobre as propriedades dos sinais (soma no tempo, soma na frequência, multiplica no tempo, deslocamento na frequencia)
-
-Aproveitar para colocar aqui os símbolos e assim fechar a lista de símbolos
-
-samp\_rate
-potencia
-SNR
-Bandwidth
-bit
-byte
-
-% ---
-\section*{Análise dos resultados}
-
-Bloco OOT criado na seção \ref{section:modules_oot}
+\section*{Teorema da Modulação}
 
 \begin{figure}[!htb]
   \centering
-  \caption{Utilização do bloco customizado em um \textit{flowgrpah}.}
-  \includegraphics[width = \linewidth]{figures/gr_modtool/exemplo_flowgraph.png}
+  \caption{\textit{Flowgraph} de um sinal em banda base e de uma portadora.}
+  \includegraphics[width = \linewidth]{figures/signals/baseband-signals-flowgraph.png}
+
+  Fonte: Elaborado pelo autor.
+  \label{fig:baseband_flowgraph}
+\end{figure}
+
+\begin{figure}[!htb]
+  \centering
+  \caption{Sinal mensagem e da portadora no domínio do tempo e da frequência.}
+  \includegraphics[width = 1.4\linewidth, angle = 90]{figures/signals/baseband-signals-curves.png}
+
+  Fonte: Elaborado pelo autor.
+  \label{fig:baseband_curves}
+\end{figure}
+
+Para conferir o Teorema da modulação, foi montado o \textit{flowgraph} apresentado na Fig. \ref{fig:baseband_flowgraph} que ao ser executado mostra as curvas de dois sinais (Fig. \ref{fig:baseband_curves}), sendo que o
+primeiro ($f(t) = cos(\omega_mt)$, onde $\omega_m = 2 \pi f_m$) é um sinal em banda base (fonte de sinal senoidal, tom de frequência de $f_m$ = 10 kHz), aqui chamado de mensagem e, o segundo é
+o sinal de uma portadora ($c(t) = cos(\omega_ct)$, onde $\omega_c = 2 \pi f_c$) com $f_c$ = 100 kHz. Considerando $f(t)$ e $c(t)$ e:
+
+\begin{itemize}
+  \item[$-$] sabendo que são sinais lineares e invariantes no tempo;
+  \item[$-$] suas transformadas de Fourier são $F(\omega)$ e $C(\omega)$, respectivamente;
+  \item[$-$] sabendo que o Teorema da Modulação \cite{Lathi:1998} determina que ao multiplicar um sinal mensagem (em banda base) por outro sinal com uma portadora de frequência (\textit{Flowgraph} da
+        Fig. \ref{fig:modulation_flowgraph});
+\end{itemize}
+
+tem-se que o reflexo no espectro em frequência deste produto é entendido como o sinal original apenas deslocado exatamente do valor da frequência da onda portadora.
+Em resumo, o sinal que antes encontrava-se em torno da frequência 0 Hz ($F(\omega)$), passa a ficar em torno da frequência da portadora (sinal modulado $F(\omega + \omega_c) + F(\omega - \omega_c)$). A
+Fig. \ref{fig:modulation_curves} mostra esse deslocamento em frequência como um exemplo prático de demonstração do Teorema da Modulação.
+
+\begin{figure}[!htb]
+  \centering
+  \caption{\textit{Flowgraph} para modulação de um sinal.}
+  \includegraphics[width = \linewidth]{figures/signals/modulation-flowgraph.png}
+
+  Fonte: Elaborado pelo autor.
+  \label{fig:modulation_flowgraph}
+\end{figure}
+
+\begin{figure}[!htb]
+  \centering
+  \caption{Modulação do sinal mensagem, curvas no tempo e na frequência.}
+  \includegraphics[width = 1.4\linewidth, angle = 90]{figures/signals/modulation-curves.png}
+
+  Fonte: Elaborado pelo autor.
+  \label{fig:modulation_curves}
+\end{figure}
+
+\newpage
+\section*{Decimação e Interpolação}
+
+Decimação e interpolação são outros dois conceitos bastante importantes e que demandam do desenvolvedor alguma afinidade teórica com o processamento de sinais, pois a qualquer momento pode ser
+necessário fazer a conversão da frequência de amostragem do sinal por algum fator \cite{hayes:1999}, aqui denominados $L$ (para interpolação) e $M$ (para decimação). Basicamente, dizer que está sendo realizado o processo
+de decimação de um sinal significa que sua taxa de amostragem foi reduzida por um fator $M$ inteiro e para a interpolação seria o caso de ocorrer um aumento dessa taxa por um fator $L$.
+Às vezes é necessário fazer uma coversão de taxa que não pode ser usando um fator inteiro e é aí que entra uma conversão fracionário (ou racional) dessa taxa.
+
+Matematicamente falando, dado o sinal discreto $x[n]$ que possui transformada de Fourier $X(e^{j\omega})$, o qual deseja-se elevar ou diminuir a frequência de amostragem por um fator $L$
+- para interpolação - ou $M$ - para decimação - constante (e inteiro por se tratar de sinais discretos), gerando um novo sinal discreto ($x_L[n]$ ou $x_M[n]$), basta recordar a propriedade de
+escalonamento aplicada à transformada de Fourier \cite{Lathi:1998}, onde:
+
+\begin{equation*}
+  x_L[n] = x[\frac{n}{L}] <==> L X(e^{j\omega L})
+\end{equation*}
+
+sendo $x_L[n]$ o sinal após o procedimento de interpolação e,
+
+\begin{equation*}
+  x_M[n] = x[nM] <==> \frac{1}{M} X(e^{\frac{j\omega}{M}})
+\end{equation*}
+
+com $x_M[n]$ o sinal em que ocorreu a decimação.
+
+Quando deseja-se fazer um procedimento de reamostragem por um fator não inteiro, então entra uma relação entre os fatores de interpolação e decimação ao mesmo tempo fazendo com que o sinal
+reamostrado racionalmente seja:
+
+\begin{equation*}
+  x_{L/M}[n] = x[\frac{nM}{L}] <==> \frac{L}{M} X(e^{\frac{j\omega L}{M}})
+\end{equation*}
+
+sendo $L$ e $M$ valores inteiros.
+
+O bloco OOT que foi criado na seção \ref{section:modules_oot} foi testado conforme mostra a Fig. \ref{fig:exemplo_flowgraph}, sendo criado um \textit{flowgraph} propriamente para verificar
+sua funcionalidade de receber amostras do tipo ponto fluatuante, elevar seus valores ao quadrado e apresentá-los na saída.
+
+\begin{figure}[!htb]
+  \centering
+  \caption{Utilização do bloco customizado em um \textit{flowgraph}.}
+  \includegraphics[trim=0.1cm 4cm 0.1cm 0.1cm, width = \linewidth]{figures/gr_modtool/exemplo_flowgraph.png}
+
   Fonte: Elaborado pelo autor.
   \label{fig:exemplo_flowgraph}
 \end{figure}
+
 % ---
 
 % \lipsum[1]
@@ -2252,25 +1521,26 @@ Bloco OOT criado na seção \ref{section:modules_oot}
 \chapter{Considerações Finais}
 % ---
 
-Todos os objetivos previstos para este trabalho foram alcançados e felizmente foi possível trazer em uma abordagem ampla, mesmo que introdutória, alguns conceitos importantes essenciais
-no auxílio a engenheiros e desenvolvedores de aplicações de rádio definido por software. Trabalhos futuros a partir deste podem ser realizados de diversas maneiras, como por exemplo:
+Todos os objetivos previstos para este trabalho foram alcançados e felizmente foi possível trazer em uma abordagem ampla, mesmo que introdutória, alguns conceitos importantes e essenciais
+para auxiliar engenheiros e desenvolvedores de aplicações de rádio definido por software. Trabalhos futuros a partir deste podem ser realizados de diversas maneiras, como por exemplo:
 
-* utilização do SDR para levantamento da resposta em frequência de dispositivos transmissores;
+\begin{itemize}
+  \item[$-$] utilização do SDR para levantamento da resposta em frequência de dispositivos transmissores;
+  \item[$-$] construção de diferentes tipos de moduladores de sinais digitais (BPSK, QPSK, QAM, etc \ldots);
+  \item[$-$] criação de transmissores dentro dos padrões do mercado (DVB, ISDB, ATSC, NTSC, etc \ldots);
+  \item[$-$] implementação prática de filtros digitais customizados.
+\end{itemize}
 
-* Construção de diferentes tipos de moduladores de sinais digitais (BPSK, QPSK, QAM, etc \ldots);
+Foi possível abordar diferentes temáticas que estão relacionadas ao desenvolvimento de aplicações com GNURadio, passando desde questões relacionadas ao \textit{hardware} necessário até detalhes
+de implementação e geração de pacotes do \textit{software}. O foco dado ao provisionamento do ambiente de desenvolvimento se deu ao fato de que essa não é diretamente uma das áreas de estudo dos
+estudantes de engenharia eletrônica e de telecomunicações da UFU e o conhecimento sobre servidores Linux, utilização de linhas de comando, conectividade entre sistemas e etc \ldots têm grande chances
+de serem úteis e necessários na bagagem de um profissional formado neste contexto.
 
-* Criação de transmissores dentro dos padrões do mercado (DVB, ISDB, ATSC, etc \ldots);
+Um ponto importante a ser observado que a visão trazida neste trabalho é despertar no engenheiro que desejar ter contato com o GNURadio a vontade de ser um desenvolvedor e não apenas um usuário
+da ferramenta. Na visão do autor os passos considerados mais onerosos são os que foram realizados neste trabalho, visto que os estudantes de engenharia eletrônica e de telecomunicações da UFU
+possuem o foco mais voltado para a área de processamento digital de sinais utilizando ferramentas como MATLAB® e/ou Simulink®.
 
-* Implementação prática de filtros digitais customizados.
-
-DIFICULDADES ENCONTRADAS
-
-ONEROSIDADE NA CHECKAGEM DE dependências
-
-BENEFÍCIOS DA UTILIZAÇÃO DO DOCKER.
-
-
-
+O esperado é que este seja um ponto de partida e todo o material aqui apresentado ficará disponível na conta do github do autor para que possa ser reproduzido posteriormente.
 
 % \lipsum[31-33]
 
